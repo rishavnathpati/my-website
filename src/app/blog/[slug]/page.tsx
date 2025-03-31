@@ -17,8 +17,8 @@ export async function generateStaticParams() {
   return paths;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPostData(params.slug);
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const post = await getPostData(props.params.slug);
 
   if (!post) {
     return { title: 'Post Not Found' };
@@ -58,8 +58,8 @@ const options = {
   keepBackground: true,
 };
 
-export default async function BlogPostPage({ params }: Props) {
-  const post = await getPostData(params.slug);
+export default async function BlogPostPage(props: Props) {
+  const post = await getPostData(props.params.slug);
 
   if (!post) {
     notFound();
