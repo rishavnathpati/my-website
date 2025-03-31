@@ -1,0 +1,136 @@
+---
+title: 'Ultimate Mac Terminal Setup Guide'
+date: '2024-03-15'
+excerpt: 'A comprehensive guide to setting up a modern, efficient terminal environment on macOS with iTerm2, Oh My Zsh, and essential tools.'
+tags: ['Development', 'Terminal', 'macOS', 'CLI', 'Productivity']
+imageUrl: '/blog/thumbnails/mac-terminal.png'
+readTimeMinutes: 15
+slug: 'mac-terminal-setup'
+---
+
+A powerful terminal setup is essential for any developer on macOS. This guide walks you through installing and configuring iTerm2, Oh My Zsh, Powerlevel10k, essential tools, and plugins for a productive workflow.
+
+## 1. Installing iTerm2
+
+The default macOS Terminal is okay, but iTerm2 offers significant improvements.
+
+```bash
+brew install --cask iterm2
+```
+
+Why iTerm2?
+
+- Split panes (Cmd+D vertical, Cmd+Shift+D horizontal)
+- Hotkey window access
+- Better search & autocomplete
+- Customizable triggers and profiles
+- Improved color support
+
+Key iTerm2 Settings:
+- Preferences → Profiles → Keys → Load Preset... → Natural Text Editing
+- Preferences → Advanced → Search for "GPU" → Enable GPU renderer (if available)
+- Preferences → Profiles → Terminal → Scrollback Buffer → Check "Unlimited scrollback"
+
+## 2. Package Management: Homebrew
+
+Homebrew is the missing package manager for macOS.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Add Homebrew to your PATH (follow instructions from brew installer)
+# Typically involves adding lines to ~/.zprofile or ~/.zshenv
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
+## 3. Shell Framework: Oh My Zsh & Powerlevel10k
+
+Zsh is the default shell, but Oh My Zsh makes managing its configuration easier.
+
+Install Git (if needed):
+```bash
+brew install git
+```
+
+Install Oh My Zsh:
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+Install Powerlevel10k Theme:
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Edit `~/.zshrc` and set `ZSH_THEME="powerlevel10k/powerlevel10k"`.
+
+Install Recommended Font:
+```bash
+brew tap homebrew/cask-fonts
+brew install --cask font-meslo-lg-nerd-font
+```
+
+Configure iTerm2 to use MesloLGS NF: Preferences → Profiles → Text → Font.
+
+## 4. Essential Development Tools
+
+Install modern CLI alternatives:
+
+```bash
+brew install eza         # Better ls
+brew install bat         # Better cat
+brew install ripgrep     # Better grep (rg)
+brew install fd          # Better find
+brew install fzf         # Fuzzy finder
+brew install delta       # Better git diff
+brew install tldr        # Simplified man pages
+brew install jq          # JSON processor
+brew install htop        # Process viewer
+brew install ncdu        # Disk usage analyzer
+```
+
+## 5. Essential Zsh Plugins
+
+Clone plugins into `$ZSH_CUSTOM/plugins/`:
+
+```bash
+# Auto suggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# Syntax highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# History substring search
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+```
+
+Edit `~/.zshrc` and add them to the plugins list:
+
+```bash
+plugins=(
+    git
+    # Add other core plugins like docker, npm, etc. if needed
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
+    # Add other useful plugins below
+    web-search
+    copypath
+    dirhistory
+    sudo
+)
+```
+
+Remember to run `source ~/.zshrc` after editing.
+
+## Conclusion
+
+This setup provides a modern, efficient terminal environment with:
+- iTerm2 for better terminal emulation
+- Homebrew for package management
+- Oh My Zsh with Powerlevel10k theme for a beautiful, informative prompt
+- Essential CLI tools for improved productivity
+- Useful Zsh plugins for better shell interaction
+
+Take time to explore each tool's features and customize the setup to your needs. Your terminal is a powerful tool - make it work for you! 
