@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { globby } from 'globby';
-import matter from 'gray-matter';
 
 // Replace with your actual domain before deployment
 const SITE_URL = 'https://yourdomain.com';
@@ -32,8 +31,9 @@ async function generateSitemap() {
 
   // 2. Get dynamic portfolio pages
   const portfolioDir = path.join(pagesDir, 'portfolio/[slug]');
-  const { portfolioItems } = await import('../src/lib/data/portfolio.ts'); // Corrected extension to .ts
-  const portfolioUrls = portfolioItems.map(item => `/portfolio/${item.slug}`);
+  // Read portfolio data from JSON file instead of importing TypeScript
+  const portfolioData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/lib/data/portfolio.json'), 'utf8'));
+  const portfolioUrls = portfolioData.portfolioItems.map(item => `/portfolio/${item.slug}`);
 
   // 3. Get dynamic blog pages
   const blogPostsDir = path.join(contentDir, 'blogs');

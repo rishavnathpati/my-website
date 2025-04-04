@@ -17,22 +17,17 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://yourdomain.com/portfolio/beatrex-ball</loc>
+    <loc>https://yourdomain.com/portfolio/unity-game-1</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://yourdomain.com/portfolio/hand-gesture-gui</loc>
+    <loc>https://yourdomain.com/portfolio/ar-experience</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://yourdomain.com/portfolio/yoga-asana-trainer</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://yourdomain.com/portfolio/brain-tumor-segmentation</loc>
+    <loc>https://yourdomain.com/portfolio/interactive-vr</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>

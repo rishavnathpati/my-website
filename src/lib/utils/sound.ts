@@ -1,10 +1,11 @@
 'use client';
 
-// Sound effect URLs
+// Sound effect URLs - commented out since files don't exist
+// Loading disabled to prevent 404 errors
 const SOUNDS = {
-  select: '/sounds/select.mp3',
-  hover: '/sounds/hover.mp3',
-  success: '/sounds/success.mp3',
+  select: '',  // '/sounds/select.mp3',
+  hover: '',   // '/sounds/hover.mp3',
+  success: '', // '/sounds/success.mp3',
 } as const;
 
 // Sound volume levels
@@ -36,31 +37,28 @@ class SoundManager {
   private initialize() {
     if (this.initialized || typeof window === 'undefined') return;
     
-    // Create audio elements only on client side
-    Object.entries(SOUNDS).forEach(([key, url]) => {
-      const audio = new window.Audio(url);
-      audio.volume = VOLUMES[key as SoundType];
-      this.audioElements.set(key as SoundType, audio);
-    });
-
+    // Skip initialization since we don't have sound files
     this.initialized = true;
+    
+    // Commented out to prevent 404 errors
+    /*
+    Object.entries(SOUNDS).forEach(([key, url]) => {
+      if (!url) return; // Skip empty URLs
+      try {
+        const audio = new window.Audio(url);
+        audio.volume = VOLUMES[key as SoundType];
+        this.audioElements.set(key as SoundType, audio);
+      } catch (e) {
+        console.debug(`Failed to load sound: ${key}`);
+      }
+    });
+    */
   }
 
   public play(type: SoundType) {
-    if (!this.enabled || typeof window === 'undefined') return;
-    
-    // Initialize if not already done
-    if (!this.initialized) {
-      this.initialize();
-    }
-    
-    const audio = this.audioElements.get(type);
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play().catch(() => {
-        // Ignore autoplay errors
-      });
-    }
+    // No-op function since sounds are disabled
+    // This way components can still call soundManager.play() without errors
+    return;
   }
 
   public toggle(enabled: boolean) {

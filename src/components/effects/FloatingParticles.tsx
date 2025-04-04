@@ -1,141 +1,120 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useTheme } from 'next-themes';
+
+interface ParticleConfig {
+  count: number;
+  color: string;
+  maxSize: number;
+  minSize: number;
+  maxSpeed: number;
+}
 
 interface Particle {
   x: number;
   y: number;
   size: number;
+  speedX: number;
   speedY: number;
   opacity: number;
-  symbol: string;
   color: string;
 }
 
-const SYMBOLS = [
-  { symbol: '✨', color: '#61DAFB' },
-  { symbol: '⭐', color: '#4CAF50' },
-];
-
-const PARTICLE_COUNT = 8; // Reduced for better performance
-
-export function FloatingParticles() {
+export default function FloatingParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
-  const scrollRef = useRef(0);
-  const { theme } = useTheme();
+  const animationFrameIdRef = useRef<number | null>(null);
 
-  // Initialize particles
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    particlesRef.current = Array.from({ length: PARTICLE_COUNT }).map(() => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      size: Math.random() * 15 + 10, // Smaller size
-      speedY: Math.random() * 0.1 + 0.02, // Slower movement
-      opacity: Math.random() * 0.3 + 0.1, // More subtle
-      ...SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-    }));
-  }, []);
-
-  // Animation loop
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d', { alpha: true });
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Handle scroll with debounce
-    let scrollTimeout: NodeJS.Timeout;
-    const handleScroll = () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        scrollRef.current = window.scrollY * 0.05;
-      }, 10);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Set canvas size
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
-
-    // Animation frame with throttle
-    let lastTime = 0;
-    const minFrameTime = 1000 / 24; // Lower FPS for better performance
-
-    const animate = (currentTime: number) => {
-      if (currentTime - lastTime < minFrameTime) {
-        requestAnimationFrame(animate);
-        return;
+    // Set canvas dimensions
+    const setCanvasDimensions = () => {
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
-      lastTime = currentTime;
+    };
 
+    setCanvasDimensions();
+    window.addEventListener('resize', setCanvasDimensions);
+
+    // Configure particles
+    const config: ParticleConfig = {
+      count: Math.min(30, Math.floor((window.innerWidth * window.innerHeight) / 30000)),
+      color: '#ffffff',
+      maxSize: 3,
+      minSize: 1,
+      maxSpeed: 0.5,
+    };
+
+    // Create particles
+    const createParticles = () => {
+      particlesRef.current = [];
+      for (let i = 0; i < config.count; i++) {
+        particlesRef.current.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * (config.maxSize - config.minSize) + config.minSize,
+          speedX: (Math.random() - 0.5) * config.maxSpeed,
+          speedY: (Math.random() - 0.5) * config.maxSpeed,
+          opacity: Math.random() * 0.5 + 0.2,
+          color: config.color,
+        });
+      }
+    };
+
+    createParticles();
+
+    // Animation loop
+    const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw particles
-      particlesRef.current.forEach(particle => {
-        // Move particle
-        particle.y -= particle.speedY;
-        
-        // Reset position if out of bounds
-        if (particle.y < -50) {
-          particle.y = canvas.height + 50;
-          particle.x = Math.random() * canvas.width;
-        }
+
+      particlesRef.current.forEach((particle) => {
+        // Update position
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        // Wrap around edges
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.y > canvas.height) particle.y = 0;
+
         // Draw particle
-        ctx.save();
-        ctx.globalAlpha = particle.opacity;
-        ctx.font = `${particle.size}px Arial`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // Optimized glow effect
-        ctx.shadowColor = particle.color;
-        ctx.shadowBlur = 25; // Enhanced glow for blur effect
-        ctx.fillStyle = theme === 'dark' ? '#ffffff' : '#000000';
-        
-        // Smooth wave motion with time-based animation
-        // Simple drift motion
-        const drawX = particle.x + Math.sin(Date.now() * 0.0005) * 10;
-        
-        // Draw with optimized transformations
-        ctx.fillText(particle.symbol, drawX, particle.y);
-        
-        ctx.restore();
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+        ctx.fill();
       });
 
-      requestAnimationFrame(animate);
+      animationFrameIdRef.current = requestAnimationFrame(animate);
     };
 
-    requestAnimationFrame(animate);
+    // Start animation
+    animate();
 
+    // Cleanup
     return () => {
-      window.removeEventListener('resize', setCanvasSize);
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollTimeout);
+      window.removeEventListener('resize', setCanvasDimensions);
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
     };
-  }, [theme]);
+  }, []);
 
+  // Fix the hydration mismatch by using camelCase for style properties and number values
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-[1]"
-      style={{
-        mixBlendMode: theme === 'dark' ? 'soft-light' : 'color-dodge',
-        opacity: theme === 'dark' ? 0.4 : 0.2
-      }}
-      suppressHydrationWarning
+      style={{ mixBlendMode: "screen", opacity: 0.4 }}
     />
   );
 }

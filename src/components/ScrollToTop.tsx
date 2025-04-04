@@ -32,11 +32,11 @@ export function ScrollToTop() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
-      <div className="relative">
+    <div className="fixed bottom-24 right-4 z-50">
+      <div className="relative h-12 w-12">
         {/* Progress Circle */}
         <svg
-          className="w-12 h-12 -rotate-90"
+          className="absolute inset-0 -rotate-90"
           viewBox="0 0 100 100"
         >
           <circle
@@ -62,15 +62,17 @@ export function ScrollToTop() {
           />
         </svg>
         
-        {/* Button */}
-        <Button
-          onClick={scrollToTop}
-          size="icon"
-          className="absolute inset-0 rounded-full hover:scale-110 transition-transform"
-          aria-label="Scroll to top"
-        >
-          <ArrowUp className="h-5 w-5" />
-        </Button>
+        {/* Button - positioned in center of progress circle */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Button
+            onClick={scrollToTop}
+            size="icon"
+            className="h-8 w-8 rounded-full hover:scale-110 transition-transform"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );

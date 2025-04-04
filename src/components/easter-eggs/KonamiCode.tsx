@@ -29,11 +29,21 @@ export function KonamiCode() {
   const maxSequenceLength = Math.max(...Object.values(CHEAT_CODES).map(code => code.sequence.length));
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    let lastKeyTime = 0;
+    const keyDebounceTime = 100; // ms
+    
     const handleKeyDown = (e: KeyboardEvent) => {
-      const key = e.key.toLowerCase();
-      const newInput = [...input, key];
+      const now = Date.now();
+      // Debounce key presses to avoid too many state updates
+      if (now - lastKeyTime < keyDebounceTime) return;
+      lastKeyTime = now;
       
-      // Keep only the last N keys pressed
+      const key = e.key.toLowerCase();
+      
+      // Optimize array operations with direct manipulation
+      const newInput = [...input, key];
       if (newInput.length > maxSequenceLength) {
         newInput.shift();
       }
@@ -41,16 +51,17 @@ export function KonamiCode() {
       setInput(newInput);
 
       // Check for any matching cheat codes
-      Object.entries(CHEAT_CODES).forEach(([codeName, code]) => {
+      for (const [codeName, code] of Object.entries(CHEAT_CODES)) {
         const sequence = code.sequence.map(k => k.toLowerCase());
         if (newInput.slice(-sequence.length).join(',') === sequence.join(',')) {
           activateCheatCode(codeName as keyof typeof CHEAT_CODES);
           setInput([]); // Reset input
+          break; // Exit loop once a match is found
         }
-      });
+      }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown, { passive: true });
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [input, maxSequenceLength]);
 
@@ -76,52 +87,70 @@ export function KonamiCode() {
   };
 
   const celebrateKonamiCode = () => {
-    const duration = 3 * 1000;
+    // Use fewer confetti particles for better performance
+    const duration = 2 * 1000; // Shorter duration
     const end = Date.now() + duration;
-    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+    const colors = ['#ff0000', '#00ff00', '#0000ff'];
 
-    (function frame() {
+    let animationFrameId: number;
+    
+    function frame() {
       confetti({
-        particleCount: 5,
+        particleCount: 3, // Fewer particles
         angle: 60,
-        spread: 55,
+        spread: 45, // Narrower spread
         origin: { x: 0 },
         colors: colors
       });
       confetti({
-        particleCount: 5,
+        particleCount: 3, // Fewer particles
         angle: 120,
-        spread: 55,
+        spread: 45, // Narrower spread
         origin: { x: 1 },
         colors: colors
       });
 
       if (Date.now() < end) {
-        requestAnimationFrame(frame);
+        animationFrameId = requestAnimationFrame(frame);
       }
-    }());
+    }
+    
+    frame();
+    
+    // Ensure cleanup happens
+    setTimeout(() => {
+      cancelAnimationFrame(animationFrameId);
+    }, duration + 100);
 
-    // Game dev-style achievement popup
+    // Use a pre-defined CSS class for the achievement popup
     const message = document.createElement('div');
-    message.textContent = '🎮 Achievement Unlocked: Konami Master!';
+    message.textContent = '🎮 Achievement: Konami!'; // Shorter text
+    message.className = 'achievement-popup';
+    
+    // Use less demanding CSS without animation and shadows
     message.style.cssText = `
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.8);
       color: #00ff00;
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px solid #00ff00;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #00ff00;
       font-family: monospace;
       z-index: 9999;
-      animation: fadeInOut 3s forwards;
-      text-shadow: 0 0 10px #00ff00;
+      opacity: 0.9;
     `;
 
     document.body.appendChild(message);
-    setTimeout(() => message.remove(), 3000);
+    
+    // Use a variable to track the timeout for cleanup
+    const timeoutId = setTimeout(() => {
+      if (document.body.contains(message)) {
+        message.remove();
+      }
+    }, 2000); // Shorter display time
   };
 
   return null;

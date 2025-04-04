@@ -6,54 +6,29 @@ import 'aos/dist/aos.css';
 
 export const AOSInitializer = () => {
   useEffect(() => {
-    // Initialize AOS with custom settings
+    // Initialize AOS with all animations disabled
     AOS.init({
-      // Core settings
-      duration: 800,
-      easing: 'ease-out-cubic',
-      once: true,          // Only animate once
-      offset: 100,         // Trigger animations a bit later
+      // Core settings - simplified
+      duration: 0, // No animation duration
+      easing: 'linear',
+      once: true,
+      offset: 0,
       
-      // Disable animations on mobile for better performance
-      disable: 'mobile',
+      // Disable all animations
+      disable: true, // Always disabled
       
-      // Throttle scroll events
-      throttleDelay: 99,   // Delay between scroll events
+      // No throttling needed since animations are disabled
+      throttleDelay: 0,
       
-      // Only animate if the scroll delta is significant
+      // Simplified configuration
       startEvent: 'DOMContentLoaded',
-      mirror: false,       // Don't mirror animations when scrolling up
+      mirror: false,
       
-      // Disable animation if user prefers reduced motion
-      disableMutationObserver: false,
-      
-      // Custom animation settings
-      anchorPlacement: 'top-bottom', // Trigger when element's top hits bottom of viewport
+      // Disable observer for better performance
+      disableMutationObserver: true,
     });
-
-    // Add a scroll velocity check
-    let lastScrollTop = 0;
-    let lastScrollTime = Date.now();
     
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset;
-      const now = Date.now();
-      const timeDiff = now - lastScrollTime;
-      const scrollDiff = Math.abs(scrollTop - lastScrollTop);
-      
-      // Only refresh animations if scroll is significant (fast scroll)
-      if (scrollDiff > 100 && timeDiff > 50) {
-        AOS.refresh();
-        lastScrollTop = scrollTop;
-        lastScrollTime = now;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    // No need for scroll handlers since animations are disabled
   }, []);
 
   return null;

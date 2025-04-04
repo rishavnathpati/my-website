@@ -9,13 +9,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
-import { CursorEffect } from "@/components/easter-eggs/CursorEffect";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AOSInitializer } from "@/components/AOSInitializer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { ConsoleProvider } from "@/components/ui/console-provider";
-import { FloatingParticles } from "@/components/effects/FloatingParticles";
+import ParallaxBackground from "@/components/effects/ParallaxBackground";
+import FloatingParticles from "@/components/effects/FloatingParticles";
 
 // Geist fonts are configured via Tailwind variables
 
@@ -79,7 +79,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ConsoleProvider>
-            {/* Background Effect */}
+            {/* Background Effects */}
+            <ParallaxBackground />
             <FloatingParticles />
             
             <SkipLink />
@@ -96,7 +97,6 @@ export default function RootLayout({
             <Toaster />
             <TailwindIndicator />
             <KonamiCode />
-            <CursorEffect />
           </ConsoleProvider>
         </ThemeProvider>
       </body>

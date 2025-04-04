@@ -1,0 +1,22 @@
+{
+  "portfolioItems": [
+    {
+      "slug": "unity-game-1",
+      "title": "Unity Game 1",
+      "description": "A 3D adventure game built with Unity",
+      "date": "2023-07-01"
+    },
+    {
+      "slug": "ar-experience",
+      "title": "AR Experience",
+      "description": "An augmented reality experience for mobile devices",
+      "date": "2023-10-15"
+    },
+    {
+      "slug": "interactive-vr",
+      "title": "Interactive VR",
+      "description": "A virtual reality interactive experience",
+      "date": "2023-12-01"
+    }
+  ]
+}
