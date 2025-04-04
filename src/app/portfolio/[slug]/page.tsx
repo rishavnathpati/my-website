@@ -88,7 +88,7 @@ export default async function PortfolioDetailPage(props: Props) {
           />
         </div>
 
-        <div className="prose dark:prose-invert max-w-none mb-8">
+        <div className="prose prose-invert max-w-none mb-8">
           <p className="text-lg text-muted-foreground leading-relaxed">
             {project.description}
           </p>

@@ -15,12 +15,8 @@ const CHEAT_CODES = {
     sequence: ['d', 'e', 'b', 'u', 'g'],
     name: 'Debug Mode',
     effect: 'Console Visibility'
-  },
-  unity: {
-    sequence: ['u', 'n', 'i', 't', 'y'],
-    name: 'Unity Mode',
-    effect: 'Dark Theme'
   }
+  // Removed Unity cheat code since we're using forced dark theme now
 };
 
 export function KonamiCode() {
@@ -78,11 +74,7 @@ export function KonamiCode() {
         // Toggle console visibility
         warn('Debug mode activated - console will remain visible');
         break;
-      case 'unity':
-        // Switch to dark theme
-        document.documentElement.classList.add('dark');
-        log('Unity-style dark theme activated');
-        break;
+      // Removed Unity case since we're using forced dark theme now
     }
   };
 

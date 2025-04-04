@@ -20,8 +20,8 @@ export function AboutSection() {
   const age = calculateAge(dob);
 
   const techStack = [
-    'Unity', 'C#', 'TypeScript', 'React', 'Node.js', 'Python',
-    'Git', 'Docker', 'AWS', 'TensorFlow', 'OpenCV'
+    'Unity', 'C#', 'Python', 'Java', 'Machine Learning', 'Deep Learning',
+    'TensorFlow', 'Git', 'Software Architecture', 'Design Patterns', 'AR/VR'
   ];
 
   return (
@@ -52,11 +52,11 @@ export function AboutSection() {
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
                   <MapPin className="w-4 h-4 text-primary" />
-                  <span className="text-muted-foreground">location: <span className="text-foreground">Kolkata, India</span></span>
+                  <span className="text-muted-foreground">location: <span className="text-foreground">Kolkata, West Bengal, India</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
                   <Code2 className="w-4 h-4 text-primary" />
-                  <span className="text-muted-foreground">role: <span className="text-foreground">Interactive Media Dev</span></span>
+                  <span className="text-muted-foreground">role: <span className="text-foreground">Game & Interactive Media Developer</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
                   <GitBranch className="w-4 h-4 text-primary" />
@@ -77,8 +77,9 @@ export function AboutSection() {
 
               <div className="space-y-6 text-muted-foreground">
                 <p className="leading-relaxed">
-                  Interactive Media Developer at Convai with 3+ years of experience in Unity (2D/3D/AR/VR) & C#.
-                  Focused on building immersive experiences and exploring AI integration in interactive media.
+                  Interactive Media Developer at Convai with over 5 years of experience in Computer Science and 3+ years specializing in Unity.
+                  I've published over 10 titles across mobile platforms (Android and iOS) and PC, spanning casual, hyper-casual,
+                  free-to-play, and educational games.
                 </p>
 
                 <div>
@@ -93,8 +94,14 @@ export function AboutSection() {
                 </div>
 
                 <p className="leading-relaxed">
-                  Committed to clean code, rapid prototyping, and pushing the boundaries of interactive technology.
-                  Always exploring new tools and frameworks to create innovative solutions.
+                  My ability to rapidly prototype and explore uncharted territories are key strengths. I excel in fostering seamless
+                  collaboration and efficient project management. I take great pride in adhering to clean coding practices,
+                  consistently striving to create games that are both efficient and high-performing.
+                </p>
+
+                <p className="leading-relaxed">
+                  My passion lies in crafting immersive experiences that captivate users through engaging gameplay, stunning visuals,
+                  and intuitive UI design.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">

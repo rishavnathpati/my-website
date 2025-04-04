@@ -80,7 +80,7 @@ export default async function BlogPostPage(props: Props) {
   const components = {
     pre: ({ children, ...props }: React.ComponentProps<'pre'>) => (
       <div className="relative">
-        <pre className="overflow-x-auto rounded-lg border bg-neutral-900 dark:bg-neutral-900 py-4 px-2" {...props}>
+        <pre className="overflow-x-auto rounded-lg border bg-neutral-900 py-4 px-2" {...props}>
           {children}
         </pre>
       </div>
@@ -124,8 +124,8 @@ export default async function BlogPostPage(props: Props) {
           </div>
         </header>
 
-        <div className="prose dark:prose-invert max-w-none prose-neutral prose-lg
-          prose-headings:font-semibold /* Removed font-raleway, will inherit font-sans */
+        <div className="prose prose-invert max-w-none prose-neutral prose-lg
+          prose-headings:font-semibold /* Using prose-invert by default since we're in forced dark mode */
           prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
           prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
           prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3

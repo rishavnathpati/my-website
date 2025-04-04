@@ -12,10 +12,10 @@ export function HeroSection() {
   React.useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        'Unity Game Developer',
-        'Full Stack Engineer',
-        'ML Enthusiast',
-        'Open Source Contributor'
+        'Game Developer',
+        'Interactive Media Developer',
+        'Unity 2D/3D/AR/VR Developer',
+        'ML/Deep Learning Enthusiast'
       ],
       typeSpeed: 50,
       backSpeed: 30,

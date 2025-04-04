@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Mail, Terminal, MessageSquare, Send, Laptop } from 'lucide-react';
+import { Mail, Terminal, MessageSquare, Send, Laptop, Phone, MapPin } from 'lucide-react';
 
 export function ContactCTA() {
   return (
@@ -19,7 +19,7 @@ export function ContactCTA() {
               <div className="font-mono">
                 <p className="text-muted-foreground mb-2">$ echo "status"</p>
                 <p className="text-foreground mb-4 pl-4">
-                  <span className="text-green-500">●</span> Available for new projects and collaborations
+                  <span className="text-green-500">●</span> Available for freelance projects and collaborations
                 </p>
 
                 <p className="text-muted-foreground mb-2">$ cat contact_info.txt</p>
@@ -30,7 +30,15 @@ export function ContactCTA() {
                   </div>
                   <div className="flex items-center gap-2 mb-3">
                     <Laptop className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">Open for: Game Dev, XR, AI Integration, Web Apps</span>
+                    <span className="text-muted-foreground">Open for: Game Dev, XR, AR/VR, AI Integration, Interactive Media</span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Phone className="w-4 h-4 text-primary" />
+                    <span className="text-muted-foreground">Phone: +91 9123877594</span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <MapPin className="w-4 h-4 text-primary" />
+                    <span className="text-muted-foreground">Kalyani, West Bengal, India</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Send className="w-4 h-4 text-primary" />

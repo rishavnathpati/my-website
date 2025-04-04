@@ -12,6 +12,15 @@ export interface PortfolioItem {
 
 export const portfolioItems: PortfolioItem[] = [
   {
+    slug: 'journey-under-the-sea',
+    title: 'Journey Under the Sea',
+    description: 'An immersive underwater exploration game with stunning visuals and engaging gameplay.',
+    imageUrl: 'https://placehold.co/600x400/png?text=Journey+Under+The+Sea',
+    tags: ['Unity', 'C#', 'Game Development', '3D', 'Adventure'],
+    detailsUrl: '/portfolio/journey-under-the-sea',
+    category: 'Games',
+  },
+  {
     slug: 'beatrex-ball',
     title: 'Beatrex Ball',
     description: 'Engaging rhythm-based mobile game synchronizing obstacles with music beats. Built with Unity.',
@@ -51,5 +60,8 @@ export const portfolioItems: PortfolioItem[] = [
     category: 'Publications',
   },
 ];
-
-export const highlightedPortfolioItems: PortfolioItem[] = portfolioItems.slice(0, 3); 
+export const highlightedPortfolioItems: PortfolioItem[] = [
+  portfolioItems[0], // Journey Under the Sea
+  portfolioItems[1], // Beatrex Ball
+  portfolioItems[2], // Hand Gesture Controlled GUI
+];

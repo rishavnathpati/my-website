@@ -195,42 +195,9 @@ kbd::after {
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Only dark theme - forcing dark mode */
 :root {
   --radius: 0.5rem;  /* Slightly reduced radius for a more technical look */
-  --background: oklch(0.98 0 0);  /* Slightly off-white for better eye comfort */
-  --foreground: oklch(0.2 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0 0);
-  --primary: oklch(0.6 0.15 200);  /* Vibrant blue for better visibility */
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.95 0 0);
-  --muted-foreground: oklch(0.45 0 0);  /* Darker muted text for better readability */
-  --accent: oklch(0.95 0 0);
-  --accent-foreground: oklch(0.2 0 0);
-  --destructive: oklch(0.6 0.25 25);
-  --border: oklch(0.85 0 0);  /* Slightly darker borders */
-  --input: oklch(0.85 0 0);
-  --ring: oklch(0.6 0.15 200);  /* Match primary color */
-  --chart-1: oklch(0.65 0.22 40);
-  --chart-2: oklch(0.6 0.15 200);
-  --chart-3: oklch(0.4 0.1 230);
-  --chart-4: oklch(0.8 0.19 85);
-  --chart-5: oklch(0.75 0.19 70);
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.2 0 0);
-  --sidebar-primary: oklch(0.6 0.15 200);  /* Match primary color */
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.95 0 0);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.85 0 0);  /* Match border color */
-  --sidebar-ring: oklch(0.6 0.15 200);  /* Match primary color */
-}
-
-.dark {
   --background: oklch(0.1 0 0);  /* Deeper black for better contrast */
   --foreground: oklch(0.95 0 0);
   --card: oklch(0.15 0 0);  /* Slightly lighter than background */
@@ -263,6 +230,8 @@ kbd::after {
   --sidebar-border: oklch(0.3 0 0);  /* Match border color */
   --sidebar-ring: oklch(0.7 0.15 200);  /* Match primary color */
 }
+
+/* Removed .dark class as we're forcing dark mode only */
 
 @tailwind base;
 @tailwind components;

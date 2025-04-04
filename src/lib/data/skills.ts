@@ -21,35 +21,35 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { 
         name: 'C#',
-        level: 5,
+        level: 3,
         description: 'Advanced C# programming with focus on game development and system architecture',
-        xp: 90
+        xp: 50
       },
       { 
-        name: 'Unity Engine',
-        level: 5,
+        name: 'Unity 3D/2D/AR/VR',
+        level: 3,
         icon: '🎮',
         description: 'Expert in Unity game engine, including 2D/3D development, AR/VR, and custom tooling',
-        xp: 85
+        xp: 60
       },
       { 
-        name: 'Git',
-        level: 4,
-        icon: '🔄',
-        description: 'Version control and collaboration workflows',
-        xp: 75
+        name: 'Java',
+        level: 3,
+        icon: '☕',
+        description: 'Java programming with focus on application development',
+        xp: 55
       },
       { 
         name: 'Software Architecture',
-        level: 4,
+        level: 3,
         description: 'System design, patterns, and scalable architecture',
-        xp: 70
+        xp: 50
       },
       { 
-        name: 'Design Patterns',
-        level: 4,
+        name: 'Design Patterns and Principles',
+        level: 3,
         description: 'Implementation of software design patterns and best practices',
-        xp: 80
+        xp: 55
       },
       { 
         name: 'Problem Solving',
@@ -65,10 +65,11 @@ export const skillCategories: SkillCategory[] = [
     description: 'Modern web development stack',
     skills: [
       { 
-        name: 'TypeScript',
-        level: 4,
-        description: 'Type-safe JavaScript development with advanced features',
-        xp: 80
+        name: 'Git',
+        level: 3,
+        icon: '🔄',
+        description: 'Version control and collaboration workflows',
+        xp: 50
       },
       { 
         name: 'React',
@@ -143,23 +144,24 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { 
         name: 'Python',
-        level: 4,
+        level: 3,
         icon: '🐍',
         description: 'Python programming for AI/ML applications',
-        xp: 75
+        xp: 55
       },
       { 
         name: 'TensorFlow',
-        level: 3,
+        level: 2,
         icon: '🧠',
         description: 'Machine learning framework for AI development',
-        xp: 60
+        xp: 35
       },
       { 
-        name: 'MediaPipe',
-        level: 3,
-        description: 'Cross-platform ML solutions framework',
-        xp: 55
+        name: 'Machine Learning / Deep Learning',
+        level: 2,
+        icon: '🤖',
+        description: 'Machine learning and deep learning concepts and applications',
+        xp: 35
       },
       { 
         name: 'OpenCV',

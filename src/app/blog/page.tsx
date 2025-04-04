@@ -27,7 +27,7 @@ function BlogGrid() {
       {allPosts.map((post) => (
         <Card
           key={post.slug}
-          className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg dark:bg-neutral-800/50 group"
+          className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-neutral-800/50 group"
         >
           <CardHeader className="p-0">
             <Link href={post.externalUrl || `/blog/${post.slug}`} target={post.externalUrl ? '_blank' : '_self'} rel={post.externalUrl ? 'noopener noreferrer' : ''} aria-label={`Read more about ${post.title}`}>

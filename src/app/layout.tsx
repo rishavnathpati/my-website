@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
+import "./no-animations.css"; // Import CSS that disables all animations
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
@@ -9,7 +10,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { AOSInitializer } from "@/components/AOSInitializer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
@@ -72,21 +72,21 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head />
       <body className="font-sans bg-background text-foreground transition-colors duration-300">
+        {/* Force dark theme only */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
+          forcedTheme="dark"
           disableTransitionOnChange
         >
           <ConsoleProvider>
             {/* Background Effects */}
             <ParallaxBackground />
             <FloatingParticles />
-            
             <SkipLink />
             <AOSInitializer />
             <Header />
-            <ThemeToggle />
             <ScrollToTop />
 
             <main id="main" className="lg:ml-[300px] relative z-[2]" tabIndex={-1}>

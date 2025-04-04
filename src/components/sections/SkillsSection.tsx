@@ -6,7 +6,6 @@ import { skillCategories } from "@/lib/data/skills";
 import { Terminal, Code2, Command, Volume2, VolumeX } from "lucide-react";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { useConsole } from "@/components/ui/console-provider";
-import { GameTooltip } from "@/components/ui/game-tooltip";
 import { soundManager } from "@/lib/utils/sound";
 
 // Effect for sound toggle
@@ -15,51 +14,8 @@ const toggleSound = (enabled: boolean) => {
   return enabled;
 };
 
-function SkillLevel({ level, xp }: { level?: number; xp?: number }) {
-  const maxLevel = 5;
-  const blocks = Array(maxLevel).fill('▱');
-  if (level) {
-    blocks.fill('▰', 0, level);
-  }
-
-  // Calculate percentages
-  const levelPercentage = level ? (level / maxLevel) * 100 : 0;
-  const xpPercentage = xp || 0;
-  
-  return (
-    <div className="flex flex-col gap-1 ml-2">
-      {/* Level bar */}
-      <div className="flex items-center gap-2">
-        <div className="w-20 h-2 bg-black/40 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-primary transition-all duration-300 skill-bar relative"
-            style={{ width: `${levelPercentage}%` }}
-          >
-            {/* Scanline effect */}
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="h-[1px] w-full bg-white/20 animate-[scanline_1s_linear_infinite]" />
-            </div>
-          </div>
-        </div>
-        <span className="font-mono text-xs text-primary min-w-[40px] skill-item">
-          {blocks.join('')}
-        </span>
-      </div>
-
-      {/* XP progress bar */}
-      <div className="w-full h-1 bg-black/20 rounded-full overflow-hidden">
-        <div 
-          className="h-full bg-primary/30 transition-all duration-300"
-          style={{ width: `${xpPercentage}%` }}
-        >
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="h-[1px] w-full bg-white/10 animate-[scanline_2s_linear_infinite]" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+// Removed SkillLevel component as per new requirements
+// Skills will only show names and icons with details in tooltip
 
 export function SkillsSection() {
   const [isLoading, setIsLoading] = useState(false);
@@ -231,8 +187,9 @@ export function SkillsSection() {
 
             {/* Description with typing animation */}
             <p className="text-muted-foreground leading-relaxed mb-8 font-mono">
-              A comprehensive tech stack built through game development, interactive media, and AI projects.
-              Constantly exploring new technologies and pushing boundaries.
+              As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years
+              specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in
+              crafting immersive experiences that captivate users through engaging gameplay, stunning visuals, and intuitive UI design.
             </p>
 
             {/* Skills grid with game-like styling */}
@@ -256,57 +213,44 @@ export function SkillsSection() {
                   {/* Skills list with hover effects */}
                   <div className="p-4 space-y-3">
                     {category.skills.map((skill, skillIndex) => (
-                      <GameTooltip
+                      <div
                         key={skill.name}
-                        content={
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <span className="text-primary">{skill.name}</span>
-                              <span className="text-primary/70">Level {skill.level}/5</span>
-                            </div>
-                            <p className="text-muted-foreground text-xs">{skill.description}</p>
-                            <div className="text-xs text-primary/70">XP: {skill.xp}%</div>
-                          </div>
-                        }
+                        className={`flex items-center p-2 rounded transition-all duration-300 group relative cursor-pointer ${
+                          selectedSkill === skill.name
+                            ? 'bg-primary/10 border border-primary/30'
+                            : 'hover:bg-primary/5'
+                        }`}
+                        data-selected={selectedSkill === skill.name}
+                        style={{
+                          transitionDelay: `${(index * 100) + (skillIndex * 50)}ms`,
+                          animation: !isLoading ? 'fadeIn 0.5s ease forwards' : 'none'
+                        }}
+                        onClick={() => {
+                          setSelectedSkill(skill.name);
+                          log(`Selected: ${skill.name}`);
+                          soundManager.play('select');
+                        }}
+                        onMouseEnter={() => soundManager.play('hover')}
                       >
-                        <div
-                          className={`flex items-center justify-between p-2 rounded transition-all duration-300 group relative cursor-pointer ${
-                            selectedSkill === skill.name
-                              ? 'bg-primary/10 border border-primary/30'
-                              : 'hover:bg-primary/5'
-                          }`}
-                          data-selected={selectedSkill === skill.name}
-                          style={{
-                            transitionDelay: `${(index * 100) + (skillIndex * 50)}ms`,
-                            animation: !isLoading ? 'fadeIn 0.5s ease forwards' : 'none'
-                          }}
-                          onClick={() => {
-                            setSelectedSkill(skill.name);
-                            log(`Selected: ${skill.name}`);
-                            soundManager.play('select');
-                          }}
-                          onMouseEnter={() => soundManager.play('hover')}
-                        >
-                          {/* Hover glow effect */}
-                          <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded blur-sm" />
-                          
-                          <div className="flex items-center justify-between w-full relative">
-                            <div className="flex items-center gap-2">
-                              {skill.icon && (
-                                <span className="text-lg group-hover:scale-110 transition-transform duration-300 skill-icon relative">
-                                  {skill.icon}
-                                  {/* Power glow effect on hover */}
-                                  <span className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full blur-md" />
-                                </span>
-                              )}
-                              <span className="font-mono text-sm text-muted-foreground group-hover:text-primary transition-colors">
-                                {skill.name}
+                        {/* Hover glow effect */}
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded blur-sm" />
+                        
+                        <div className="flex items-center justify-between w-full relative">
+                          <div className="flex items-center gap-2">
+                            {skill.icon && (
+                              <span className="text-lg group-hover:scale-110 transition-transform duration-300 skill-icon relative">
+                                {skill.icon}
+                                {/* Power glow effect on hover */}
+                                <span className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full blur-md" />
                               </span>
-                            </div>
-                            <SkillLevel level={skill.level} xp={skill.xp} />
+                            )}
+                            <span className="font-mono text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                              {skill.name}
+                            </span>
                           </div>
+                          <span className="text-xs text-primary/60">Level {skill.level}/5</span>
                         </div>
-                      </GameTooltip>
+                      </div>
                     ))}
                   </div>
                 </div>
