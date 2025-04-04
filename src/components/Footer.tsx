@@ -18,6 +18,9 @@ export function Footer() {
           <span className="text-primary">&gt; </span>
           <span className="typing-animation">Feel free to fork, star, or contribute!</span>
         </div>
+        <div className="mt-4 text-sm text-muted-foreground font-mono">
+          © Copyright Rishav Nath Pati
+        </div>
       </div>
 
       <style jsx>{`

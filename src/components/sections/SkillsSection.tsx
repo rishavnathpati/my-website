@@ -14,9 +14,6 @@ const toggleSound = (enabled: boolean) => {
   return enabled;
 };
 
-// Removed SkillLevel component as per new requirements
-// Skills will only show names and icons with details in tooltip
-
 export function SkillsSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
@@ -48,56 +45,65 @@ export function SkillsSection() {
         return;
       }
 
-      switch (e.key) {
-        case 'ArrowUp':
-          e.preventDefault();
-          if (currentSkillIndex > 0) {
-            const newSkill = skillCategories[currentCatIndex].skills[currentSkillIndex - 1];
-            setSelectedSkill(newSkill.name);
-            log(`Selected: ${newSkill.name}`);
-            soundManager.play('select');
+      // Tab key for navigation (more reliable than arrows)
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        
+        // Find the next skill to select
+        let nextSkill = null;
+        
+        // If we already have a selection
+        if (selectedSkill) {
+          let foundCurrent = false;
+          let foundNext = false;
+          
+          // Loop through all categories and skills to find the next one after current
+          outerLoop: for (let catIdx = 0; catIdx < skillCategories.length; catIdx++) {
+            for (let skillIdx = 0; skillIdx < skillCategories[catIdx].skills.length; skillIdx++) {
+              const skill = skillCategories[catIdx].skills[skillIdx];
+              
+              // If we found the current skill, mark it and continue to find the next
+              if (skill.name === selectedSkill) {
+                foundCurrent = true;
+                continue;
+              }
+              
+              // If we already found the current, this is our next skill
+              if (foundCurrent) {
+                nextSkill = skill;
+                foundNext = true;
+                break outerLoop;
+              }
+            }
           }
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          if (currentCatIndex !== -1 && currentSkillIndex < skillCategories[currentCatIndex].skills.length - 1) {
-            const newSkill = skillCategories[currentCatIndex].skills[currentSkillIndex + 1];
-            setSelectedSkill(newSkill.name);
-            log(`Selected: ${newSkill.name}`);
-            soundManager.play('select');
+          
+          // If we went through all skills and didn't find next, loop to beginning
+          if (!foundNext) {
+            nextSkill = skillCategories[0].skills[0];
           }
-          break;
-        case 'ArrowLeft':
-          e.preventDefault();
-          if (currentCatIndex > 0) {
-            const newSkill = skillCategories[currentCatIndex - 1].skills[0];
-            setSelectedSkill(newSkill.name);
-            log(`Switched to: ${skillCategories[currentCatIndex - 1].title}`);
-            soundManager.play('select');
-          }
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          if (currentCatIndex < skillCategories.length - 1) {
-            const newSkill = skillCategories[currentCatIndex + 1].skills[0];
-            setSelectedSkill(newSkill.name);
-            log(`Switched to: ${skillCategories[currentCatIndex + 1].title}`);
-            soundManager.play('select');
-          }
-          break;
-        case 'Escape':
-          if (selectedSkill) {
-            setSelectedSkill(null);
-            log('Selection cleared');
-            soundManager.play('hover');
-          }
-          break;
+        } else {
+          // If no selection yet, select the first skill
+          nextSkill = skillCategories[0].skills[0];
+        }
+        
+        if (nextSkill) {
+          setSelectedSkill(nextSkill.name);
+          log(`Selected: ${nextSkill.name}`);
+          soundManager.play('select');
+        }
+      }
+      
+      // Escape key for clearing selection
+      if (e.key === 'Escape' && selectedSkill) {
+        setSelectedSkill(null);
+        log('Selection cleared');
+        soundManager.play('hover');
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedSkill, isLoading, log]);
+  }, [selectedSkill, isLoading, log, soundEnabled]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -137,12 +143,8 @@ export function SkillsSection() {
           <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground font-mono mb-6 bg-black/30 p-3 rounded-lg border border-border/20">
             <Command size={14} className="text-primary" />
             <div className="flex items-center gap-2">
-              <kbd className="px-2 py-1 bg-black/50 rounded border border-primary/20">↑↓</kbd>
+              <kbd className="px-2 py-1 bg-black/50 rounded border border-primary/20">Tab</kbd>
               <span>Navigate Skills</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <kbd className="px-2 py-1 bg-black/50 rounded border border-primary/20">←→</kbd>
-              <span>Switch Category</span>
             </div>
             <div className="flex items-center gap-2">
               <kbd className="px-2 py-1 bg-black/50 rounded border border-primary/20">ESC</kbd>
@@ -197,10 +199,9 @@ export function SkillsSection() {
               {skillCategories.map((category, index) => (
                 <div
                   key={category.title}
-                  className={`bg-black/20 rounded-lg border border-border/50 overflow-hidden transition-all duration-300 ${
-                    isLoading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+                  className={`bg-black/20 rounded-lg border border-border/50 overflow-hidden ${
+                    isLoading ? 'opacity-0' : 'opacity-100'
                   }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {/* Category header with game UI style */}
                   <div className="border-b border-border/50 px-4 py-2 flex items-center gap-2 bg-black/40">
@@ -215,36 +216,28 @@ export function SkillsSection() {
                     {category.skills.map((skill, skillIndex) => (
                       <div
                         key={skill.name}
-                        className={`flex items-center p-2 rounded transition-all duration-300 group relative cursor-pointer ${
+                        className={`flex items-center p-2 rounded cursor-pointer ${
                           selectedSkill === skill.name
                             ? 'bg-primary/10 border border-primary/30'
                             : 'hover:bg-primary/5'
                         }`}
-                        data-selected={selectedSkill === skill.name}
-                        style={{
-                          transitionDelay: `${(index * 100) + (skillIndex * 50)}ms`,
-                          animation: !isLoading ? 'fadeIn 0.5s ease forwards' : 'none'
-                        }}
                         onClick={() => {
-                          setSelectedSkill(skill.name);
-                          log(`Selected: ${skill.name}`);
-                          soundManager.play('select');
+                          if (selectedSkill !== skill.name) {
+                            setSelectedSkill(skill.name);
+                            log(`Selected: ${skill.name}`);
+                            soundManager.play('select');
+                          }
                         }}
-                        onMouseEnter={() => soundManager.play('hover')}
                       >
-                        {/* Hover glow effect */}
-                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded blur-sm" />
                         
                         <div className="flex items-center justify-between w-full relative">
                           <div className="flex items-center gap-2">
                             {skill.icon && (
-                              <span className="text-lg group-hover:scale-110 transition-transform duration-300 skill-icon relative">
+                              <span className="text-lg">
                                 {skill.icon}
-                                {/* Power glow effect on hover */}
-                                <span className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full blur-md" />
                               </span>
                             )}
-                            <span className="font-mono text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                            <span className="font-mono text-sm text-muted-foreground">
                               {skill.name}
                             </span>
                           </div>

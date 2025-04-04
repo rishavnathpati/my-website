@@ -12,9 +12,11 @@ export function HeroSection() {
   React.useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        'Game Developer',
-        'Interactive Media Developer',
-        'Unity 2D/3D/AR/VR Developer',
+        'GameDev',
+        'Game & Interactive Media Developer',
+        'Interactive Media Developer @ Convai',
+        'Unity | 2D,3D,AR/VR',
+        'C# > Python > JAVA > C > C++',
         'ML/Deep Learning Enthusiast'
       ],
       typeSpeed: 50,
@@ -48,8 +50,8 @@ export function HeroSection() {
             </h1>
             <p className="text-muted-foreground mb-2">$ current_role</p>
             <p className="text-lg sm:text-xl md:text-2xl mb-6">
-              <span ref={el} className="text-foreground"></span>
-              <span className="animate-blink">_</span>
+              I'm a <span ref={el} className="text-foreground"></span>
+              <span className="animate-blink">|</span>
             </p>
             <p className="text-muted-foreground mb-2">$ next_action</p>
             <div className="flex flex-col sm:flex-row gap-4">

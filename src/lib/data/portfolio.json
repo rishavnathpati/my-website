@@ -1,22 +1,58 @@
 {
   "portfolioItems": [
     {
-      "slug": "unity-game-1",
-      "title": "Unity Game 1",
-      "description": "A 3D adventure game built with Unity",
-      "date": "2023-07-01"
+      "slug": "beatrex-ball",
+      "title": "Beatrex Ball",
+      "description": "A rhythm-based mobile game developed with Unity",
+      "date": "2023-06-15",
+      "category": "games",
+      "techStack": ["Unity", "C#", "Mobile Development"],
+      "thumbnail": "/portfolio/games/beatrex-ball.jpg"
     },
     {
-      "slug": "ar-experience",
-      "title": "AR Experience",
-      "description": "An augmented reality experience for mobile devices",
-      "date": "2023-10-15"
+      "slug": "itch-io-collection",
+      "title": "Itch.io Game Collection",
+      "description": "Collection of games published on the Itch.io platform",
+      "date": "2023-05-20",
+      "category": "games",
+      "techStack": ["Unity", "C#", "Game Design"],
+      "thumbnail": "/portfolio/games/itch-collection.jpg"
     },
     {
-      "slug": "interactive-vr",
-      "title": "Interactive VR",
-      "description": "A virtual reality interactive experience",
-      "date": "2023-12-01"
+      "slug": "journey-under-sea",
+      "title": "Journey Under the Sea",
+      "description": "An immersive underwater adventure game",
+      "date": "2023-02-10",
+      "category": "games",
+      "techStack": ["Unity", "C#", "3D Modeling"],
+      "thumbnail": "/portfolio/games/journey-sea.jpg"
+    },
+    {
+      "slug": "hand-gesture-gui",
+      "title": "Hand Gesture Controlled GUI",
+      "description": "Computer vision project for controlling GUI with hand gestures",
+      "date": "2023-04-15",
+      "category": "ml",
+      "techStack": ["Python", "OpenCV", "MediaPipe", "Computer Vision"],
+      "thumbnail": "/portfolio/ml/hand-gesture-gui.jpg"
+    },
+    {
+      "slug": "yoga-asana-trainer",
+      "title": "Yoga Asana Trainer",
+      "description": "AI-powered application to guide and correct yoga poses",
+      "date": "2022-11-28",
+      "category": "ml",
+      "techStack": ["Python", "TensorFlow", "Computer Vision", "Unity"],
+      "thumbnail": "/portfolio/ml/yoga-trainer.jpg"
+    },
+    {
+      "slug": "brain-tumor-extraction",
+      "title": "Brain Tumor Segmentation",
+      "description": "Research publication on brain tumor segmentation using U-Net architecture",
+      "date": "2023-03-20",
+      "category": "publications",
+      "techStack": ["Python", "Deep Learning", "U-Net", "Medical Imaging"],
+      "thumbnail": "/portfolio/publications/brain-tumor.jpg"
     }
   ]
 }

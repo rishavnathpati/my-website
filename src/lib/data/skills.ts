@@ -20,17 +20,17 @@ export const skillCategories: SkillCategory[] = [
     description: 'Primary development skills and tools',
     skills: [
       { 
-        name: 'C#',
-        level: 3,
-        description: 'Advanced C# programming with focus on game development and system architecture',
-        xp: 50
-      },
-      { 
         name: 'Unity 3D/2D/AR/VR',
         level: 3,
         icon: '🎮',
         description: 'Expert in Unity game engine, including 2D/3D development, AR/VR, and custom tooling',
         xp: 60
+      },
+      { 
+        name: 'C#',
+        level: 3,
+        description: 'Advanced C# programming with focus on game development and system architecture',
+        xp: 50
       },
       { 
         name: 'Java',
@@ -40,22 +40,57 @@ export const skillCategories: SkillCategory[] = [
         xp: 55
       },
       { 
-        name: 'Software Architecture',
-        level: 3,
-        description: 'System design, patterns, and scalable architecture',
-        xp: 50
-      },
-      { 
         name: 'Design Patterns and Principles',
         level: 3,
         description: 'Implementation of software design patterns and best practices',
         xp: 55
       },
       { 
+        name: 'Software Architecture',
+        level: 3,
+        description: 'System design, patterns, and scalable architecture',
+        xp: 50
+      },
+      { 
         name: 'Problem Solving',
         level: 5,
         description: 'Algorithmic thinking and complex problem resolution',
         xp: 95
+      },
+    ],
+  },
+  {
+    title: 'Data & AI',
+    icon: 'ai.py',
+    description: 'Artificial Intelligence and Machine Learning',
+    skills: [
+      { 
+        name: 'Python',
+        level: 3,
+        icon: '🐍',
+        description: 'Python programming for AI/ML applications and data science',
+        xp: 55
+      },
+      { 
+        name: 'Machine Learning / Deep Learning',
+        level: 2,
+        icon: '🤖',
+        description: 'Machine learning and deep learning concepts and applications',
+        xp: 35
+      },
+      { 
+        name: 'TensorFlow',
+        level: 2,
+        icon: '🧠',
+        description: 'Machine learning framework for AI development',
+        xp: 35
+      },
+      { 
+        name: 'OpenCV',
+        level: 3,
+        icon: '👁️',
+        description: 'Computer vision and image processing',
+        xp: 70
       },
     ],
   },
@@ -134,41 +169,6 @@ export const skillCategories: SkillCategory[] = [
         level: 3,
         description: 'High-performance RPC framework for services',
         xp: 65
-      },
-    ],
-  },
-  {
-    title: 'AI & ML',
-    icon: 'ai.py',
-    description: 'Artificial Intelligence and Machine Learning',
-    skills: [
-      { 
-        name: 'Python',
-        level: 3,
-        icon: '🐍',
-        description: 'Python programming for AI/ML applications',
-        xp: 55
-      },
-      { 
-        name: 'TensorFlow',
-        level: 2,
-        icon: '🧠',
-        description: 'Machine learning framework for AI development',
-        xp: 35
-      },
-      { 
-        name: 'Machine Learning / Deep Learning',
-        level: 2,
-        icon: '🤖',
-        description: 'Machine learning and deep learning concepts and applications',
-        xp: 35
-      },
-      { 
-        name: 'OpenCV',
-        level: 3,
-        icon: '👁️',
-        description: 'Computer vision and image processing',
-        xp: 70
       },
     ],
   },

@@ -30,11 +30,9 @@ export function PortfolioHighlights() {
                 return (
                   <div
                     key={item.slug}
-                    className={`bg-black/20 rounded-lg border border-border/50 overflow-hidden transition-all duration-300 ${
+                    className={`bg-black/20 rounded-lg border border-border/50 overflow-hidden ${
                       isExpanded ? 'md:col-span-2' : ''
                     } hover:border-primary/50`}
-                    data-aos={index > 1 ? "fade-up" : undefined}
-                    data-aos-once="true"
                   >
                     <div 
                       className="border-b border-border/50 p-4 cursor-pointer"
@@ -72,18 +70,19 @@ export function PortfolioHighlights() {
                       </div>
                     </div>
 
-                    <div className={`transition-all duration-300 ${isExpanded ? 'block' : 'hidden'}`}>
-                      <div className="aspect-video overflow-hidden border-b border-border/50">
-                        <Image
-                          src={item.imageUrl}
-                          alt={item.title}
-                          width={600}
-                          height={338}
-                          className="object-cover w-full h-full"
-                          priority={index < 2}
-                          loading={index >= 2 ? "lazy" : undefined}
-                        />
-                      </div>
+                    <div className={isExpanded ? 'block' : 'hidden'}>
+                      {isExpanded && (
+                        <div className="aspect-video overflow-hidden border-b border-border/50">
+                          <Image
+                            src={item.imageUrl}
+                            alt={item.title}
+                            width={400}
+                            height={225}
+                            className="object-cover w-full h-full"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
 
                       <div className="p-4">
                         <div className="flex flex-wrap gap-2 mb-4">

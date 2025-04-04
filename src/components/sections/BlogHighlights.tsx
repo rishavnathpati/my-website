@@ -34,9 +34,7 @@ export function BlogHighlights() {
               {recentPosts.map((post, index) => (
                 <div
                   key={post.slug}
-                  className="bg-black/20 rounded-lg border border-border/50 overflow-hidden transition-colors hover:border-primary/50"
-                  data-aos="fade-up"
-                  data-aos-delay={index * 100}
+                  className="bg-black/20 rounded-lg border border-border/50 overflow-hidden hover:border-primary/50"
                 >
                   <div className="border-b border-border/50 p-4">
                     <div className="flex items-center gap-2 mb-3">
@@ -69,10 +67,11 @@ export function BlogHighlights() {
                     <Image
                       src={post.imageUrl}
                       alt={`Thumbnail for ${post.title}`}
-                      width={600}
-                      height={338}
+                      width={400}
+                      height={225}
                       className="object-cover w-full h-full"
                       loading="lazy"
+                      sizes="(max-width: 768px) 100vw, 400px"
                     />
                   </div>
 

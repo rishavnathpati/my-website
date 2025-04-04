@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import "./globals.css";
 import "./no-animations.css"; // Import CSS that disables all animations
+import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
@@ -14,8 +14,7 @@ import { AOSInitializer } from "@/components/AOSInitializer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { ConsoleProvider } from "@/components/ui/console-provider";
-import ParallaxBackground from "@/components/effects/ParallaxBackground";
-import FloatingParticles from "@/components/effects/FloatingParticles";
+import BackgroundEffects from "@/components/effects/BackgroundEffects";
 
 // Geist fonts are configured via Tailwind variables
 
@@ -71,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head />
-      <body className="font-sans bg-background text-foreground transition-colors duration-300">
+      <body className="font-sans bg-background text-foreground">
         {/* Force dark theme only */}
         <ThemeProvider
           attribute="class"
@@ -82,8 +81,7 @@ export default function RootLayout({
         >
           <ConsoleProvider>
             {/* Background Effects */}
-            <ParallaxBackground />
-            <FloatingParticles />
+            <BackgroundEffects />
             <SkipLink />
             <AOSInitializer />
             <Header />

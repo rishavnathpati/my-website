@@ -21,7 +21,7 @@ export function AboutSection() {
 
   const techStack = [
     'Unity', 'C#', 'Python', 'Java', 'Machine Learning', 'Deep Learning',
-    'TensorFlow', 'Git', 'Software Architecture', 'Design Patterns', 'AR/VR'
+    'TensorFlow', 'Git', 'Software Architecture', 'Design Patterns', 'AR/VR', 'gRPC', 'Conversational AI'
   ];
 
   return (
@@ -43,8 +43,8 @@ export function AboutSection() {
               
               <div className="space-y-4 font-mono">
                 <div className="flex items-center space-x-3 text-sm">
-                  <Terminal className="w-4 h-4 text-primary" />
-                  <span className="text-muted-foreground">status: <span className="text-green-500">active</span></span>
+                  <Calendar className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">birthday: <span className="text-foreground">3 May 2001</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
                   <Coffee className="w-4 h-4 text-primary" />
@@ -55,12 +55,28 @@ export function AboutSection() {
                   <span className="text-muted-foreground">location: <span className="text-foreground">Kolkata, West Bengal, India</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
+                  <Coffee className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">phone: <span className="text-foreground">+91 9123877594</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <UserCheck className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">degree: <span className="text-foreground">Masters in Computer Application</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
                   <Code2 className="w-4 h-4 text-primary" />
                   <span className="text-muted-foreground">role: <span className="text-foreground">Game & Interactive Media Developer</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
-                  <GitBranch className="w-4 h-4 text-primary" />
-                  <span className="text-muted-foreground">available: <span className="text-green-500">true</span></span>
+                  <Mail className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">email: <span className="text-foreground">patirishavnath@gmail.com</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Terminal className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">website: <span className="text-foreground">patirishavnath.github.io</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Briefcase className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">freelance: <span className="text-green-500">available</span></span>
                 </div>
               </div>
             </div>
@@ -76,12 +92,39 @@ export function AboutSection() {
               </div>
 
               <div className="space-y-6 text-muted-foreground">
-                <p className="leading-relaxed">
-                  Interactive Media Developer at Convai with over 5 years of experience in Computer Science and 3+ years specializing in Unity.
-                  I've published over 10 titles across mobile platforms (Android and iOS) and PC, spanning casual, hyper-casual,
-                  free-to-play, and educational games.
-                </p>
+                <div>
+                  <p className="leading-relaxed mb-4">
+                    🎮 As a seasoned Game Developer, I possess extensive expertise in C# and Unity3D. My portfolio boasts over 10 published titles across mobile platforms (Android and iOS) and PC, encompassing a diverse range of genres including casual, hyper-casual, free-to-play, and educational games. My experience spans the entire development lifecycle, from initial concept to final product delivery.
+                  </p>
+  
+                  <p className="leading-relaxed mb-4">
+                    ⚙️ Proficient in Git and other version control systems, I excel in fostering seamless collaboration and efficient project management. As a self-motivated professional, I have consistently demonstrated success in my endeavors. I take great pride in adhering to clean coding practices, consistently striving to create games that are both efficient and high-performing.
+                  </p>
+  
+                  <p className="leading-relaxed mb-4">
+                    🧪 My ability to rapidly prototype and willingness to explore uncharted territories are key strengths. This approach enables me to contribute innovative ideas, resulting in captivating and enjoyable gaming experiences that push the boundaries of interactive entertainment.
+                  </p>
 
+                  <p className="leading-relaxed mb-4">
+                    If you're in search of a passionate and dedicated Game Developer to elevate your team, I'd be delighted to connect. After all, in the game of talent acquisition, I might just be the power-up your project needs! 🎮🚀
+                  </p>
+
+                  <p className="leading-relaxed">
+                    As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in crafting immersive experiences that captivate users through engaging gameplay, stunning visuals, and intuitive UI design. Leveraging Unity's powerful capabilities, I develop cross-platform applications for iOS and Android, ensuring wide accessibility. My collaborative approach and effective communication skills enable me to thrive in multidisciplinary teams, translating innovative ideas into reality. I am driven by the desire to evoke emotions and challenge perceptions through my work, constantly pushing the boundaries of what's possible in interactive media. With a commitment to excellence and a creative mindset, I am dedicated to delivering unforgettable experiences that resonate with users.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-foreground font-mono mb-3">$ key_competencies</h3>
+                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+                    <li>Exceptional multitasking abilities, allowing me to efficiently manage complex development processes, troubleshoot issues, and maintain productivity even under high-pressure situations</li>
+                    <li>Keen attention to detail, particularly in visual elements, ensuring pixel-perfect designs and seamless user experiences across all projects</li>
+                    <li>Strong character development skills, balancing creative design with practical gameplay mechanics to create compelling and challenging game experiences</li>
+                    <li>Advanced debugging proficiency, with the ability to quickly identify, analyze, and resolve complex issues in code and game systems</li>
+                    <li>Extraordinary perseverance in quality assurance, demonstrating the ability to conduct thorough and repeated playtesting to ensure optimal game balance and user satisfaction</li>
+                  </ul>
+                </div>
+                
                 <div>
                   <h3 className="text-foreground font-mono mb-3">$ tech_stack</h3>
                   <div className="flex flex-wrap gap-2">
@@ -91,18 +134,65 @@ export function AboutSection() {
                       </Badge>
                     ))}
                   </div>
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">Unity 3D/2D/AR/VR</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '60%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">60%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">C#</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '50%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">50%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">Java</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '55%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">55%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">ML/Deep Learning</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '35%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">35%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">Python</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '55%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">55%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">TensorFlow</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '35%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">35%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">Software Architecture</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '50%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">50%</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-40 text-sm">Design Patterns</div>
+                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                        <div className="bg-primary h-full" style={{ width: '55%' }}></div>
+                      </div>
+                      <div className="w-10 text-xs text-right">55%</div>
+                    </div>
+                  </div>
                 </div>
-
-                <p className="leading-relaxed">
-                  My ability to rapidly prototype and explore uncharted territories are key strengths. I excel in fostering seamless
-                  collaboration and efficient project management. I take great pride in adhering to clean coding practices,
-                  consistently striving to create games that are both efficient and high-performing.
-                </p>
-
-                <p className="leading-relaxed">
-                  My passion lies in crafting immersive experiences that captivate users through engaging gameplay, stunning visuals,
-                  and intuitive UI design.
-                </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <Button asChild size="lg" className="font-mono">
