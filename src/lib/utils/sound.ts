@@ -1,3 +1,5 @@
+'use client';
+
 // Sound effect URLs
 const SOUNDS = {
   select: '/sounds/select.mp3',
@@ -18,16 +20,10 @@ class SoundManager {
   private static instance: SoundManager;
   private audioElements: Map<SoundType, HTMLAudioElement>;
   private enabled: boolean = true;
+  private initialized: boolean = false;
 
   private constructor() {
     this.audioElements = new Map();
-    
-    // Pre-create audio elements
-    Object.entries(SOUNDS).forEach(([key, url]) => {
-      const audio = new Audio(url);
-      audio.volume = VOLUMES[key as SoundType];
-      this.audioElements.set(key as SoundType, audio);
-    });
   }
 
   public static getInstance(): SoundManager {
@@ -37,8 +33,26 @@ class SoundManager {
     return SoundManager.instance;
   }
 
+  private initialize() {
+    if (this.initialized || typeof window === 'undefined') return;
+    
+    // Create audio elements only on client side
+    Object.entries(SOUNDS).forEach(([key, url]) => {
+      const audio = new window.Audio(url);
+      audio.volume = VOLUMES[key as SoundType];
+      this.audioElements.set(key as SoundType, audio);
+    });
+
+    this.initialized = true;
+  }
+
   public play(type: SoundType) {
-    if (!this.enabled) return;
+    if (!this.enabled || typeof window === 'undefined') return;
+    
+    // Initialize if not already done
+    if (!this.initialized) {
+      this.initialize();
+    }
     
     const audio = this.audioElements.get(type);
     if (audio) {
