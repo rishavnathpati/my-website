@@ -14,6 +14,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { AOSInitializer } from "@/components/AOSInitializer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
+import { ConsoleProvider } from "@/components/ui/console-provider";
 
 // Geist fonts are configured via Tailwind variables
 
@@ -76,21 +77,23 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SkipLink />
-          <AOSInitializer />
-          <Header />
-          <ThemeToggle />
-          <ScrollToTop />
+          <ConsoleProvider>
+            <SkipLink />
+            <AOSInitializer />
+            <Header />
+            <ThemeToggle />
+            <ScrollToTop />
 
-          <main id="main" className="lg:ml-[300px]" tabIndex={-1}>
-            {children}
-            <Footer />
-          </main>
-          <Analytics />
-          <Toaster />
-          <TailwindIndicator />
-          <KonamiCode />
-          <CursorEffect />
+            <main id="main" className="lg:ml-[300px]" tabIndex={-1}>
+              {children}
+              <Footer />
+            </main>
+            <Analytics />
+            <Toaster />
+            <TailwindIndicator />
+            <KonamiCode />
+            <CursorEffect />
+          </ConsoleProvider>
         </ThemeProvider>
       </body>
     </html>

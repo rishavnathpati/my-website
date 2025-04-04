@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, User, FileText, BookOpen, Mail, Bot, Github, Linkedin, FileCode2, Pencil, Menu, X, Terminal } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { useConsole } from '@/components/ui/console-provider';
 
 // Define navigation items
 const navItems = [
@@ -27,22 +28,67 @@ const socialLinks = [
 export function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [showShortcuts, setShowShortcuts] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const pathname = usePathname();
+  const { log, success, warn } = useConsole();
+
+  // Game dev-style keyboard shortcuts
+  useEffect(() => {
+    const handleShortcuts = (e: KeyboardEvent) => {
+      // Show shortcuts overlay when holding Tab
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        setShowShortcuts(e.type === 'keydown');
+        if (e.type === 'keydown') {
+          log('Keyboard shortcuts overlay activated');
+        }
+      }
+
+      // Quick navigation with number keys (1-6)
+      if (e.type === 'keydown' && !e.repeat && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const num = parseInt(e.key);
+        if (num >= 1 && num <= navItems.length) {
+          const section = navItems[num - 1];
+          const element = document.getElementById(section.sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            success(`Quick nav: ${section.label}`);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleShortcuts);
+    window.addEventListener('keyup', handleShortcuts);
+    
+    return () => {
+      window.removeEventListener('keydown', handleShortcuts);
+      window.removeEventListener('keyup', handleShortcuts);
+    };
+  }, [log, success]);
 
   const toggleMobileNav = () => {
-    setIsMobileNavOpen(!isMobileNavOpen);
+    const newState = !isMobileNavOpen;
+    setIsMobileNavOpen(newState);
+    log(`Menu ${newState ? 'opened' : 'closed'}`);
   };
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (isMobileNavOpen) {
       setIsMobileNavOpen(false);
+      log('Closing menu for navigation');
     }
+
+    // Extract section name from href for logging
+    const sectionName = href.startsWith('#') ? href.substring(1) : href;
+    log(`Navigating to ${sectionName}`);
 
     // If we're not on the home page and trying to navigate to a section
     if (pathname !== '/' && href.startsWith('#')) {
       e.preventDefault();
+      log('Redirecting to home page with section hash');
       // Navigate to home page with the hash
       window.location.href = '/' + href;
     }
@@ -63,7 +109,31 @@ export function Header() {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+          const sectionId = entry.target.id;
+          const section = entry.target;
+          
+          // Add loading animation
+          section.classList.add('loading');
+          setActiveSection(sectionId);
+          log(`Loading section: ${sectionId}`);
+          
+          // Game dev-style loading sequence
+          setTimeout(() => {
+            section.classList.remove('loading');
+            success(`Section "${sectionId}" loaded successfully`);
+            
+            // Add active section highlight effect
+            const navLink = document.querySelector(`[data-section="${sectionId}"]`);
+            if (navLink) {
+              navLink.classList.add('active');
+            }
+          }, 500);
+        } else {
+          // Remove active highlight when section is not in view
+          const navLink = document.querySelector(`[data-section="${entry.target.id}"]`);
+          if (navLink) {
+            navLink.classList.remove('active');
+          }
         }
       });
     };
@@ -190,6 +260,54 @@ export function Header() {
           onClick={toggleMobileNav}
           aria-hidden="true"
         />
+      )}
+
+      {/* Game-style shortcuts overlay */}
+      {showShortcuts && (
+        <div className="fixed inset-0 z-[9996] bg-black/80 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-black/50 border border-primary p-8 rounded-lg max-w-2xl w-full mx-4 font-mono">
+            <div className="flex items-center gap-3 mb-6">
+              <Terminal size={20} className="text-primary" />
+              <h2 className="text-2xl text-primary">⌨️ Keyboard Shortcuts</h2>
+            </div>
+            
+            <div className="grid gap-4">
+              <div className="text-lg mb-2 text-primary/80">Quick Navigation:</div>
+              <div className="grid grid-cols-2 gap-4">
+                {navItems.map((item, index) => (
+                  <div key={item.label} className="flex items-center gap-4">
+                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md min-w-[40px] text-center">
+                      {index + 1}
+                    </kbd>
+                    <span className="text-muted-foreground">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-primary/20">
+                <div className="text-lg mb-4 text-primary/80">Cheat Codes:</div>
+                <div className="grid gap-3 text-sm">
+                  <div className="flex items-center gap-4">
+                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md">↑↑↓↓←→←→BA</kbd>
+                    <span className="text-muted-foreground">Celebration Mode</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md">DEBUG</kbd>
+                    <span className="text-muted-foreground">Toggle Console</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md">UNITY</kbd>
+                    <span className="text-muted-foreground">Dark Theme</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 text-sm text-muted-foreground text-center">
+                Hold TAB to show/hide shortcuts
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
