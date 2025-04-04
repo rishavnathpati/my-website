@@ -8,94 +8,187 @@ readTimeMinutes: 15
 slug: 'mac-terminal-setup'
 ---
 
-A powerful terminal setup is essential for any developer on macOS. This guide walks you through installing and configuring iTerm2, Oh My Zsh, Powerlevel10k, essential tools, and plugins for a productive workflow.
+import { Steps, Step } from '@/components/ui/mdx/Steps';
+import { Note } from '@/components/ui/mdx/Note';
+import { Card } from '@/components/ui/mdx/Card';
+import { Terminal, Package, Shell, Tool, Plugin } from 'lucide-react';
 
-## 1. Installing iTerm2
+A powerful terminal setup is essential for any developer working on macOS. This comprehensive guide will walk you through creating a modern, efficient terminal environment using iTerm2, Oh My Zsh, and other essential tools.
 
-The default macOS Terminal is okay, but iTerm2 offers significant improvements.
+<Note>
+This guide assumes you're using macOS and are comfortable with basic terminal operations. If you're new to the terminal, don't worry – we'll go through each step in detail.
+</Note>
+
+<Card title="What You'll Learn" icon={<Terminal className="h-5 w-5" />}>
+- Setting up iTerm2 with optimal configurations
+- Package management with Homebrew
+- Shell customization using Oh My Zsh and Powerlevel10k
+- Essential development tools for productivity
+- Must-have Zsh plugins for better workflow
+</Card>
+
+## Setting Up iTerm2
+
+<Card title="Why Choose iTerm2?" icon={<Terminal className="h-5 w-5" />}>
+The default macOS Terminal is functional, but iTerm2 offers significant improvements:
+
+- ✨ Split panes (Cmd+D vertical, Cmd+Shift+D horizontal)
+- 🔑 Hotkey window access
+- 🔍 Better search & autocomplete
+- 🎨 Customizable triggers and profiles
+- 🎯 Improved color support
+</Card>
+
+<Steps>
+<Step>
+### Install iTerm2
 
 ```bash
 brew install --cask iterm2
 ```
+</Step>
 
-Why iTerm2?
+<Step>
+### Configure Key Settings
 
-- Split panes (Cmd+D vertical, Cmd+Shift+D horizontal)
-- Hotkey window access
-- Better search & autocomplete
-- Customizable triggers and profiles
-- Improved color support
+1. **Natural Text Editing**
+   - Open iTerm2 Preferences
+   - Navigate to Profiles → Keys
+   - Load Preset... → Natural Text Editing
 
-Key iTerm2 Settings:
-- Preferences → Profiles → Keys → Load Preset... → Natural Text Editing
-- Preferences → Advanced → Search for "GPU" → Enable GPU renderer (if available)
-- Preferences → Profiles → Terminal → Scrollback Buffer → Check "Unlimited scrollback"
+2. **Enable GPU Rendering**
+   - Go to Advanced Settings
+   - Search for "GPU"
+   - Enable GPU renderer
 
-## 2. Package Management: Homebrew
+3. **Unlimited History**
+   - Go to Profiles → Terminal
+   - Check "Unlimited scrollback"
+</Step>
+</Steps>
 
-Homebrew is the missing package manager for macOS.
+## Package Management with Homebrew
+
+<Card title="About Homebrew" icon={<Package className="h-5 w-5" />}>
+Homebrew is the missing package manager for macOS, making it easy to install and manage software packages from the command line.
+</Card>
+
+<Steps>
+<Step>
+### Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+</Step>
 
-# Add Homebrew to your PATH (follow instructions from brew installer)
-# Typically involves adding lines to ~/.zprofile or ~/.zshenv
+<Step>
+### Configure PATH
+
+Add Homebrew to your PATH by adding these lines to your `~/.zprofile`:
+
+```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
+</Step>
+</Steps>
 
-## 3. Shell Framework: Oh My Zsh & Powerlevel10k
+## Shell Customization
 
-Zsh is the default shell, but Oh My Zsh makes managing its configuration easier.
+<Card title="Oh My Zsh & Powerlevel10k" icon={<Shell className="h-5 w-5" />}>
+Transform your terminal with a powerful shell framework and a beautiful theme that provides:
+- Rich command-line completion
+- Useful aliases and functions
+- Git integration
+- Customizable prompts
+</Card>
 
-Install Git (if needed):
+<Steps>
+<Step>
+### Install Prerequisites
+
 ```bash
 brew install git
 ```
+</Step>
 
-Install Oh My Zsh:
+<Step>
+### Install Oh My Zsh
+
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+</Step>
 
-Install Powerlevel10k Theme:
+<Step>
+### Set Up Powerlevel10k
+
+1. Install the theme:
 ```bash
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
-Edit `~/.zshrc` and set `ZSH_THEME="powerlevel10k/powerlevel10k"`.
+2. Configure theme in `~/.zshrc`:
+```bash
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+</Step>
 
-Install Recommended Font:
+<Step>
+### Install Required Font
+
 ```bash
 brew tap homebrew/cask-fonts
 brew install --cask font-meslo-lg-nerd-font
 ```
 
-Configure iTerm2 to use MesloLGS NF: Preferences → Profiles → Text → Font.
+Then set MesloLGS NF as your font in iTerm2 (Preferences → Profiles → Text → Font).
+</Step>
+</Steps>
 
-## 4. Essential Development Tools
+## Essential Development Tools
 
-Install modern CLI alternatives:
+<Card title="Modern CLI Tools" icon={<Tool className="h-5 w-5" />}>
+Replace traditional Unix tools with modern alternatives that provide better features and user experience.
+</Card>
 
 ```bash
-brew install eza         # Better ls
-brew install bat         # Better cat
-brew install ripgrep     # Better grep (rg)
-brew install fd          # Better find
+# File Operations
+brew install eza         # Modern ls replacement
+brew install bat         # Better cat with syntax highlighting
+brew install fd         # Faster find alternative
+
+# Search Tools
+brew install ripgrep     # Fast grep replacement
 brew install fzf         # Fuzzy finder
+
+# Git Enhancements
 brew install delta       # Better git diff
+
+# System Tools
 brew install tldr        # Simplified man pages
 brew install jq          # JSON processor
-brew install htop        # Process viewer
+brew install htop        # Interactive process viewer
 brew install ncdu        # Disk usage analyzer
 ```
 
-## 5. Essential Zsh Plugins
+<Note type="info">
+These modern alternatives are designed to be drop-in replacements for traditional Unix tools, with better features and more intuitive interfaces.
+</Note>
 
-Clone plugins into `$ZSH_CUSTOM/plugins/`:
+## Zsh Plugins
+
+<Card title="Essential Plugins" icon={<Plugin className="h-5 w-5" />}>
+Enhance your shell experience with plugins that provide auto-suggestions, syntax highlighting, and improved history search.
+</Card>
+
+<Steps>
+<Step>
+### Install Plugins
 
 ```bash
-# Auto suggestions
+# Auto-suggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # Syntax highlighting
@@ -104,33 +197,42 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # History substring search
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 ```
+</Step>
 
-Edit `~/.zshrc` and add them to the plugins list:
+<Step>
+### Configure Plugins
+
+Add these plugins to your `~/.zshrc`:
 
 ```bash
 plugins=(
-    git
-    # Add other core plugins like docker, npm, etc. if needed
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-history-substring-search
-    # Add other useful plugins below
-    web-search
-    copypath
-    dirhistory
-    sudo
+    git                             # Git shortcuts
+    zsh-autosuggestions            # Fish-like suggestions
+    zsh-syntax-highlighting        # Command syntax highlighting
+    zsh-history-substring-search   # Better history search
+    web-search                     # Quick web searches
+    copypath                       # Copy current directory
+    dirhistory                     # Directory navigation
+    sudo                          # Double ESC to add sudo
 )
 ```
+</Step>
+</Steps>
 
-Remember to run `source ~/.zshrc` after editing.
+<Note type="warning">
+Remember to run `source ~/.zshrc` after making any changes to your configuration file.
+</Note>
 
-## Conclusion
+## Next Steps
 
-This setup provides a modern, efficient terminal environment with:
-- iTerm2 for better terminal emulation
-- Homebrew for package management
-- Oh My Zsh with Powerlevel10k theme for a beautiful, informative prompt
-- Essential CLI tools for improved productivity
-- Useful Zsh plugins for better shell interaction
+<Card>
+Now that you have a powerful terminal setup, consider:
+- Customizing your Powerlevel10k theme
+- Exploring additional Zsh plugins
+- Setting up custom aliases and functions
+- Configuring keyboard shortcuts
+</Card>
 
-Take time to explore each tool's features and customize the setup to your needs. Your terminal is a powerful tool - make it work for you! 
+<Note type="success">
+Congratulations! You now have a modern, efficient terminal environment that will significantly boost your productivity. Take some time to explore each tool's features and customize the setup to match your workflow.
+</Note> 

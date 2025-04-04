@@ -1,31 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Open_Sans, Raleway, Poppins } from "next/font/google";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@/components/analytics";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
+import { CursorEffect } from "@/components/easter-eggs/CursorEffect";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AOSInitializer } from "@/components/AOSInitializer";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { SkipLink } from "@/components/SkipLink";
 
-// Configure fonts
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-  display: "swap",
-});
-
-const raleway = Raleway({
-  subsets: ["latin"],
-  variable: "--font-raleway",
-  display: "swap",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
+// Geist fonts are configured via Tailwind variables
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
 
@@ -77,22 +67,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${openSans.variable} ${raleway.variable} ${poppins.variable}`} suppressHydrationWarning>
-      <body className="font-open-sans bg-background text-foreground transition-colors duration-300">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+      <head />
+      <body className="font-sans bg-background text-foreground transition-colors duration-300">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <SkipLink />
           <AOSInitializer />
           <Header />
           <ThemeToggle />
+          <ScrollToTop />
 
-          <div id="main" className="lg:ml-[300px]">
+          <main id="main" className="lg:ml-[300px]" tabIndex={-1}>
             {children}
             <Footer />
-          </div>
+          </main>
+          <Analytics />
+          <Toaster />
+          <TailwindIndicator />
+          <KonamiCode />
+          <CursorEffect />
         </ThemeProvider>
       </body>
     </html>

@@ -32,7 +32,7 @@ async function generateSitemap() {
 
   // 2. Get dynamic portfolio pages
   const portfolioDir = path.join(pagesDir, 'portfolio/[slug]');
-  const { portfolioItems } = await import('../src/lib/data/portfolio.js');
+  const { portfolioItems } = await import('../src/lib/data/portfolio.ts'); // Corrected extension to .ts
   const portfolioUrls = portfolioItems.map(item => `/portfolio/${item.slug}`);
 
   // 3. Get dynamic blog pages

@@ -2,5 +2,5 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap location - IMPORTANT: Replace 'https://yourdomain.com' with your actual domain before deployment
 Sitemap: https://yourdomain.com/sitemap.xml 

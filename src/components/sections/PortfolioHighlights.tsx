@@ -42,7 +42,8 @@ export function PortfolioHighlights() {
                     width={600}
                     height={338}
                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                    loading="lazy"
+                    priority={index < 3} // Prioritize the first few images
+                    loading={index >= 3 ? "lazy" : undefined} // Lazy load images after the first few
                   />
                 </div>
               </CardHeader>

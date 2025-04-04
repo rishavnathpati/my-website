@@ -54,8 +54,20 @@ const formatDate = (dateString: string): string => {
 };
 
 const options = {
-  theme: 'one-dark-pro',
+  theme: 'github-dark',
   keepBackground: true,
+  defaultLang: 'plaintext',
+  onVisitLine(node: any) {
+    if (node.children.length === 0) {
+      node.children = [{ type: 'text', value: ' ' }];
+    }
+  },
+  onVisitHighlightedLine(node: any) {
+    node.properties.className.push('highlighted');
+  },
+  onVisitHighlightedWord(node: any) {
+    node.properties.className = ['word'];
+  },
 };
 
 export default async function BlogPostPage(props: Props) {
@@ -66,8 +78,17 @@ export default async function BlogPostPage(props: Props) {
   }
 
   const components = {
-    pre: (props: React.ComponentProps<'pre'>) => (
-      <pre className="!bg-neutral-900 dark:!bg-neutral-900" {...props} />
+    pre: ({ children, ...props }: React.ComponentProps<'pre'>) => (
+      <div className="relative">
+        <pre className="overflow-x-auto rounded-lg border bg-neutral-900 dark:bg-neutral-900 py-4 px-2" {...props}>
+          {children}
+        </pre>
+      </div>
+    ),
+    code: ({ children, ...props }: React.ComponentProps<'code'>) => (
+      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm" {...props}>
+        {children}
+      </code>
     ),
   };
 
@@ -104,15 +125,32 @@ export default async function BlogPostPage(props: Props) {
         </header>
 
         <div className="prose dark:prose-invert max-w-none prose-neutral prose-lg
-                      prose-headings:font-raleway prose-headings:font-semibold prose-a:text-primary hover:prose-a:text-primary/80
-                      prose-code:before:content-none prose-code:after:content-none prose-code:font-mono prose-code:bg-muted prose-code:text-foreground prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-sm
-                      prose-pre:bg-muted prose-pre:text-foreground prose-pre:p-4 prose-pre:rounded-lg prose-pre:border
-                      dark:prose-pre:bg-neutral-800/50 dark:prose-pre:border-neutral-700">
+          prose-headings:font-semibold /* Removed font-raleway, will inherit font-sans */
+          prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
+          prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+          prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+          prose-p:mb-4 prose-p:leading-relaxed
+          prose-a:text-primary prose-a:no-underline hover:prose-a:text-primary/80
+          prose-code:before:content-none prose-code:after:content-none 
+          prose-pre:my-8 prose-pre:bg-[#1a1a1a] prose-pre:border prose-pre:border-[#333]
+          prose-pre:rounded-lg prose-pre:shadow-lg
+          prose-img:rounded-lg prose-img:shadow-md
+          prose-blockquote:border-l-4 prose-blockquote:border-primary/50
+          prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-muted-foreground
+          prose-ul:list-disc prose-ul:pl-6 prose-ol:list-decimal prose-ol:pl-6
+          prose-li:mb-2 prose-li:pl-2
+          prose-strong:font-semibold prose-strong:text-foreground
+          prose-em:italic prose-em:text-foreground">
           <MDXRemote
             source={post.content}
             options={{
               mdxOptions: {
-                rehypePlugins: [[rehypePrettyCode, options] as any],
+                rehypePlugins: [[rehypePrettyCode, {
+                  theme: 'one-dark-pro',
+                  keepBackground: true,
+                  defaultLang: 'plaintext',
+                  grid: true,
+                }] as any],
               },
             }}
             components={components}

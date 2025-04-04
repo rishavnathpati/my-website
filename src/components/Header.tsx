@@ -13,7 +13,7 @@ const navItems = [
   { href: '#skills', icon: FileText, label: 'Skills', sectionId: 'skills' },
   { href: '#portfolio', icon: BookOpen, label: 'Portfolio', sectionId: 'portfolio' },
   { href: '#blogs', icon: Pencil, label: 'Blogs', sectionId: 'blogs' },
-  { href: '#contact', icon: Mail, label: 'Contact', sectionId: 'contact' },
+  { href: '#contact-cta', icon: Mail, label: 'Contact', sectionId: 'contact-cta' },
 ];
 
 // Define social links
@@ -144,7 +144,7 @@ export function Header() {
                     href={item.href}
                     className={`nav-link flex items-center py-3 px-4 rounded-md transition-colors group ${
                       isActive
-                        ? 'text-white bg-gray-800 dark:bg-neutral-800'
+                        ? 'text-white bg-gray-800 dark:bg-neutral-800' // Ensure no underline on active/hover
                         : 'text-gray-400 dark:text-neutral-400 hover:text-white dark:hover:text-white hover:bg-gray-800 dark:hover:bg-neutral-800'
                     }`}
                     data-section={item.sectionId}
