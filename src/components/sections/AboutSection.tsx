@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Download, Mail, MapPin, Calendar, UserCheck, Briefcase, Code2, GitBranch, Terminal, Coffee } from 'lucide-react';
+import { Download, Mail, MapPin, Calendar, UserCheck, Briefcase, Code2, Terminal, Phone, Globe2, Cake } from 'lucide-react';
 
 const calculateAge = (birthDate: string): number => {
   const today = new Date();
@@ -19,10 +18,6 @@ export function AboutSection() {
   const dob = '2001-05-03';
   const age = calculateAge(dob);
 
-  const techStack = [
-    'Unity', 'C#', 'Python', 'Java', 'Machine Learning', 'Deep Learning',
-    'TensorFlow', 'Git', 'Software Architecture', 'Design Patterns', 'AR/VR', 'gRPC', 'Conversational AI'
-  ];
 
   return (
     <section id="about" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
@@ -47,7 +42,7 @@ export function AboutSection() {
                   <span className="text-muted-foreground">birthday: <span className="text-foreground">3 May 2001</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
-                  <Coffee className="w-4 h-4 text-primary" />
+                  <Cake className="w-4 h-4 text-primary" />
                   <span className="text-muted-foreground">age: <span className="text-foreground">{age}</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
@@ -55,7 +50,7 @@ export function AboutSection() {
                   <span className="text-muted-foreground">location: <span className="text-foreground">Kolkata, West Bengal, India</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
-                  <Coffee className="w-4 h-4 text-primary" />
+                  <Phone className="w-4 h-4 text-primary" />
                   <span className="text-muted-foreground">phone: <span className="text-foreground">+91 9123877594</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
@@ -71,7 +66,7 @@ export function AboutSection() {
                   <span className="text-muted-foreground">email: <span className="text-foreground">patirishavnath@gmail.com</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
-                  <Terminal className="w-4 h-4 text-primary" />
+                  <Globe2 className="w-4 h-4 text-primary" />
                   <span className="text-muted-foreground">website: <span className="text-foreground">patirishavnath.github.io</span></span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">
@@ -125,74 +120,6 @@ export function AboutSection() {
                   </ul>
                 </div>
                 
-                <div>
-                  <h3 className="text-foreground font-mono mb-3">$ tech_stack</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {techStack.map((tech) => (
-                      <Badge key={tech} variant="outline" className="font-mono">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">Unity 3D/2D/AR/VR</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '60%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">60%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">C#</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '50%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">50%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">Java</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '55%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">55%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">ML/Deep Learning</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '35%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">35%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">Python</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '55%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">55%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">TensorFlow</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '35%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">35%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">Software Architecture</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '50%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">50%</div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-40 text-sm">Design Patterns</div>
-                      <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                        <div className="bg-primary h-full" style={{ width: '55%' }}></div>
-                      </div>
-                      <div className="w-10 text-xs text-right">55%</div>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <Button asChild size="lg" className="font-mono">

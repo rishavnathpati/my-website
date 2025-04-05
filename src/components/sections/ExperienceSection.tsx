@@ -85,10 +85,10 @@ const education: EducationItem[] = [
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="py-20 lg:py-28 bg-gradient-to-b from-black/20 to-black/30 backdrop-blur-sm">
+    <section id="experience" className="py-20 lg:py-28 bg-black/30">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-black/30 rounded-lg border border-border p-6 mb-12">
+          <div className="bg-black/40 rounded-lg border border-border p-6 mb-12">
             <div className="flex items-center gap-2 mb-6">
               <Terminal className="w-5 h-5 text-primary" />
               <h2 className="text-2xl font-bold font-mono text-foreground">
@@ -112,8 +112,8 @@ export function ExperienceSection() {
 
                 <div className="space-y-8">
                   {professionalExperience.map((exp, index) => (
-                    <div key={index} className="border-l-2 border-border pl-5 relative" data-aos="fade-up" data-aos-delay={index * 100}>
-                      <div className="absolute w-4 h-4 bg-background border-2 border-primary rounded-full -left-[9px] top-0"></div>
+                    <div key={index} className="border-l border-border pl-5 relative">
+                      <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2"></div>
                       <div className="flex flex-col sm:flex-row sm:justify-between mb-2">
                         <h4 className="text-lg font-semibold text-foreground">{exp.title}</h4>
                         <div className="flex items-center text-sm text-primary">
@@ -150,8 +150,8 @@ export function ExperienceSection() {
 
                 <div className="space-y-8">
                   {education.map((edu, index) => (
-                    <div key={index} className="border-l-2 border-border pl-5 relative" data-aos="fade-up" data-aos-delay={index * 100}>
-                      <div className="absolute w-4 h-4 bg-background border-2 border-primary rounded-full -left-[9px] top-0"></div>
+                    <div key={index} className="border-l border-border pl-5 relative">
+                      <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2"></div>
                       <div className="flex flex-col sm:flex-row sm:justify-between mb-2">
                         <h4 className="text-lg font-semibold text-foreground">{edu.degree}</h4>
                         <div className="flex items-center text-sm text-primary">

@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import confetti from 'canvas-confetti';
+import { useEffect, useState, useCallback } from 'react';
 import { useConsole } from '@/components/ui/console-provider';
 
 // Game dev-style cheat codes
@@ -61,7 +60,38 @@ export function KonamiCode() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [input, maxSequenceLength]);
 
-  const activateCheatCode = (codeName: keyof typeof CHEAT_CODES) => {
+  const celebrateKonamiCode = useCallback(() => {
+    // Simple celebration effect using DOM elements
+    const colors = ['#ff0000', '#00ff00', '#0000ff'];
+
+    // Create achievement popup
+    const message = document.createElement('div');
+    message.textContent = '🎮 Achievement: Konami!';
+    message.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: ${colors[1]};
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid ${colors[1]};
+      font-family: monospace;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    `;
+
+    document.body.appendChild(message);
+
+    // Fade out and remove after 1.5s
+    setTimeout(() => {
+      message.style.opacity = '0';
+      setTimeout(() => message.remove(), 300);
+    }, 1500);
+  }, []); // No dependencies needed for this effect
+
+  const activateCheatCode = useCallback((codeName: keyof typeof CHEAT_CODES) => {
     const code = CHEAT_CODES[codeName];
     log(`Cheat code detected: ${code.name}`);
     success(`Activating ${code.effect}...`);
@@ -74,76 +104,8 @@ export function KonamiCode() {
         // Toggle console visibility
         warn('Debug mode activated - console will remain visible');
         break;
-      // Removed Unity case since we're using forced dark theme now
     }
-  };
-
-  const celebrateKonamiCode = () => {
-    // Use fewer confetti particles for better performance
-    const duration = 2 * 1000; // Shorter duration
-    const end = Date.now() + duration;
-    const colors = ['#ff0000', '#00ff00', '#0000ff'];
-
-    let animationFrameId: number;
-    
-    function frame() {
-      confetti({
-        particleCount: 3, // Fewer particles
-        angle: 60,
-        spread: 45, // Narrower spread
-        origin: { x: 0 },
-        colors: colors
-      });
-      confetti({
-        particleCount: 3, // Fewer particles
-        angle: 120,
-        spread: 45, // Narrower spread
-        origin: { x: 1 },
-        colors: colors
-      });
-
-      if (Date.now() < end) {
-        animationFrameId = requestAnimationFrame(frame);
-      }
-    }
-    
-    frame();
-    
-    // Ensure cleanup happens
-    setTimeout(() => {
-      cancelAnimationFrame(animationFrameId);
-    }, duration + 100);
-
-    // Use a pre-defined CSS class for the achievement popup
-    const message = document.createElement('div');
-    message.textContent = '🎮 Achievement: Konami!'; // Shorter text
-    message.className = 'achievement-popup';
-    
-    // Use less demanding CSS without animation and shadows
-    message.style.cssText = `
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: #00ff00;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #00ff00;
-      font-family: monospace;
-      z-index: 9999;
-      opacity: 0.9;
-    `;
-
-    document.body.appendChild(message);
-    
-    // Use a variable to track the timeout for cleanup
-    const timeoutId = setTimeout(() => {
-      if (document.body.contains(message)) {
-        message.remove();
-      }
-    }, 2000); // Shorter display time
-  };
+  }, [log, success, warn, celebrateKonamiCode]);
 
   return null;
 }

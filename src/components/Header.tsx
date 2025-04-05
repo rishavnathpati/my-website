@@ -3,32 +3,41 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, User, FileText, BookOpen, Mail, Bot, Github, Linkedin, FileCode2, Pencil, Menu, X, Terminal } from 'lucide-react';
+import { Home, User, FileText, BookOpen, Mail, Bot, Github, Linkedin, FileCode2, Pencil, Menu, X, Terminal, Gamepad2, Command, Download } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useConsole } from '@/components/ui/console-provider';
 
-// Define navigation items
+// Define navigation items with enhanced metadata
 const navItems = [
-  { href: '#hero', icon: Home, label: 'Home', sectionId: 'hero' },
-  { href: '#about', icon: User, label: 'About', sectionId: 'about' },
-  { href: '#skills', icon: FileText, label: 'Skills', sectionId: 'skills' },
-  { href: '#portfolio', icon: BookOpen, label: 'Portfolio', sectionId: 'portfolio' },
-  { href: '#blogs', icon: Pencil, label: 'Blogs', sectionId: 'blogs' },
-  { href: '#contact-cta', icon: Mail, label: 'Contact', sectionId: 'contact-cta' },
+  { href: '#hero', icon: Home, label: 'Home', sectionId: 'hero', command: 'cd ~', shortcut: '1' },
+  { href: '#about', icon: User, label: 'About', sectionId: 'about', command: 'cat about.md', shortcut: '2' },
+  { href: '#skills', icon: FileText, label: 'Skills', sectionId: 'skills', command: 'ls skills/', shortcut: '3' },
+  {
+    href: '#experience',
+    icon: FileText,
+    label: 'Experience',
+    sectionId: 'experience',
+    command: 'cat experience.md',
+    shortcut: '4'
+  },
+  { href: '#portfolio', icon: Gamepad2, label: 'Portfolio', sectionId: 'portfolio', command: './view_projects', shortcut: '5' },
+  { href: '#blogs', icon: Pencil, label: 'Blogs', sectionId: 'blogs', command: 'vim blog.md', shortcut: '6' },
+  { href: '#contact-cta', icon: Mail, label: 'Contact', sectionId: 'contact-cta', command: 'mail -s "Hello"', shortcut: '7' },
 ];
 
-// Define social links
+// Define social links with enhanced metadata
 const socialLinks = [
-  { href: 'https://www.linkedin.com/in/rishavnathpati', icon: Linkedin, label: 'LinkedIn' },
-  { href: 'https://github.com/rishavnathpati', icon: Github, label: 'GitHub' },
-  { href: 'https://medium.com/@patirishavnath', icon: Bot, label: 'Medium' },
-  { href: 'https://leetcode.com/rishavnathpati/', icon: FileCode2, label: 'LeetCode' },
+  { href: 'https://www.linkedin.com/in/rishavnathpati', icon: Linkedin, label: 'LinkedIn', command: 'open linkedin' },
+  { href: 'https://github.com/rishavnathpati', icon: Github, label: 'GitHub', command: 'git remote -v' },
+  { href: 'https://medium.com/@patirishavnath', icon: Bot, label: 'Medium', command: 'read blog' },
+  { href: 'https://leetcode.com/rishavnathpati/', icon: FileCode2, label: 'LeetCode', command: 'solve algo' },
 ];
 
 export function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [lastCommand, setLastCommand] = useState('');
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const pathname = usePathname();
@@ -37,12 +46,13 @@ export function Header() {
   // Game dev-style keyboard shortcuts
   useEffect(() => {
     const handleShortcuts = (e: KeyboardEvent) => {
-      // Show shortcuts overlay when holding Tab
-      if (e.key === 'Tab') {
+      // Show shortcuts overlay when holding Command/Ctrl
+      if (e.key === 'Meta' || e.key === 'Control') {
         e.preventDefault();
         setShowShortcuts(e.type === 'keydown');
         if (e.type === 'keydown') {
-          log('Keyboard shortcuts overlay activated');
+          log('Keyboard shortcuts activated');
+          playActivationSound();
         }
       }
 
@@ -54,7 +64,9 @@ export function Header() {
           const element = document.getElementById(section.sectionId);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
-            success(`Quick nav: ${section.label}`);
+            success(`Executing: ${section.command}`);
+            setLastCommand(section.command);
+            playNavigationSound();
           }
         }
       }
@@ -69,27 +81,36 @@ export function Header() {
     };
   }, [log, success]);
 
+  const playNavigationSound = () => {
+    // You can implement actual sound effects here if desired
+    console.log('*click*');
+  };
+
+  const playActivationSound = () => {
+    // You can implement actual sound effects here if desired
+    console.log('*beep*');
+  };
+
   const toggleMobileNav = () => {
     const newState = !isMobileNavOpen;
     setIsMobileNavOpen(newState);
-    log(`Menu ${newState ? 'opened' : 'closed'}`);
+    log(`Terminal ${newState ? 'maximized' : 'minimized'}`);
+    playNavigationSound();
   };
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, command: string) => {
     if (isMobileNavOpen) {
       setIsMobileNavOpen(false);
-      log('Closing menu for navigation');
+      log('Minimizing terminal');
     }
 
-    // Extract section name from href for logging
-    const sectionName = href.startsWith('#') ? href.substring(1) : href;
-    log(`Navigating to ${sectionName}`);
+    setLastCommand(command);
+    success(`Executing: ${command}`);
+    playNavigationSound();
 
-    // If we're not on the home page and trying to navigate to a section
     if (pathname !== '/' && href.startsWith('#')) {
       e.preventDefault();
-      log('Redirecting to home page with section hash');
-      // Navigate to home page with the hash
+      log('Redirecting to home directory');
       window.location.href = '/' + href;
     }
   };
@@ -159,14 +180,13 @@ export function Header() {
 
   return (
     <>
-      {/* Mobile menu button */}
       <button
         onClick={toggleMobileNav}
         className="fixed top-4 left-4 z-[9999] lg:hidden p-2 rounded-md bg-black/30 backdrop-blur-sm border border-border text-foreground hover:text-primary hover:border-primary transition-colors"
-        aria-label={isMobileNavOpen ? "Close menu" : "Open menu"}
+        aria-label={isMobileNavOpen ? "Minimize terminal" : "Open terminal"}
         aria-expanded={isMobileNavOpen}
       >
-        {isMobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+        {isMobileNavOpen ? <X size={20} /> : <Terminal size={20} />}
       </button>
 
       <header
@@ -176,24 +196,28 @@ export function Header() {
       >
         <div className="p-4 flex flex-col h-full">
           <div className="profile mb-8 pt-10 lg:pt-0">
-            <div className="bg-black/20 rounded-lg border border-border p-4">
+            <div className="bg-black/20 rounded-lg border border-border p-4 relative group">
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
               <div className="flex items-center gap-3 mb-4">
                 <Terminal size={16} className="text-primary" />
                 <span className="font-mono text-sm text-muted-foreground">user_profile.json</span>
               </div>
               
-              <div className="flex flex-col items-center">
-                <Image
-                  src="/profile-img.jpg"
-                  alt="Rishav Nath Pati"
-                  width={100}
-                  height={100}
-                  className="rounded-lg border-2 border-primary/20"
-                  priority
-                />
+              <div className="flex flex-col items-center relative z-10">
+                <div className="relative group">
+                  <Image
+                    src="/profile-img.jpg"
+                    alt="Rishav Nath Pati"
+                    width={100}
+                    height={100}
+                    className="rounded-lg border-2 border-primary/20 transition-transform duration-300 group-hover:scale-105"
+                    priority
+                  />
+                  <div className="absolute inset-0 border-2 border-primary/0 rounded-lg transition-all duration-300 group-hover:border-primary/40 group-hover:scale-105"></div>
+                </div>
                 <h1 className="text-xl font-mono mt-4 mb-1">
                   <Link href="/" className="text-foreground hover:text-primary transition-colors" onClick={() => handleLinkClick}>
-                    rishav_nath_pati
+                    <span className="text-primary">./</span>rishav_nath_pati
                   </Link>
                 </h1>
                 <div className="social-links mt-4 flex justify-center space-x-2">
@@ -204,7 +228,12 @@ export function Header() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={link.label}
-                      className="w-8 h-8 bg-black/30 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors border border-border"
+                      className="w-8 h-8 bg-black/30 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200 border border-border hover:scale-110"
+                      onClick={() => {
+                        success(`Executing: ${link.command}`);
+                        setLastCommand(link.command);
+                        playNavigationSound();
+                      }}
                     >
                       <link.icon size={16} />
                     </a>
@@ -226,85 +255,69 @@ export function Header() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className={`nav-link flex items-center py-2 px-3 rounded-md transition-colors group font-mono text-sm ${
+                      className={`nav-link flex items-center py-2 px-3 rounded-md transition-all duration-200 group font-mono text-sm relative overflow-hidden ${
                         isActive
                           ? 'bg-black/40 text-primary border border-primary/20 no-underline hover:no-underline'
                           : 'text-muted-foreground hover:text-primary hover:bg-black/20 border border-transparent'
                       }`}
                       data-section={item.sectionId}
-                      onClick={(e) => handleLinkClick(e, item.href)}
+                      onClick={(e) => handleLinkClick(e, item.href, item.command)}
                       aria-current={isActive ? 'page' : undefined}
+                      suppressHydrationWarning
                     >
-                      <item.icon
-                        size={16}
-                        className={`mr-2 transition-colors ${
-                          isActive
-                            ? 'text-primary'
-                            : 'text-muted-foreground group-hover:text-primary'
-                        }`}
-                      />
-                      <span>{item.label.toLowerCase()}</span>
+                      <div className="flex items-center flex-1">
+                        <item.icon
+                          size={16}
+                          className={`mr-2 transition-colors ${
+                            isActive
+                              ? 'text-primary'
+                              : 'text-muted-foreground group-hover:text-primary'
+                          }`}
+                        />
+                        <span>{item.label.toLowerCase()}</span>
+                      </div>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity text-xs text-primary/60 flex items-center gap-1">
+                        <Command size={12} />
+                        <span>{item.shortcut}</span>
+                      </div>
+                      {isActive && (
+                        <div className="absolute bottom-0 left-0 h-[2px] bg-primary/40 w-full transform origin-left scale-x-100 transition-transform"></div>
+                      )}
                     </Link>
                   </li>
                 );
               })}
             </ul>
           </nav>
+
+          {/* Last executed command display */}
+          <div className="mt-4 px-2 py-1 bg-black/20 rounded border border-border/50">
+            <div className="flex items-center gap-2">
+              <Terminal size={12} className="text-primary/60" />
+              <span className="font-mono text-xs text-muted-foreground">Last command:</span>
+            </div>
+            <div className="font-mono text-xs text-primary/80 mt-1">
+              $ {lastCommand || 'No command executed'}
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* Overlay for mobile */}
-      {isMobileNavOpen && (
-        <div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9997] lg:hidden"
-          onClick={toggleMobileNav}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Game-style shortcuts overlay */}
+      {/* Keyboard shortcuts overlay */}
       {showShortcuts && (
-        <div className="fixed inset-0 z-[9996] bg-black/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="bg-black/50 border border-primary p-8 rounded-lg max-w-2xl w-full mx-4 font-mono">
-            <div className="flex items-center gap-3 mb-6">
-              <Terminal size={20} className="text-primary" />
-              <h2 className="text-2xl text-primary">⌨️ Keyboard Shortcuts</h2>
-            </div>
-            
-            <div className="grid gap-4">
-              <div className="text-lg mb-2 text-primary/80">Quick Navigation:</div>
-              <div className="grid grid-cols-2 gap-4">
-                {navItems.map((item, index) => (
-                  <div key={item.label} className="flex items-center gap-4">
-                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md min-w-[40px] text-center">
-                      {index + 1}
-                    </kbd>
-                    <span className="text-muted-foreground">{item.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-primary/20">
-                <div className="text-lg mb-4 text-primary/80">Cheat Codes:</div>
-                <div className="grid gap-3 text-sm">
-                  <div className="flex items-center gap-4">
-                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md">↑↑↓↓←→←→BA</kbd>
-                    <span className="text-muted-foreground">Celebration Mode</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md">DEBUG</kbd>
-                    <span className="text-muted-foreground">Toggle Console</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <kbd className="bg-primary/20 text-primary px-3 py-1 rounded-md">UNITY</kbd>
-                    <span className="text-muted-foreground">Dark Theme</span>
-                  </div>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center">
+          <div className="bg-black/60 border border-primary/20 rounded-lg p-6 max-w-md w-full">
+            <h3 className="font-mono text-primary mb-4 flex items-center gap-2">
+              <Command size={16} />
+              Available Commands
+            </h3>
+            <div className="space-y-2">
+              {navItems.map((item) => (
+                <div key={item.label} className="flex items-center justify-between font-mono text-sm">
+                  <span className="text-muted-foreground">{item.command}</span>
+                  <span className="text-primary">[{item.shortcut}]</span>
                 </div>
-              </div>
-
-              <div className="mt-6 text-sm text-muted-foreground text-center">
-                Hold TAB to show/hide shortcuts
-              </div>
+              ))}
             </div>
           </div>
         </div>

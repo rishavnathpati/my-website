@@ -1,26 +1,47 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      const scrolled = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrolled / height) * 100;
-      
-      setScrollProgress(progress);
-      setIsVisible(scrolled > 300);
+    const handleScroll = () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+
+      animationFrameId.current = requestAnimationFrame(() => {
+        const scrolled = document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const newProgress = height > 0 ? Math.round((scrolled / height) * 100) : 0;
+        const newVisibility = scrolled > 300;
+
+        setScrollProgress(newProgress);
+
+        if (newVisibility !== isVisible) {
+          setIsVisible(newVisibility);
+        }
+        
+        animationFrameId.current = null;
+      });
     };
 
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
+  }, [isVisible]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -48,7 +69,7 @@ export function ScrollToTop() {
             cy="50"
           />
           <circle
-            className="text-primary stroke-current transition-all duration-300"
+            className="text-primary stroke-current"
             strokeWidth="4"
             strokeLinecap="round"
             fill="transparent"
@@ -56,8 +77,8 @@ export function ScrollToTop() {
             cx="50"
             cy="50"
             style={{
-              strokeDasharray: `${2 * Math.PI * 44}`,
-              strokeDashoffset: `${2 * Math.PI * 44 * (1 - scrollProgress / 100)}`,
+              strokeDasharray: 276.46, // Pre-calculated 2 * Math.PI * 44
+              strokeDashoffset: 276.46 * (1 - scrollProgress / 100),
             }}
           />
         </svg>
@@ -67,7 +88,7 @@ export function ScrollToTop() {
           <Button
             onClick={scrollToTop}
             size="icon"
-            className="h-8 w-8 rounded-full hover:scale-110 transition-transform"
+            className="h-8 w-8 rounded-full hover:bg-primary/80"
             aria-label="Scroll to top"
           >
             <ArrowUp className="h-4 w-4" />

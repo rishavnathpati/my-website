@@ -42,18 +42,12 @@ export default function FloatingParticles() {
     resizeCanvas();
     
     // Particle configuration
-    // Adjust particle count based on screen size and device performance
-    const getOptimalParticleCount = () => {
-      const width = window.innerWidth;
-      return Math.min(50, Math.floor(width / 40)); // Reduced particle count
-    };
-
     const config: ParticleConfig = {
-      count: getOptimalParticleCount(),
+      count: 30, // Further reduced count for better performance
       color: '#ffffff',
-      maxSize: 2,
-      minSize: 0.5,
-      maxSpeed: 0.1,
+      maxSize: 2.5,
+      minSize: 0.8,
+      maxSpeed: 1, // Increased speed slightly for subtle movement
     };
     
     // Create particles
@@ -64,8 +58,8 @@ export default function FloatingParticles() {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: config.minSize + Math.random() * (config.maxSize - config.minSize),
-        speedX: (Math.random() - 0.5) * config.maxSpeed,
-        speedY: (Math.random() - 0.5) * config.maxSpeed,
+        speedX: (Math.random() - 0.5) * config.maxSpeed, // Use maxSpeed directly
+        speedY: (Math.random() - 0.5) * config.maxSpeed, // Use maxSpeed directly
         opacity: 0.1 + Math.random() * 0.6, // Random opacity between 0.1 and 0.7
         color: config.color,
       });
@@ -75,7 +69,7 @@ export default function FloatingParticles() {
     let animationFrameId: number;
     
     let lastTime = 0;
-    const targetFPS = 30; // Limit FPS for better performance
+    const targetFPS = 24; // Lower FPS since movement is slower
     const frameInterval = 1000 / targetFPS;
 
     const draw = (currentTime: number) => {

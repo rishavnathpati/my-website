@@ -16,11 +16,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.6",
     "@tailwindcss/typography": "^0.5.16",
-    "@types/aos": "^3.0.7",
-    "@types/canvas-confetti": "^1.9.0",
     "@types/mdx": "^2.0.13",
-    "aos": "^2.3.4",
-    "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "geist": "^1.3.1",
@@ -34,10 +30,8 @@
     "rehype-pretty-code": "^0.13.2",
     "remark-gfm": "^4.0.1",
     "shiki": "^1.29.2",
-    "shiki-themes": "^0.2.7",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
-    "tw-animate-css": "^1.2.5",
     "typed.js": "^2.1.0"
   },
   "devDependencies": {

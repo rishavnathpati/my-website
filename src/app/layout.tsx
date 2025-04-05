@@ -10,7 +10,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
-import { AOSInitializer } from "@/components/AOSInitializer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { ConsoleProvider } from "@/components/ui/console-provider";
@@ -83,7 +82,6 @@ export default function RootLayout({
             {/* Background Effects */}
             <BackgroundEffects />
             <SkipLink />
-            <AOSInitializer />
             <Header />
             <ScrollToTop />
 
