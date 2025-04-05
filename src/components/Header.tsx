@@ -36,7 +36,6 @@ const socialLinks = [
 export function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [showShortcuts, setShowShortcuts] = useState(false);
   const [lastCommand, setLastCommand] = useState('');
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
@@ -46,17 +45,6 @@ export function Header() {
   // Game dev-style keyboard shortcuts
   useEffect(() => {
     const handleShortcuts = (e: KeyboardEvent) => {
-      // Show shortcuts overlay when holding Command/Ctrl
-      if (e.key === 'Meta' || e.key === 'Control') {
-        e.preventDefault();
-        setShowShortcuts(e.type === 'keydown');
-        if (e.type === 'keydown') {
-          log('Keyboard shortcuts activated');
-          playActivationSound();
-        }
-      }
-
-      // Quick navigation with number keys (1-6)
       if (e.type === 'keydown' && !e.repeat && !e.metaKey && !e.ctrlKey && !e.altKey) {
         const num = parseInt(e.key);
         if (num >= 1 && num <= navItems.length) {
@@ -73,22 +61,14 @@ export function Header() {
     };
 
     window.addEventListener('keydown', handleShortcuts);
-    window.addEventListener('keyup', handleShortcuts);
-    
     return () => {
       window.removeEventListener('keydown', handleShortcuts);
-      window.removeEventListener('keyup', handleShortcuts);
     };
   }, [log, success]);
 
   const playNavigationSound = () => {
     // You can implement actual sound effects here if desired
     console.log('*click*');
-  };
-
-  const playActivationSound = () => {
-    // You can implement actual sound effects here if desired
-    console.log('*beep*');
   };
 
   const toggleMobileNav = () => {
@@ -191,8 +171,9 @@ export function Header() {
 
       <header
         id="header"
-        className={`fixed top-0 bottom-0 w-[300px] z-[9998] bg-black/30 backdrop-blur-sm text-white overflow-y-auto transition-transform duration-300 ease-in-out flex flex-col border-r border-border
-          ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
+        className={`fixed top-0 left-0 w-72 h-screen border-r border-border bg-black/20 backdrop-blur-sm p-6 transition-transform duration-300 z-50 ${
+          isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0`}
       >
         <div className="p-4 flex flex-col h-full">
           <div className="profile mb-8 pt-10 lg:pt-0">
@@ -302,26 +283,6 @@ export function Header() {
           </div>
         </div>
       </header>
-
-      {/* Keyboard shortcuts overlay */}
-      {showShortcuts && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center">
-          <div className="bg-black/60 border border-primary/20 rounded-lg p-6 max-w-md w-full">
-            <h3 className="font-mono text-primary mb-4 flex items-center gap-2">
-              <Command size={16} />
-              Available Commands
-            </h3>
-            <div className="space-y-2">
-              {navItems.map((item) => (
-                <div key={item.label} className="flex items-center justify-between font-mono text-sm">
-                  <span className="text-muted-foreground">{item.command}</span>
-                  <span className="text-primary">[{item.shortcut}]</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 } 
