@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import "./no-animations.css"; // Import CSS that disables all animations
+// Removed no-animations.css import to enable animations by default
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AnimationProvider } from "@/components/ui/animation-provider";
 import { Analytics } from "@/components/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Toaster } from "@/components/ui/toaster";
@@ -78,22 +79,24 @@ export default function RootLayout({
           forcedTheme="dark"
           disableTransitionOnChange
         >
-          <ConsoleProvider>
-            {/* Background Effects */}
-            <BackgroundEffects />
-            <SkipLink />
-            <Header />
-            <ScrollToTop />
+          <AnimationProvider>
+            <ConsoleProvider>
+              {/* Background Effects */}
+              <BackgroundEffects />
+              <SkipLink />
+              <Header />
+              <ScrollToTop />
 
-            <main id="main" className="lg:ml-[300px] relative z-[2]" tabIndex={-1}>
-              {children}
-              <Footer />
-            </main>
-            <Analytics />
-            <Toaster />
-            <TailwindIndicator />
-            <KonamiCode />
-          </ConsoleProvider>
+              <main id="main" className="lg:ml-[300px] relative z-[2]" tabIndex={-1}>
+                {children}
+                <Footer />
+              </main>
+              <Analytics />
+              <Toaster />
+              <TailwindIndicator />
+              <KonamiCode />
+            </ConsoleProvider>
+          </AnimationProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -3,6 +3,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Apply reduced motion when .reduce-motion class is present */
+.reduce-motion *:not(.force-animation) {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
 /* Game dev-inspired animations */
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
@@ -382,4 +401,23 @@ pre[data-language]::before {
 .token.important,
 .token.variable {
   color: #d16969;
+}
+
+/* Update animation classes to work with reduced motion */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 10s linear infinite;
+}
+
+.animate-rainbow {
+  animation: rainbow 5s linear infinite;
+}
+
+/* Force animations even when reduced motion is enabled */
+.force-animation {
+  animation-duration: inherit !important;
+  transition-duration: inherit !important;
 }

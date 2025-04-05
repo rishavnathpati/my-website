@@ -11,7 +11,6 @@ import { useConsole } from '@/components/ui/console-provider';
 const navItems = [
   { href: '#hero', icon: Home, label: 'Home', sectionId: 'hero', command: 'cd ~', shortcut: '1' },
   { href: '#about', icon: User, label: 'About', sectionId: 'about', command: 'cat about.md', shortcut: '2' },
-  { href: '#skills', icon: FileText, label: 'Skills', sectionId: 'skills', command: 'ls skills/', shortcut: '3' },
   {
     href: '#experience',
     icon: FileText,
@@ -20,6 +19,7 @@ const navItems = [
     command: 'cat experience.md',
     shortcut: '4'
   },
+  { href: '#skills', icon: FileText, label: 'Skills', sectionId: 'skills', command: 'ls skills/', shortcut: '3' },
   { href: '#portfolio', icon: Gamepad2, label: 'Portfolio', sectionId: 'portfolio', command: './view_projects', shortcut: '5' },
   { href: '#blogs', icon: Pencil, label: 'Blogs', sectionId: 'blogs', command: 'vim blog.md', shortcut: '6' },
   { href: '#contact-cta', icon: Mail, label: 'Contact', sectionId: 'contact-cta', command: 'mail -s "Hello"', shortcut: '7' },

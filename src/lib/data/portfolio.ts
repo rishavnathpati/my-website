@@ -16,7 +16,7 @@ export const portfolioItems: PortfolioItem[] = [
     slug: 'beatrex-ball',
     title: 'Beatrex Ball Game',
     description: 'A rhythm-based mobile game developed with Unity. Features dynamic gameplay that synchronizes with music beats for an immersive gaming experience. This project showcases my expertise in game mechanics, sound integration, and responsive UI design.',
-    imageUrl: 'https://placehold.co/600x400/8844ee/ffffff.png?text=Beatrex+Ball',
+    imageUrl: '/portfolio/games/beatrex-ball.jpg',
     tags: ['Unity', 'C#', 'Mobile Game', 'Rhythm', 'iOS', 'Android'],
     detailsUrl: '/portfolio/beatrex-ball',
     githubUrl: 'https://github.com/rishavnathpati/BeatRex-Ball',

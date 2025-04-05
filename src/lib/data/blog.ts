@@ -15,7 +15,7 @@ export const blogPostsData: BlogPostHighlight[] = [
     title: 'Ultimate Mac Terminal Setup Guide',
     date: '2024-03-15',
     excerpt: 'A comprehensive guide to setting up a modern, efficient terminal environment on macOS with iTerm2, Oh My Zsh, and essential tools.',
-    imageUrl: 'https://placehold.co/600x400/444444/ffffff.png?text=Mac+Terminal+Setup',
+    imageUrl: '/blog/thumbnails/mac-terminal.png',
     tags: ['Development', 'Terminal', 'macOS'],
     readTimeMinutes: 15,
   },
