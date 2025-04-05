@@ -138,10 +138,10 @@ export function SkillsSection() {
       <LoadingOverlay isLoading={isLoading} text="Loading Skill Tree" />
       
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto mb-12">
+        <div className="max-w-4xl mx-auto">
           {/* Keyboard controls hint */}
-          <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground font-mono mb-6 bg-black/30 p-3 rounded-lg border border-border/20">
-            <Command size={14} className="text-primary" />
+          <div className="flex items-center gap-2 mb-6 bg-black/30 p-3 rounded-lg border border-border/20">
+            <Command size={18} className="text-muted-foreground" />
             <div className="flex items-center gap-2">
               <kbd className="px-2 py-1 bg-black/50 rounded border border-primary/20">Tab</kbd>
               <span>Navigate Skills</span>
@@ -183,7 +183,7 @@ export function SkillsSection() {
           <div className="bg-black/30 rounded-lg border border-border p-6 relative overflow-hidden">
             {/* Terminal-like header */}
             <div className="flex items-center gap-2 mb-6 text-muted-foreground">
-              <Terminal size={18} />
+              <Terminal size={18} className="text-muted-foreground" />
               <span className="font-mono text-sm">cat skills_overview.md</span>
             </div>
 

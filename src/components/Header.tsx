@@ -45,7 +45,7 @@ export function Header() {
   // Game dev-style keyboard shortcuts
   useEffect(() => {
     const handleShortcuts = (e: KeyboardEvent) => {
-      if (e.type === 'keydown' && !e.repeat && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      if (e.type === 'keydown' && !e.repeat && !e.altKey) {
         const num = parseInt(e.key);
         if (num >= 1 && num <= navItems.length) {
           const section = navItems[num - 1];
@@ -113,14 +113,10 @@ export function Header() {
           const sectionId = entry.target.id;
           const section = entry.target;
           
-          // Add loading animation
-          section.classList.add('loading');
           setActiveSection(sectionId);
           log(`Loading section: ${sectionId}`);
           
-          // Game dev-style loading sequence
           setTimeout(() => {
-            section.classList.remove('loading');
             success(`Section "${sectionId}" loaded successfully`);
             
             // Add active section highlight effect
