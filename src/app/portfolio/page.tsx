@@ -23,7 +23,7 @@ function PortfolioGrid() {
       {portfolioItems.map((item, index) => (
         <Card
           key={item.slug}
-          className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-neutral-800/50 group"
+          className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 group"
         >
           <CardHeader className="p-0">
             <Link href={item.detailsUrl ?? '#'} aria-label={`View details for ${item.title}`}>
@@ -57,7 +57,7 @@ function PortfolioGrid() {
               {item.tags.length > 4 && <Badge variant="outline">...</Badge>}
             </div>
           </CardContent>
-          <CardFooter className="p-5 bg-muted/30 bg-neutral-800/30 border-t border-border flex justify-between items-center">
+          <CardFooter className="p-5 bg-black/30 border-t border-border flex justify-between items-center">
             {item.detailsUrl ? (
               <Button variant="ghost" size="sm" asChild>
                 <Link href={item.detailsUrl} className="text-sm">

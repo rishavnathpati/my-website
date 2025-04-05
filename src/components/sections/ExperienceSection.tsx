@@ -85,7 +85,7 @@ const education: EducationItem[] = [
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="py-20 lg:py-28 bg-black/30">
+    <section id="experience" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="bg-black/40 rounded-lg border border-border p-6 mb-12">
