@@ -104,7 +104,8 @@ export default async function BlogPostPage(props: Props) {
 
       <article>
         <header className="mb-10 border-b border-border pb-8">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-raleway text-foreground leading-tight">
+          {/* Changed font to font-mono */}
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground leading-tight">
             {post.title}
           </h1>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-4">
@@ -131,8 +132,9 @@ export default async function BlogPostPage(props: Props) {
           prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
           prose-p:mb-4 prose-p:leading-relaxed
           prose-a:text-primary prose-a:no-underline hover:prose-a:text-primary/80
-          prose-code:before:content-none prose-code:after:content-none 
-          prose-pre:my-8 prose-pre:bg-[#1a1a1a] prose-pre:border prose-pre:border-[#333]
+          /* Adjusted code and pre backgrounds/borders for theme consistency */
+          prose-code:before:content-none prose-code:after:content-none prose-code:bg-black/30 prose-code:px-2 prose-code:py-0.5 prose-code:rounded 
+          prose-pre:my-8 prose-pre:bg-black/20 prose-pre:border prose-pre:border-border 
           prose-pre:rounded-lg prose-pre:shadow-lg
           prose-img:rounded-lg prose-img:shadow-md
           prose-blockquote:border-l-4 prose-blockquote:border-primary/50
@@ -159,4 +161,4 @@ export default async function BlogPostPage(props: Props) {
       </article>
     </div>
   );
-} 
+}

@@ -156,9 +156,9 @@ export function SkillsSection() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-3 mb-6">
+          <div className="flex items-center justify-between gap-3 mb-8">
             <div className="flex items-center gap-3">
-              <Code2 className="w-6 h-6 text-primary" />
+              <Terminal className="w-6 h-6 text-primary" />
               <h2 className="text-2xl font-bold font-mono text-foreground">
                 tech_stack.json
               </h2>
@@ -180,22 +180,22 @@ export function SkillsSection() {
             </button>
           </div>
           
-          <div className="bg-black/30 rounded-lg border border-border p-6 relative overflow-hidden">
+          <div className="bg-black/30 rounded-lg border border-border p-8 relative overflow-hidden">
             {/* Terminal-like header */}
             <div className="flex items-center gap-2 mb-6 text-muted-foreground">
               <Terminal size={18} className="text-muted-foreground" />
               <span className="font-mono text-sm">cat skills_overview.md</span>
-            </div>
+             </div>
 
-            {/* Description with typing animation */}
-            <p className="text-muted-foreground leading-relaxed mb-8 font-mono">
-              As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years
-              specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in
+             {/* Description with typing animation - Changed text color */}
+             <p className="text-foreground leading-relaxed mb-10 font-mono">
+               As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years
+               specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in
               crafting immersive experiences that captivate users through engaging gameplay, stunning visuals, and intuitive UI design.
             </p>
 
             {/* Skills grid with game-like styling */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {skillCategories.map((category, index) => (
                 <div
                   key={category.title}
@@ -212,7 +212,7 @@ export function SkillsSection() {
                   </div>
                   
                   {/* Skills list with hover effects */}
-                  <div className="p-4 space-y-3">
+                  <div className="p-6 space-y-4">
                     {category.skills.map((skill, skillIndex) => (
                       <div
                         key={skill.name}
@@ -234,12 +234,13 @@ export function SkillsSection() {
                           <div className="flex items-center gap-2">
                             {skill.icon && (
                               <span className="text-lg">
-                                {skill.icon}
-                              </span>
-                            )}
-                            <span className="font-mono text-sm text-muted-foreground">
-                              {skill.name}
-                            </span>
+                                 {skill.icon}
+                               </span>
+                             )}
+                             {/* Changed text color */}
+                             <span className="font-mono text-sm text-foreground">
+                               {skill.name}
+                             </span>
                           </div>
                           <span className="text-xs text-primary/60">Level {skill.level}/5</span>
                         </div>

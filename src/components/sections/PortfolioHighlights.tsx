@@ -46,12 +46,14 @@ export function PortfolioHighlights() {
                               {item.title}
                             </h3>
                           </div>
-                          <p className={`text-sm text-muted-foreground font-mono ${isExpanded ? '' : 'line-clamp-2'}`}>
+                          {/* Changed text color */}
+                          <p className={`text-sm text-foreground font-mono ${isExpanded ? '' : 'line-clamp-2'}`}>
                             {item.description}
                           </p>
                         </div>
                         <div className="flex flex-col items-end gap-3">
-                          <div className="flex items-center gap-3 text-muted-foreground">
+                           {/* Changed text color */}
+                          <div className="flex items-center gap-3 text-foreground">
                             <div className="flex items-center gap-1">
                               <Star className="w-4 h-4" />
                               <span className="text-sm font-mono">24</span>

@@ -64,16 +64,18 @@ export default async function PortfolioDetailPage(props: Props) {
         </Button>
       </div>
 
-      <article className="max-w-4xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-raleway text-foreground">
-            {project.title}
-          </h1>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">
-                {tag}
-              </Badge>
+       <article className="max-w-4xl mx-auto">
+         <header className="mb-8">
+           {/* Changed font */}
+           <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">
+             {project.title}
+           </h1>
+           <div className="flex flex-wrap gap-2 mb-6">
+             {project.tags.map((tag) => (
+               /* Changed variant and added font */
+               <Badge key={tag} variant="outline" className="font-mono text-xs">
+                 {tag}
+               </Badge>
             ))}
           </div>
         </header>
@@ -85,37 +87,41 @@ export default async function PortfolioDetailPage(props: Props) {
             fill
             className="object-cover"
             priority
-          />
-        </div>
+           />
+         </div>
 
-        <div className="prose prose-invert max-w-none mb-8">
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {project.description}
-          </p>
-        </div>
+         {/* Removed prose, added font-mono and text-foreground directly */}
+         <div className="max-w-none mb-8">
+           <p className="text-lg text-foreground leading-relaxed font-mono">
+             {project.description}
+           </p>
+         </div>
 
-        <div className="flex flex-wrap gap-4 mb-12">
-          {project.githubUrl && (
-            <Button asChild>
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                <Github className="mr-2 h-5 w-5" /> View on GitHub
-              </a>
+         <div className="flex flex-wrap gap-4 mb-12">
+           {project.githubUrl && (
+             /* Added font-mono */
+             <Button asChild className="font-mono">
+               <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                 <Github className="mr-2 h-5 w-5" /> View on GitHub
+               </a>
+             </Button>
+           )}
+           {project.liveUrl && (
+             /* Added font-mono */
+             <Button variant="outline" asChild className="font-mono">
+               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                 <ExternalLink className="mr-2 h-5 w-5" /> Live Demo
+               </a>
             </Button>
           )}
-          {project.liveUrl && (
-            <Button variant="outline" asChild>
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-2 h-5 w-5" /> Live Demo
-              </a>
-            </Button>
-          )}
         </div>
 
-        {relatedProjects.length > 0 && (
-          <section className="border-t border-border pt-12">
-            <h2 className="text-2xl font-bold mb-6 font-raleway">Related Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedProjects.map((item) => (
+         {relatedProjects.length > 0 && (
+           <section className="border-t border-border pt-12">
+             {/* Changed font */}
+             <h2 className="text-2xl font-bold mb-6 font-mono">Related Projects</h2>
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {relatedProjects.map((item) => (
                 <Link
                   key={item.slug}
                   href={`/portfolio/${item.slug}`}
@@ -126,15 +132,17 @@ export default async function PortfolioDetailPage(props: Props) {
                       src={item.imageUrl}
                       alt={item.title}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {item.description}
-                  </p>
+                       className="object-cover transition-transform duration-300 group-hover:scale-105"
+                     />
+                   </div>
+                   {/* Added font-mono */}
+                   <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors font-mono">
+                     {item.title}
+                   </h3>
+                   {/* Added font-mono and changed text color */}
+                   <p className="text-sm text-foreground line-clamp-2 font-mono">
+                     {item.description}
+                   </p>
                 </Link>
               ))}
             </div>
@@ -143,4 +151,4 @@ export default async function PortfolioDetailPage(props: Props) {
       </article>
     </div>
   );
-} 
+}

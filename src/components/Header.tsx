@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Home, User, FileText, BookOpen, Mail, Bot, Github, Linkedin, FileCode2, Pencil, Menu, X, Terminal, Gamepad2, Command, Download } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useConsole } from '@/components/ui/console-provider';
+import { Console } from '@/components/ui/console'; // Import the Console component
 
 // Define navigation items with enhanced metadata
 const navItems = [
@@ -36,7 +37,7 @@ const socialLinks = [
 export function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [lastCommand, setLastCommand] = useState('');
+  // Removed unused lastCommand state
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const pathname = usePathname();
@@ -53,7 +54,7 @@ export function Header() {
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
             success(`Executing: ${section.command}`);
-            setLastCommand(section.command);
+            // Removed setLastCommand
             playNavigationSound();
           }
         }
@@ -84,7 +85,7 @@ export function Header() {
       log('Minimizing terminal');
     }
 
-    setLastCommand(command);
+    // Removed setLastCommand
     success(`Executing: ${command}`);
     playNavigationSound();
 
@@ -167,13 +168,13 @@ export function Header() {
 
       <header
         id="header"
-        className={`fixed top-0 left-0 w-72 h-screen border-r border-border bg-black/20 backdrop-blur-sm p-6 transition-transform duration-300 z-50 ${
+        className={`fixed top-0 left-0 w-72 h-screen border-r border-border bg-black/30 backdrop-blur-sm transition-transform duration-300 z-50 ${
           isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
       >
-        <div className="p-4 flex flex-col h-full">
+        <div className="p-6 flex flex-col h-full">
           <div className="profile mb-8 pt-10 lg:pt-0">
-            <div className="bg-black/20 rounded-lg border border-border p-4 relative group">
+            <div className="bg-black/40 rounded-lg border border-border p-6 relative group">
               <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
               <div className="flex items-center gap-3 mb-4">
                 <Terminal size={16} className="text-primary" />
@@ -208,7 +209,7 @@ export function Header() {
                       className="w-8 h-8 bg-black/30 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200 border border-border hover:scale-110"
                       onClick={() => {
                         success(`Executing: ${link.command}`);
-                        setLastCommand(link.command);
+                        // Removed setLastCommand
                         playNavigationSound();
                       }}
                     >
@@ -220,22 +221,22 @@ export function Header() {
             </div>
           </div>
 
-          <nav id="navbar" className="nav-menu flex-grow">
-            <div className="flex items-center gap-2 mb-3 px-2">
+          <nav id="navbar" className="nav-menu flex-grow mt-8">
+            <div className="flex items-center gap-2 mb-4">
               <Terminal size={16} className="text-primary" />
               <span className="font-mono text-sm text-muted-foreground">navigation.sh</span>
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {navItems.map((item) => {
                 const isActive = activeSection === item.sectionId && pathname === '/';
                 return (
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className={`nav-link flex items-center py-2 px-3 rounded-md transition-all duration-200 group font-mono text-sm relative overflow-hidden ${
+                      className={`nav-link flex items-center py-3 px-4 rounded-md transition-all duration-200 group font-mono text-sm relative overflow-hidden ${
                         isActive
-                          ? 'bg-black/40 text-primary border border-primary/20 no-underline hover:no-underline'
-                          : 'text-muted-foreground hover:text-primary hover:bg-black/20 border border-transparent'
+                          ? 'bg-black/50 text-primary border border-primary/30 no-underline hover:no-underline'
+                          : 'text-muted-foreground hover:text-primary hover:bg-black/30 border border-transparent'
                       }`}
                       data-section={item.sectionId}
                       onClick={(e) => handleLinkClick(e, item.href, item.command)}
@@ -267,18 +268,13 @@ export function Header() {
             </ul>
           </nav>
 
-          {/* Last executed command display */}
-          <div className="mt-4 px-2 py-1 bg-black/20 rounded border border-border/50">
-            <div className="flex items-center gap-2">
-              <Terminal size={12} className="text-primary/60" />
-              <span className="font-mono text-xs text-muted-foreground">Last command:</span>
-            </div>
-            <div className="font-mono text-xs text-primary/80 mt-1">
-              $ {lastCommand || 'No command executed'}
-            </div>
+          {/* Render Console component here, pushed to the bottom */}
+          <div className="mt-auto"> {/* Use mt-auto to push console to bottom */}
+            <Console />
           </div>
+          {/* Removed the old "Last command" display */}
         </div>
       </header>
     </>
   );
-} 
+}

@@ -83,13 +83,14 @@ export function AboutSection() {
                 <Terminal className="w-5 h-5 text-primary" />
                 <h2 className="text-2xl font-bold font-mono text-foreground">
                   cat about.md
-                </h2>
-              </div>
+               </h2>
+             </div>
 
-              <div className="space-y-6 text-muted-foreground">
-                <div>
-                  <p className="leading-relaxed mb-4">
-                    🎮 As a seasoned Game Developer, I possess extensive expertise in C# and Unity3D. My portfolio boasts over 10 published titles across mobile platforms (Android and iOS) and PC, encompassing a diverse range of genres including casual, hyper-casual, free-to-play, and educational games. My experience spans the entire development lifecycle, from initial concept to final product delivery.
+              {/* Added font-mono */}
+             <div className="space-y-6 text-muted-foreground font-mono">
+               <div>
+                 <p className="leading-relaxed mb-4">
+                   🎮 As a seasoned Game Developer, I possess extensive expertise in C# and Unity3D. My portfolio boasts over 10 published titles across mobile platforms (Android and iOS) and PC, encompassing a diverse range of genres including casual, hyper-casual, free-to-play, and educational games. My experience spans the entire development lifecycle, from initial concept to final product delivery.
                   </p>
   
                   <p className="leading-relaxed mb-4">
@@ -105,23 +106,41 @@ export function AboutSection() {
                   </p>
 
                   <p className="leading-relaxed">
-                    As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in crafting immersive experiences that captivate users through engaging gameplay, stunning visuals, and intuitive UI design. Leveraging Unity's powerful capabilities, I develop cross-platform applications for iOS and Android, ensuring wide accessibility. My collaborative approach and effective communication skills enable me to thrive in multidisciplinary teams, translating innovative ideas into reality. I am driven by the desire to evoke emotions and challenge perceptions through my work, constantly pushing the boundaries of what's possible in interactive media. With a commitment to excellence and a creative mindset, I am dedicated to delivering unforgettable experiences that resonate with users.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-foreground font-mono mb-3">$ key_competencies</h3>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                    <li>Exceptional multitasking abilities, allowing me to efficiently manage complex development processes, troubleshoot issues, and maintain productivity even under high-pressure situations</li>
-                    <li>Keen attention to detail, particularly in visual elements, ensuring pixel-perfect designs and seamless user experiences across all projects</li>
-                    <li>Strong character development skills, balancing creative design with practical gameplay mechanics to create compelling and challenging game experiences</li>
-                    <li>Advanced debugging proficiency, with the ability to quickly identify, analyze, and resolve complex issues in code and game systems</li>
-                    <li>Extraordinary perseverance in quality assurance, demonstrating the ability to conduct thorough and repeated playtesting to ensure optimal game balance and user satisfaction</li>
+                  <h3 className="text-foreground font-mono mb-4 flex items-center gap-2">
+                    <Terminal className="w-4 h-4 text-primary" />
+                    <span>$ key_competencies</span>
+                  </h3>
+                   {/* Added font-mono (inherited from parent div now, but explicitly adding here is fine too) */}
+                  <ul className="space-y-4 text-muted-foreground font-mono">
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Exceptional multitasking abilities, allowing me to efficiently manage complex development processes, troubleshoot issues, and maintain productivity even under high-pressure situations</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Keen attention to detail, particularly in visual elements, ensuring pixel-perfect designs and seamless user experiences across all projects</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Strong character development skills, balancing creative design with practical gameplay mechanics to create compelling and challenging game experiences</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Advanced debugging proficiency, with the ability to quickly identify, analyze, and resolve complex issues in code and game systems</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Extraordinary perseverance in quality assurance, demonstrating the ability to conduct thorough and repeated playtesting to ensure optimal game balance and user satisfaction</span>
+                    </li>
                   </ul>
                 </div>
                 
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <div className="flex flex-col sm:flex-row gap-4 pt-6">
                   <Button asChild size="lg" className="font-mono">
                     <a href="/Rishav_Nath_Pati_Resume.pdf" download>
                       <Download className="mr-2 h-5 w-5" /> download_cv.pdf

@@ -37,32 +37,37 @@ function PortfolioGrid() {
                   loading="lazy" // Keep lazy loading for items on this page
                 />
               </div>
-            </Link>
-          </CardHeader>
-          <CardContent className="flex-grow p-5">
-            <CardTitle className="text-xl font-semibold mb-2 font-poppins group-hover:text-primary transition-colors">
-              <Link href={item.detailsUrl ?? '#'}>
-                {item.title}
+             </Link>
+           </CardHeader>
+           <CardContent className="flex-grow p-5">
+             {/* Changed font */}
+             <CardTitle className="text-xl font-semibold mb-2 font-mono group-hover:text-primary transition-colors">
+               <Link href={item.detailsUrl ?? '#'}>
+                 {item.title}
               </Link>
             </CardTitle>
-            <CardDescription className="text-muted-foreground mb-4 text-sm line-clamp-3">
+            {/* Changed font and text color */}
+            <CardDescription className="text-foreground mb-4 text-sm line-clamp-3 font-mono">
               {item.description}
-            </CardDescription>
-            <div className="flex flex-wrap gap-2">
-              {item.tags.slice(0, 4).map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-              {item.tags.length > 4 && <Badge variant="outline">...</Badge>}
-            </div>
-          </CardContent>
-          <CardFooter className="p-5 bg-black/30 border-t border-border flex justify-between items-center">
-            {item.detailsUrl ? (
-              <Button variant="ghost" size="sm" asChild>
-                <Link href={item.detailsUrl} className="text-sm">
-                  Details <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+             </CardDescription>
+             <div className="flex flex-wrap gap-2">
+               {item.tags.slice(0, 4).map((tag) => (
+                 /* Changed variant and added font */
+                 <Badge key={tag} variant="outline" className="font-mono text-xs">
+                   {tag}
+                 </Badge>
+               ))}
+               {/* Changed variant and added font */}
+               {item.tags.length > 4 && <Badge variant="outline" className="font-mono text-xs">...</Badge>}
+             </div>
+           </CardContent>
+           <CardFooter className="p-5 bg-black/30 border-t border-border flex justify-between items-center">
+             {item.detailsUrl ? (
+               <Button variant="ghost" size="sm" asChild>
+                 {/* Added font-mono */}
+                 <Link href={item.detailsUrl} className="text-sm font-mono">
+                   Details <ArrowRight className="ml-1 h-4 w-4" />
+                 </Link>
               </Button>
             ) : <div></div>}
             <div className="flex items-center space-x-2">
@@ -93,16 +98,18 @@ export const metadata: Metadata = {
   description: 'Explore the full portfolio of games, machine learning projects, and publications by Rishav Nath Pati.',
 };
 
-export default function PortfolioPage() {
-  return (
-    <div className="container mx-auto px-4 py-16 lg:py-24">
-      <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
-        <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-raleway text-foreground">
-          My Portfolio
-        </h1>
-        <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-          A collection of projects demonstrating my skills across game development, machine learning, interactive media, and research.
-        </p>
+ export default function PortfolioPage() {
+   return (
+     <div className="container mx-auto px-4 py-16 lg:py-24">
+       <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
+         {/* Changed font */}
+         <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">
+           My Portfolio
+         </h1>
+         {/* Changed font and text color */}
+         <p className="text-lg lg:text-xl text-foreground leading-relaxed font-mono">
+           A collection of projects demonstrating my skills across game development, machine learning, interactive media, and research.
+         </p>
       </div>
 
       {/* Wrap the grid in Suspense */}

@@ -53,7 +53,7 @@ export function ScrollToTop() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 z-50">
+    <div className="fixed bottom-8 right-8 z-50">
       <div className="relative h-12 w-12">
         {/* Progress Circle */}
         <svg
@@ -88,7 +88,7 @@ export function ScrollToTop() {
           <Button
             onClick={scrollToTop}
             size="icon"
-            className="h-8 w-8 rounded-full hover:bg-primary/80"
+            className="h-8 w-8 rounded-full bg-black/30 backdrop-blur-sm border border-border hover:border-primary hover:bg-black/50 transition-colors"
             aria-label="Scroll to top"
           >
             <ArrowUp className="h-4 w-4" />
