@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+ @import "tailwindcss";
+ /* @import "tw-animate-css"; Removed - Package not found and likely replaced by tailwindcss-animate */
 
-@custom-variant dark (&:is(.dark *));
+ @custom-variant dark (&:is(.dark *));
 
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
@@ -271,15 +271,16 @@ kbd::after {
   }
 }
 
-/* Code block styles */
-pre {
-  overflow-x: auto;
-  padding: 0 !important;
-  margin: 1.5rem 0 !important;
-  background-color: #1a1a1a !important;
-  border: 1px solid #333 !important;
-  border-radius: 0.5rem !important;
-}
+ /* Code block styles */
+ pre {
+   overflow-x: auto;
+   padding: 0 !important;
+   margin: 1.5rem 0 !important;
+   /* Use theme variables for background and border */
+   background-color: hsl(var(--card)) !important; /* Or rgba(0,0,0,0.2) if preferred */
+   border: 1px solid hsl(var(--border)) !important;
+   border-radius: 0.5rem !important;
+ }
 
 pre > code {
   display: grid;
@@ -310,12 +311,13 @@ pre code .word {
   border-radius: 0.25rem;
 }
 
-/* Inline code styling */
-:not(pre) > code {
-  background-color: rgba(115, 115, 115, 0.1) !important;
-  color: #e83e8c !important;
-  padding: 0.2em 0.4em !important;
-  border-radius: 3px !important;
+ /* Inline code styling */
+ :not(pre) > code {
+   /* Use theme colors */
+   background-color: rgba(0, 0, 0, 0.3) !important; /* Similar to bg-black/30 */
+   color: hsl(var(--primary)) !important; 
+   padding: 0.2em 0.4em !important;
+   border-radius: 3px !important;
   font-size: 0.875em !important;
   font-weight: 400 !important;
   word-break: break-word;
@@ -326,15 +328,15 @@ pre[data-language]::before {
   content: attr(data-language);
   display: block;
   position: relative;
-  top: 0;
-  right: 0;
-  color: #666;
-  font-size: 0.75rem;
-  font-family: ui-monospace, monospace;
-  text-transform: uppercase;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid #333;
-}
+   top: 0;
+   right: 0;
+   color: hsl(var(--muted-foreground)); /* Use theme variable */
+   font-size: 0.75rem;
+   font-family: ui-monospace, monospace;
+   text-transform: uppercase;
+   padding: 0.5rem 1rem;
+   border-bottom: 1px solid hsl(var(--border)); /* Use theme variable */
+ }
 
 /* Syntax highlighting colors */
 .token.comment,

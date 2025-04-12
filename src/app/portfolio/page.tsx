@@ -2,11 +2,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { Suspense } from 'react'; // Import Suspense
-import { PortfolioCardSkeleton } from '@/components/PortfolioCardSkeleton'; // Import Skeleton
-import {
-  Card,
-  CardContent,
-  CardDescription,
+ import { PortfolioCardSkeleton } from '@/components/PortfolioCardSkeleton'; // Import Skeleton
+ import {
+   Card as ShadCard, // Import Card with an alias
+   CardContent,
+   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -17,13 +17,14 @@ import { portfolioItems } from "@/lib/data/portfolio";
 import { ArrowRight, Github, ExternalLink } from 'lucide-react';
 
 // Define the PortfolioGrid component containing the mapping logic
-function PortfolioGrid() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {portfolioItems.map((item, index) => (
-        <Card
-          key={item.slug}
-          className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 group"
+ function PortfolioGrid() {
+   return (
+     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+       {portfolioItems.map((item, index) => (
+         /* Use the alias ShadCard */
+         <ShadCard
+           key={item.slug}
+           className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 group"
         >
           <CardHeader className="p-0">
             <Link href={item.detailsUrl ?? '#'} aria-label={`View details for ${item.title}`}>
@@ -85,11 +86,11 @@ function PortfolioGrid() {
                   </a>
                 </Button>
               )}
-            </div>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
+             </div>
+           </CardFooter>
+         </ShadCard> /* Use the alias ShadCard */
+       ))}
+     </div>
   );
 }
 

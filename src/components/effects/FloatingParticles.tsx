@@ -12,11 +12,11 @@ interface Particle {
   opacity: number;
 }
 
-interface ParticleConfig {
-  count: number;
-  color: string;
-  maxSize: number;
-  minSize: number;
+ interface ParticleConfig {
+   count: number;
+   // color: string; // Removed unused property
+   maxSize: number;
+   minSize: number;
   maxSpeed: number;
 }
 
@@ -41,11 +41,11 @@ export default function FloatingParticles() {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const config: ParticleConfig = {
-      count: 30,
-      color: '#ffffff',
-      maxSize: 2.5,
-      minSize: 0.8,
+     const config: ParticleConfig = {
+       count: 30,
+       // color: '#ffffff', // Removed unused color property
+       maxSize: 2.5,
+       minSize: 0.8,
       maxSpeed: 1,
     };
 
@@ -68,12 +68,13 @@ export default function FloatingParticles() {
 
     const draw = (currentTime: number) => {
       const deltaTime = currentTime - lastTime;
-      if (deltaTime > frameInterval) {
-        lastTime = currentTime - (deltaTime % frameInterval);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-        
-        particles.forEach((particle) => {
+       if (deltaTime > frameInterval) {
+         lastTime = currentTime - (deltaTime % frameInterval);
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         // Set fillStyle to use the primary color CSS variable
+         ctx.fillStyle = 'hsl(var(--primary))';
+         
+         particles.forEach((particle) => {
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
           ctx.globalAlpha = particle.opacity;

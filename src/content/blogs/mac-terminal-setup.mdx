@@ -9,11 +9,11 @@ slug: 'mac-terminal-setup'
 ---
 
 import { Steps, Step } from '@/components/ui/mdx/Steps';
-import { Note } from '@/components/ui/mdx/Note';
-import { Card } from '@/components/ui/mdx/Card';
-import { Terminal, Package, Shell, Tool, Plugin } from 'lucide-react';
-
-A powerful terminal setup is essential for any developer working on macOS. This comprehensive guide will walk you through creating a modern, efficient terminal environment using iTerm2, Oh My Zsh, and other essential tools.
+ import { Note } from '@/components/ui/mdx/Note';
+ import { Card } from '@/components/ui/mdx/Card';
+ import { Terminal, Package, Shell, Wrench, Plug } from 'lucide-react'; // Replaced Tool with Wrench, Plugin with Plug
+ 
+ A powerful terminal setup is essential for any developer working on macOS. This comprehensive guide will walk you through creating a modern, efficient terminal environment using iTerm2, Oh My Zsh, and other essential tools.
 
 <Note>
 This guide assumes you're using macOS and are comfortable with basic terminal operations. If you're new to the terminal, don't worry – we'll go through each step in detail.
@@ -147,11 +147,11 @@ Then set MesloLGS NF as your font in iTerm2 (Preferences → Profiles → Text �
 </Step>
 </Steps>
 
-## Essential Development Tools
-
-<Card title="Modern CLI Tools" icon={<Tool className="h-5 w-5" />}>
-Replace traditional Unix tools with modern alternatives that provide better features and user experience.
-</Card>
+ ## Essential Development Tools
+ 
+ <Card title="Modern CLI Tools" icon={<Wrench className="h-5 w-5" />}>
+ Replace traditional Unix tools with modern alternatives that provide better features and user experience.
+ </Card>
 
 ```bash
 # File Operations
@@ -177,11 +177,11 @@ brew install ncdu        # Disk usage analyzer
 These modern alternatives are designed to be drop-in replacements for traditional Unix tools, with better features and more intuitive interfaces.
 </Note>
 
-## Zsh Plugins
-
-<Card title="Essential Plugins" icon={<Plugin className="h-5 w-5" />}>
-Enhance your shell experience with plugins that provide auto-suggestions, syntax highlighting, and improved history search.
-</Card>
+ ## Zsh Plugins
+ 
+ <Card title="Essential Plugins" icon={<Plug className="h-5 w-5" />}>
+ Enhance your shell experience with plugins that provide auto-suggestions, syntax highlighting, and improved history search.
+ </Card>
 
 <Steps>
 <Step>
@@ -235,4 +235,4 @@ Now that you have a powerful terminal setup, consider:
 
 <Note type="success">
 Congratulations! You now have a modern, efficient terminal environment that will significantly boost your productivity. Take some time to explore each tool's features and customize the setup to match your workflow.
-</Note> 
+</Note>

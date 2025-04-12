@@ -113,10 +113,10 @@ export function HeroSection() {
     
     const typed = new Typed(el.current, {
       strings: [
-        'GameDev',
-        'Game & Interactive Media Developer',
-        'Interactive Media Developer @ Convai',
-        'Unity | 2D,3D,AR/VR',
+        'a Software Engineer',
+        'an Interactive Media Developer @ Convai',
+        'a Unity GameDev | 2D | 3D | AR/VR |',
+
       ],
       typeSpeed: 70,
       backSpeed: 50,
@@ -175,12 +175,11 @@ export function HeroSection() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary bg-clip-text">
                 Rishav Nath Pati
               </h1>
-              <p className="text-muted-foreground mb-2">$ current_role</p>
-              <p className="text-lg sm:text-xl md:text-2xl mb-6">
-                I'm a <span ref={el} className="text-foreground"></span>
-                <span className="animate-blink">|</span>
-              </p>
-              <p className="text-muted-foreground mb-2">$ next_action</p>
+               <p className="text-muted-foreground mb-2">$ current_role</p>
+               <p className="text-lg sm:text-xl md:text-2xl mb-6">
+                 I'm <span ref={el} className="text-foreground"></span>
+               </p>
+               <p className="text-muted-foreground mb-2">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   asChild 
