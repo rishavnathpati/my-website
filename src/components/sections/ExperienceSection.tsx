@@ -3,12 +3,12 @@
 import { memo, useMemo } from 'react';
 import { Briefcase, Terminal, GraduationCap, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { 
-  professionalExperience, 
-  education, 
+import {
+  professionalExperience,
+  education,
   professionalSummary,
-  type ExperienceItem, 
-  type EducationItem 
+  type ExperienceItem,
+  type EducationItem
 } from '@/lib/data/experience';
 
 // Memoized Experience Item component
@@ -36,9 +36,9 @@ const ExperienceItem = memo(function ExperienceItem({ experience }: { experience
       {experience.skills && (
         <div className="flex flex-wrap gap-2 mt-3">
           {experience.skills.map((skill) => (
-            <Badge 
-              key={skill} 
-              variant="outline" 
+            <Badge
+              key={skill}
+              variant="outline"
               className="text-xs font-mono transition-colors hover:bg-primary/10"
             >
               {skill}
@@ -83,7 +83,6 @@ function ExperienceSectionComponent() {
     <section id="experience" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Header - Using a generic section title */}
           <div className="flex items-center gap-3 mb-8 group">
             <Terminal className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
             <h2 className="text-2xl font-bold font-mono text-foreground group-hover:text-primary transition-colors">
@@ -93,10 +92,8 @@ function ExperienceSectionComponent() {
 
           <div className="bg-black/40 rounded-lg border border-border p-6 mb-12 hover:border-primary/50 transition-colors">
             <div className="flex items-center gap-2 mb-6 group">
-              <Terminal className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
-              <h2 className="text-2xl font-bold font-mono text-foreground group-hover:text-primary transition-colors">
-                $ cat resume.md
-              </h2>
+              <Terminal size={18} className="group-hover:text-primary transition-colors" />
+              <span className="font-mono text-sm group-hover:text-primary transition-colors">$ cat resume.md</span>
             </div>
 
             <div className="space-y-8 text-foreground font-mono">

@@ -3,7 +3,6 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { AnimationProvider } from "@/components/ui/animation-provider";
 import { Analytics } from "@/components/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,7 +12,6 @@ import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { ConsoleProvider } from "@/components/ui/console-provider";
-import BackgroundEffects from "@/components/effects/BackgroundEffects";
 import { siteMetadata } from "@/lib/config/metadata";
 
 // Configure fonts
@@ -53,13 +51,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Suspense fallback={<LoadingFallback />}>
-            <AnimationProvider>
               <ConsoleProvider>
-                {/* Background elements */}
-                <Suspense fallback={null}>
-                  <BackgroundEffects />
-                </Suspense>
-
                 {/* Accessibility */}
                 <SkipLink />
 
@@ -97,7 +89,6 @@ export default function RootLayout({
                   <KonamiCode />
                 </Suspense>
               </ConsoleProvider>
-            </AnimationProvider>
           </Suspense>
         </ThemeProvider>
       </body>

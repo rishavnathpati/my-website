@@ -1,13 +1,10 @@
 'use client';
 
-import { memo, useRef, useCallback, useState, useEffect } from 'react';
+import { memo, useRef, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown, Terminal, Gamepad2 } from 'lucide-react';
-import { HeroParticles } from '@/components/effects/HeroParticles';
 import { typedStrings } from '@/lib/data/hero';
-import { useAnimations } from '@/components/ui/animation-provider';
-import { useTypewriter } from '@/lib/animations/hooks';
 
 // Memoized button component
 const ActionButton = memo(function ActionButton({ 
@@ -40,83 +37,35 @@ function HeroSectionComponent() {
   const heroContentRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
   const [isHoveringGamepad, setIsHoveringGamepad] = useState(false);
-  const { animationsEnabled } = useAnimations();
   
-  // Enhanced typewriter effect with variable speed
-  const { displayText, isTyping, cursor } = useTypewriter(typedStrings[0], {
-    speed: 50,
-    variableSpeed: true,
-    loop: true,
-    pauseEnd: 2000,
-    delayStart: 500
-  });
-
   // Memoized hover handlers
   const handleGamepadEnter = useCallback(() => setIsHoveringGamepad(true), []);
   const handleGamepadLeave = useCallback(() => setIsHoveringGamepad(false), []);
   
   // Manual tilt effect implementation
   const handleTiltMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tiltRef.current || !animationsEnabled) return;
+    if (!tiltRef.current) return;
     
     const rect = tiltRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
     
     tiltRef.current.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) scale(1.02)`;
-  }, [animationsEnabled]);
+  }, []);
   
   const handleTiltMouseLeave = useCallback(() => {
     if (!tiltRef.current) return;
     tiltRef.current.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)';
-  }, []);
-  
-  // Parallax effect for hero content
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
-  // Handle mouse move for parallax effect
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!animationsEnabled) return;
-    
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    
-    // Calculate mouse position relative to the center of the element
-    const x = clientX - left - width / 2;
-    const y = clientY - top - height / 2;
-    
-    setMousePosition({ x, y });
-  }, [animationsEnabled]);
-  
-  // Apply parallax effect
-  useEffect(() => {
-    if (!heroContentRef.current || !animationsEnabled) return;
-    
-    const parallaxX = mousePosition.x * 0.02;
-    const parallaxY = mousePosition.y * 0.02;
-    
-    heroContentRef.current.style.transform = `translate(${parallaxX}px, ${parallaxY}px)`;
-  }, [mousePosition, animationsEnabled]);
-
-  // Client-side animations
-  const [isClient, setIsClient] = useState(false);
-  
-  useEffect(() => {
-    setIsClient(true);
   }, []);
 
   return (
     <section
       id="hero"
       className="min-h-screen w-full flex flex-col justify-center items-center px-4 relative overflow-hidden"
-      onMouseMove={handleMouseMove}
     >
-      <HeroParticles />
-      
       <div 
         ref={heroContentRef}
-        className="z-10 max-w-4xl w-full transition-transform duration-100 ease-out backdrop-blur-sm" 
-        style={{ willChange: 'transform' }}
+        className="z-10 max-w-4xl w-full backdrop-blur-sm" 
       >
         {/* Section Header */}
         <div className="flex items-center gap-3 mb-6 group">
@@ -164,8 +113,7 @@ function HeroSectionComponent() {
               </h1>
               <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ current_role</p>
               <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
-                I'm <span className="text-foreground">{displayText}</span>
-                {cursor && isClient && <span className="text-primary animate-blink">|</span>}
+                I'm <span className="text-foreground">{typedStrings[0]}</span>
               </p>
               <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
