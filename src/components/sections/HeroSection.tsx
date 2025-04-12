@@ -1,155 +1,140 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Typed from 'typed.js';
+import { memo, useRef, useCallback, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown, Terminal, Gamepad2 } from 'lucide-react';
+import { HeroParticles } from '@/components/effects/HeroParticles';
+import { typedStrings } from '@/lib/data/hero';
+import { useAnimations } from '@/components/ui/animation-provider';
+import { useTypewriter } from '@/lib/animations/hooks';
 
-interface Particle {
-  x: number;
-  y: number;
-  size: number;
-  speedX: number;
-  speedY: number;
-  opacity: number;
-}
+// Memoized button component
+const ActionButton = memo(function ActionButton({ 
+  href, 
+  variant = 'default',
+  children 
+}: { 
+  href: string;
+  variant?: 'default' | 'outline';
+  children: React.ReactNode;
+}) {
+  return (
+    <Button 
+      asChild 
+      variant={variant}
+      size="lg" 
+      className="font-mono relative overflow-hidden group"
+    >
+      <Link href={href}>
+        <span className="relative z-10">{children}</span>
+        <div className={`absolute inset-0 ${
+          variant === 'default' ? 'bg-primary/10' : 'bg-primary/5'
+        } transform translate-y-full group-hover:translate-y-0 transition-transform duration-200`} />
+      </Link>
+    </Button>
+  );
+});
 
-export function HeroSection() {
-  const el = React.useRef(null);
-  const heroContentRef = React.useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const animationFrameId = useRef<number | null>(null);
+function HeroSectionComponent() {
+  const heroContentRef = useRef<HTMLDivElement>(null);
+  const tiltRef = useRef<HTMLDivElement>(null);
   const [isHoveringGamepad, setIsHoveringGamepad] = useState(false);
+  const { animationsEnabled } = useAnimations();
+  
+  // Enhanced typewriter effect with variable speed
+  const { displayText, isTyping, cursor } = useTypewriter(typedStrings[0], {
+    speed: 50,
+    variableSpeed: true,
+    loop: true,
+    pauseEnd: 2000,
+    delayStart: 500
+  });
 
-  // Particle system setup and animation
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    const createParticles = () => {
-      particlesRef.current = Array.from({ length: 50 }).map(() => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 1,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.5 + 0.1
-      }));
-    };
-
-    const animate = () => {
-      if (!ctx || !canvas) return;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particlesRef.current.forEach((particle, i) => {
-        // Update particle position
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-
-        // Mouse interaction
-        const dx = mouseRef.current.x - particle.x;
-        const dy = mouseRef.current.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 100) {
-          const angle = Math.atan2(dy, dx);
-          particle.x -= Math.cos(angle) * 0.5;
-          particle.y -= Math.sin(angle) * 0.5;
-        }
-
-        // Wrap around screen
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(var(--primary), ${particle.opacity})`;
-        ctx.fill();
-      });
-
-      animationFrameId.current = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = {
-        x: e.clientX,
-        y: e.clientY
-      };
-    };
-
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('mousemove', handleMouseMove);
+  // Memoized hover handlers
+  const handleGamepadEnter = useCallback(() => setIsHoveringGamepad(true), []);
+  const handleGamepadLeave = useCallback(() => setIsHoveringGamepad(false), []);
+  
+  // Manual tilt effect implementation
+  const handleTiltMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!tiltRef.current || !animationsEnabled) return;
     
-    resizeCanvas();
-    createParticles();
-    animate();
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
+    const rect = tiltRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+    
+    tiltRef.current.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) scale(1.02)`;
+  }, [animationsEnabled]);
+  
+  const handleTiltMouseLeave = useCallback(() => {
+    if (!tiltRef.current) return;
+    tiltRef.current.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)';
   }, []);
-
-  // Typed.js effect
-  React.useEffect(() => {
-    if (!el.current) return;
+  
+  // Parallax effect for hero content
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Handle mouse move for parallax effect
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!animationsEnabled) return;
     
-    const typed = new Typed(el.current, {
-      strings: [
-        'a Software Engineer',
-        'an Interactive Media Developer @ Convai',
-        'a Unity GameDev | 2D | 3D | AR/VR |',
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    
+    // Calculate mouse position relative to the center of the element
+    const x = clientX - left - width / 2;
+    const y = clientY - top - height / 2;
+    
+    setMousePosition({ x, y });
+  }, [animationsEnabled]);
+  
+  // Apply parallax effect
+  useEffect(() => {
+    if (!heroContentRef.current || !animationsEnabled) return;
+    
+    const parallaxX = mousePosition.x * 0.02;
+    const parallaxY = mousePosition.y * 0.02;
+    
+    heroContentRef.current.style.transform = `translate(${parallaxX}px, ${parallaxY}px)`;
+  }, [mousePosition, animationsEnabled]);
 
-      ],
-      typeSpeed: 70,
-      backSpeed: 50,
-      backDelay: 3000,
-      startDelay: 1000,
-      loop: true,
-      smartBackspace: false,
-    });
-
-    return () => {
-      typed.destroy();
-    };
+  // Client-side animations
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
   }, []);
 
   return (
     <section
       id="hero"
       className="min-h-screen w-full flex flex-col justify-center items-center px-4 relative overflow-hidden"
+      onMouseMove={handleMouseMove}
     >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-0"
-        style={{ opacity: 0.6 }}
-      />
+      <HeroParticles />
       
       <div 
-        ref={heroContentRef} 
+        ref={heroContentRef}
         className="z-10 max-w-4xl w-full transition-transform duration-100 ease-out backdrop-blur-sm" 
         style={{ willChange: 'transform' }}
       >
-        <div className="bg-black/40 rounded-lg border border-border p-6 mb-8 relative overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"
+        {/* Section Header */}
+        <div className="flex items-center gap-3 mb-6 group">
+          <Terminal className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+          <h2 className="text-2xl font-bold font-mono text-foreground group-hover:text-primary transition-colors">
+            home
+          </h2>
+        </div>
+        
+        <div 
+          ref={tiltRef}
+          className="bg-black/40 rounded-lg border border-border p-6 mb-8 relative overflow-hidden group hover:border-primary/50 transition-colors"
+          onMouseMove={handleTiltMouseMove}
+          onMouseLeave={handleTiltMouseLeave}
+        >
+          {/* Animated gradient background */}
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none transition-opacity group-hover:opacity-75"
             style={{
               maskImage: 'radial-gradient(circle at center, black, transparent)',
               WebkitMaskImage: 'radial-gradient(circle at center, black, transparent)'
@@ -157,51 +142,39 @@ export function HeroSection() {
           />
           
           <div className="relative">
-            <div className="flex items-center gap-2 mb-4 text-muted-foreground">
-              <Terminal size={20} />
-              <span className="text-sm font-mono">portfolio.sh</span>
+            <div className="flex items-center gap-2 mb-4 text-muted-foreground group">
+              <Terminal size={20} className="group-hover:text-primary transition-colors" />
+              <span className="text-sm font-mono group-hover:text-primary transition-colors">portfolio.sh</span>
             </div>
             
             <div className="font-mono">
-              <div className="flex items-center gap-2 mb-2">
-                <p className="text-muted-foreground">$ whoami</p>
+              <div className="flex items-center gap-2 mb-2 group">
+                <p className="text-muted-foreground group-hover:text-primary transition-colors">$ whoami</p>
                 <Gamepad2 
                   size={20} 
-                  className={`text-primary transition-all duration-300 cursor-pointer ${isHoveringGamepad ? 'rotate-12 scale-110' : ''}`}
-                  onMouseEnter={() => setIsHoveringGamepad(true)}
-                  onMouseLeave={() => setIsHoveringGamepad(false)}
+                  className={`text-primary transition-all duration-300 cursor-pointer ${
+                    isHoveringGamepad ? 'rotate-12 scale-110' : ''
+                  }`}
+                  onMouseEnter={handleGamepadEnter}
+                  onMouseLeave={handleGamepadLeave}
                 />
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary bg-clip-text">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary bg-clip-text hover:text-primary/90 transition-colors">
                 Rishav Nath Pati
               </h1>
-               <p className="text-muted-foreground mb-2">$ current_role</p>
-               <p className="text-lg sm:text-xl md:text-2xl mb-6">
-                 I'm <span ref={el} className="text-foreground"></span>
-               </p>
-               <p className="text-muted-foreground mb-2">$ next_action</p>
+              <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ current_role</p>
+              <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
+                I'm <span className="text-foreground">{displayText}</span>
+                {cursor && isClient && <span className="text-primary animate-blink">|</span>}
+              </p>
+              <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="font-mono relative overflow-hidden group"
-                >
-                  <Link href="#portfolio">
-                    <span className="relative z-10">view_portfolio.exe</span>
-                    <div className="absolute inset-0 bg-primary/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200" />
-                  </Link>
-                </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
-                  className="font-mono relative overflow-hidden group"
-                >
-                  <Link href="#contact-cta">
-                    <span className="relative z-10">contact_me.sh</span>
-                    <div className="absolute inset-0 bg-primary/5 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200" />
-                  </Link>
-                </Button>
+                <div>
+                  <ActionButton href="#portfolio">view_portfolio.sh</ActionButton>
+                </div>
+                <div>
+                  <ActionButton href="#contact-cta" variant="outline">contact_me.sh</ActionButton>
+                </div>
               </div>
             </div>
           </div>
@@ -209,10 +182,17 @@ export function HeroSection() {
       </div>
 
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-        <Link href="#about" aria-label="Scroll down to about section">
-          <ArrowDown className="w-6 h-6 text-muted-foreground hover:text-primary transition-colors animate-bounce-slow" />
+        <Link 
+          href="#about" 
+          aria-label="Scroll down to about section"
+          className="group"
+        >
+          <ArrowDown className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors animate-bounce-slow" />
         </Link>
       </div>
     </section>
   );
 }
+
+// Export memoized component
+export const HeroSection = memo(HeroSectionComponent);

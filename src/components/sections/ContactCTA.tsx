@@ -1,64 +1,91 @@
-// Removed 'use client'
+'use client';
 
+import { memo, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mail, Terminal, MessageSquare, Send, Laptop, Phone, MapPin } from 'lucide-react';
-// Removed motion import
+import { Mail, Terminal } from 'lucide-react';
+import { contactInfo, type ContactInfo } from '@/lib/data/contact';
 
-// Removed animation variants
-
-export function ContactCTA() {
+// Memoized contact item component
+const ContactItem = memo(function ContactItem({ info }: { info: ContactInfo }) {
+  const Icon = info.icon;
+  
   return (
-    // Removed motion wrapper
+    <div className="flex items-center gap-2 mb-3 group">
+      <Icon className={`w-4 h-4 text-primary transition-transform group-hover:scale-110 ${
+        info.isPrimary ? 'animate-pulse' : ''
+      }`} />
+      <span className={`${
+        info.isPrimary ? 'text-foreground' : 'text-muted-foreground'
+      } transition-colors group-hover:text-primary`}>
+        {info.text}
+      </span>
+    </div>
+  );
+});
+
+function ContactCTAComponent() {
+  // Memoize contact info to prevent unnecessary re-renders
+  const memoizedContactInfo = useMemo(() => contactInfo, []);
+
+  return (
     <section
       id="contact-cta"
       className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-black/30 rounded-lg border border-border p-6">
-            <div className="flex items-center gap-2 mb-6">
-              <Terminal className="w-5 h-5 text-primary" />
-              <span className="font-mono text-sm text-muted-foreground">contact.sh</span>
+          {/* Section Header */}
+          <div className="flex items-center gap-3 mb-6 group">
+            <Terminal className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+            <h2 className="text-2xl font-bold font-mono text-foreground group-hover:text-primary transition-colors">
+              contact
+            </h2>
+          </div>
+
+          <div className="bg-black/30 rounded-lg border border-border p-6 hover:border-primary/50 transition-colors">
+            <div className="flex items-center gap-2 mb-6 group">
+              <Terminal className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+              <span className="font-mono text-sm group-hover:text-primary transition-colors">contact.sh</span>
             </div>
 
-            {/* Re-added data-aos */}
-            <div className="space-y-6" data-aos="fade-up">
+            <div className="space-y-6">
               <div className="font-mono">
-                <p className="text-muted-foreground mb-2">$ echo "status"</p>
-                <p className="text-foreground mb-4 pl-4">
-                  <span className="text-green-500">●</span> Available for freelance projects and collaborations
+                <div className="text-muted-foreground mb-2 group">
+                  <span className="group-hover:text-primary transition-colors">$ echo "status"</span>
+                </div>
+                <p className="text-foreground mb-4 pl-4 group hover:bg-primary/5 rounded transition-colors">
+                  <span className="text-green-500 animate-pulse">●</span>
+                  <span className="ml-2 group-hover:text-primary transition-colors">
+                    Available for freelance projects and collaborations
+                  </span>
                 </p>
 
-                <p className="text-muted-foreground mb-2">$ cat contact_info.txt</p>
-                <div className="bg-black/20 rounded border border-border/50 p-4 mb-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <MessageSquare className="w-4 h-4 text-primary" />
-                    <span className="text-foreground">Let's create something amazing together!</span>
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Laptop className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">Open for: Game Dev, XR, AR/VR, AI Integration, Interactive Media</span>
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Phone className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">Phone: +91 9123877594</span>
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">Kalyani, West Bengal, India</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Send className="w-4 h-4 text-primary" />
-                    {/* Corrected: Use < for less than sign */}
-                    <span className="text-muted-foreground">Response Time: &lt; 24 hours</span>
-                  </div>
+                <div className="text-muted-foreground mb-2 group">
+                  <span className="group-hover:text-primary transition-colors">$ cat contact_info.txt</span>
+                </div>
+                <div className="bg-black/20 rounded border border-border/50 p-4 mb-6 hover:border-primary/50 transition-colors">
+                  {memoizedContactInfo.map((info, index) => (
+                    <ContactItem key={index} info={info} />
+                  ))}
                 </div>
 
-                <p className="text-muted-foreground mb-2">$ ./send_message.sh</p>
+                <div className="text-muted-foreground mb-2 group">
+                  <span className="group-hover:text-primary transition-colors">$ ./send_message.sh</span>
+                </div>
                 <div className="pl-4">
-                  <Button size="lg" asChild className="font-mono">
-                    <a href="mailto:patirishavnath@gmail.com">
-                      <Mail className="mr-2 h-5 w-5" /> initialize_conversation.js
+                  <Button 
+                    size="lg" 
+                    asChild 
+                    className="font-mono transition-transform hover:scale-105 hover:shadow-lg"
+                  >
+                    <a 
+                      href="mailto:patirishavnath@gmail.com"
+                      className="flex items-center"
+                    >
+                      <Mail className="mr-2 h-5 w-5 transition-transform group-hover:rotate-12" />
+                      <span className="relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all hover:after:w-full">
+                        initialize_conversation.js
+                      </span>
                     </a>
                   </Button>
                 </div>
@@ -68,6 +95,8 @@ export function ContactCTA() {
         </div>
       </div>
     </section>
-    // Removed closing motion.div
   );
 }
+
+// Export memoized component
+export const ContactCTA = memo(ContactCTAComponent);

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { Suspense } from "react";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
@@ -14,50 +14,23 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { ConsoleProvider } from "@/components/ui/console-provider";
 import BackgroundEffects from "@/components/effects/BackgroundEffects";
+import { siteMetadata } from "@/lib/config/metadata";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
+// Configure fonts
+const fontSans = GeistSans;
+const fontMono = GeistMono;
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: "Rishav Nath Pati | Game & Interactive Media Developer",
-  description: "Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.",
-  openGraph: {
-    title: 'Rishav Nath Pati | Game & Interactive Media Developer',
-    description: 'Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.',
-    url: '/',
-    siteName: 'Rishav Nath Pati Portfolio',
-    images: [
-      {
-        url: '/profile-img.jpg',
-        width: 800,
-        height: 800,
-        alt: 'Rishav Nath Pati',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Rishav Nath Pati | Game & Interactive Media Developer',
-    description: 'Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.',
-    images: ['/profile-img.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
+// Export metadata
+export const metadata = siteMetadata;
+
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -65,7 +38,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+    <html 
+      lang="en" 
+      className={`${fontSans.variable} ${fontMono.variable}`} 
+      suppressHydrationWarning
+    >
       <head />
       <body className="font-sans bg-background text-foreground">
         <ThemeProvider
@@ -75,23 +52,53 @@ export default function RootLayout({
           forcedTheme="dark"
           disableTransitionOnChange
         >
-          <AnimationProvider>
-            <ConsoleProvider>
-              <BackgroundEffects />
-              <SkipLink />
-              <Header />
-              <ScrollToTop />
+          <Suspense fallback={<LoadingFallback />}>
+            <AnimationProvider>
+              <ConsoleProvider>
+                {/* Background elements */}
+                <Suspense fallback={null}>
+                  <BackgroundEffects />
+                </Suspense>
 
-              <main id="main" className="lg:ml-[300px] relative z-[2]" tabIndex={-1}>
-                {children}
-                <Footer />
-              </main>
-              <Analytics />
-              <Toaster />
-              <TailwindIndicator />
-              <KonamiCode />
-            </ConsoleProvider>
-          </AnimationProvider>
+                {/* Accessibility */}
+                <SkipLink />
+
+                {/* Navigation */}
+                <Header />
+
+                {/* Utility components */}
+                <Suspense fallback={null}>
+                  <ScrollToTop />
+                </Suspense>
+
+                {/* Main content */}
+                <main 
+                  id="main" 
+                  className="lg:ml-[300px] relative z-[2]" 
+                  tabIndex={-1}
+                >
+                  {children}
+                  <Footer />
+                </main>
+
+                {/* Analytics and utilities */}
+                <Suspense fallback={null}>
+                  <Analytics />
+                </Suspense>
+                <Toaster />
+                
+                {/* Development utilities */}
+                {process.env.NODE_ENV === 'development' && (
+                  <TailwindIndicator />
+                )}
+
+                {/* Easter eggs */}
+                <Suspense fallback={null}>
+                  <KonamiCode />
+                </Suspense>
+              </ConsoleProvider>
+            </AnimationProvider>
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>
