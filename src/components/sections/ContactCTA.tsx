@@ -1,8 +1,14 @@
+// Removed 'use client'
+
 import { Button } from '@/components/ui/button';
 import { Mail, Terminal, MessageSquare, Send, Laptop, Phone, MapPin } from 'lucide-react';
+// Removed motion import
+
+// Removed animation variants
 
 export function ContactCTA() {
   return (
+    // Removed motion wrapper
     <section
       id="contact-cta"
       className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm"
@@ -15,6 +21,7 @@ export function ContactCTA() {
               <span className="font-mono text-sm text-muted-foreground">contact.sh</span>
             </div>
 
+            {/* Re-added data-aos */}
             <div className="space-y-6" data-aos="fade-up">
               <div className="font-mono">
                 <p className="text-muted-foreground mb-2">$ echo "status"</p>
@@ -42,6 +49,7 @@ export function ContactCTA() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Send className="w-4 h-4 text-primary" />
+                    {/* Corrected: Use < for less than sign */}
                     <span className="text-muted-foreground">Response Time: &lt; 24 hours</span>
                   </div>
                 </div>
@@ -60,5 +68,6 @@ export function ContactCTA() {
         </div>
       </div>
     </section>
+    // Removed closing motion.div
   );
 }

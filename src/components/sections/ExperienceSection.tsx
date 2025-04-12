@@ -1,7 +1,13 @@
+// Removed 'use client'
+
 import React from 'react';
 import { Briefcase, Terminal, GraduationCap, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+// Removed motion import
 
+// Removed animation variants
+
+// Interfaces (keep as before)
 interface ExperienceItem {
   title: string;
   company: string;
@@ -19,6 +25,7 @@ interface EducationItem {
   description: string;
 }
 
+// Data (keep as before)
 const professionalExperience: ExperienceItem[] = [
   {
     title: "Interactive Media Developer",
@@ -85,6 +92,7 @@ const education: EducationItem[] = [
 
 export function ExperienceSection() {
   return (
+    // Removed motion wrapper
     <section id="experience" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
@@ -93,14 +101,13 @@ export function ExperienceSection() {
               <Terminal className="w-5 h-5 text-primary" />
               <h2 className="text-2xl font-bold font-mono text-foreground">
                 cat resume.md
-               </h2>
-             </div>
+              </h2>
+            </div>
 
-             {/* Added font-mono, changed text color */}
-             <div className="space-y-8 text-foreground font-mono">
-               <p className="leading-relaxed mb-6">
-                 Detail-oriented and innovative Interactive Media Developer with a passion for game development and extensive experience in developing user-centered digital content. Skilled in Unity, C#, Python, Java, C, and C++, with a proven track record of creating engaging games and applications. Committed to leveraging problem-solving skills and technical expertise to deliver high-performing interactive media solutions.
-               </p>
+            <div className="space-y-8 text-foreground font-mono">
+              <p className="leading-relaxed mb-6">
+                Detail-oriented and innovative Interactive Media Developer with a passion for game development and extensive experience in developing user-centered digital content. Skilled in Unity, C#, Python, Java, C, and C++, with a proven track record of creating engaging games and applications. Committed to leveraging problem-solving skills and technical expertise to deliver high-performing interactive media solutions.
+              </p>
 
               {/* Professional Experience */}
               <div>
@@ -110,26 +117,22 @@ export function ExperienceSection() {
                     Professional Experience
                   </h3>
                 </div>
-
                 <div className="space-y-8">
                   {professionalExperience.map((exp, index) => (
-                   <div key={index} className="border-l border-border pl-5 relative">
-                     <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2"></div>
-                     <div className="flex flex-col sm:flex-row sm:justify-between mb-2">
-                       {/* Added font-mono */}
-                       <h4 className="text-lg font-semibold text-foreground font-mono">{exp.title}</h4>
-                       <div className="flex items-center text-sm text-primary">
-                         <Calendar className="w-3 h-3 mr-1" />
-                         <span>{exp.period}</span>
+                    <div key={index} className="border-l border-border pl-5 relative">
+                      <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2"></div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-2">
+                        <h4 className="text-lg font-semibold text-foreground font-mono">{exp.title}</h4>
+                        <div className="flex items-center text-sm text-primary">
+                          <Calendar className="w-3 h-3 mr-1" />
+                          <span>{exp.period}</span>
                         </div>
-                     </div>
-                     {/* Kept company/location muted for contrast */}
-                     <div className="text-sm text-muted-foreground mb-2">{exp.company} | {exp.location}</div>
-                     {/* Added font-mono, changed text color */}
-                     <ul className="list-disc pl-4 space-y-1 mb-3 text-sm font-mono text-foreground">
-                       {exp.description.map((desc, i) => (
-                         <li key={i}>{desc}</li>
-                       ))}
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">{exp.company} | {exp.location}</div>
+                      <ul className="list-disc pl-4 space-y-1 mb-3 text-sm font-mono text-foreground">
+                        {exp.description.map((desc, i) => (
+                          <li key={i}>{desc}</li>
+                        ))}
                       </ul>
                       {exp.skills && (
                         <div className="flex flex-wrap gap-2 mt-3">
@@ -151,25 +154,21 @@ export function ExperienceSection() {
                     Education
                   </h3>
                 </div>
-
                 <div className="space-y-8">
                   {education.map((edu, index) => (
-                   <div key={index} className="border-l border-border pl-5 relative">
-                     <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2"></div>
-                     <div className="flex flex-col sm:flex-row sm:justify-between mb-2">
-                       {/* Added font-mono */}
-                       <h4 className="text-lg font-semibold text-foreground font-mono">{edu.degree}</h4>
-                       <div className="flex items-center text-sm text-primary">
-                         <Calendar className="w-3 h-3 mr-1" />
-                         <span>{edu.period}</span>
-                       </div>
-                     </div>
-                     {/* Kept institution/location muted for contrast */}
-                     <div className="text-sm text-muted-foreground mb-2">{edu.institution} | {edu.location}</div>
-                     {/* Added font-mono */}
-                     <p className="text-sm font-mono">{edu.description}</p>
-                   </div>
-                 ))}
+                    <div key={index} className="border-l border-border pl-5 relative">
+                      <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2"></div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-2">
+                        <h4 className="text-lg font-semibold text-foreground font-mono">{edu.degree}</h4>
+                        <div className="flex items-center text-sm text-primary">
+                          <Calendar className="w-3 h-3 mr-1" />
+                          <span>{edu.period}</span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">{edu.institution} | {edu.location}</div>
+                      <p className="text-sm font-mono">{edu.description}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -177,5 +176,6 @@ export function ExperienceSection() {
         </div>
       </div>
     </section>
+    // Removed closing motion.div
   );
 }

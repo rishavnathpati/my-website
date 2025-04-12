@@ -1,4 +1,4 @@
-'use client';
+'use client'; // Was already client component
 
 import { useState, useEffect } from 'react';
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +7,9 @@ import { Terminal, Code2, Command, Volume2, VolumeX } from "lucide-react";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { useConsole } from "@/components/ui/console-provider";
 import { soundManager } from "@/lib/utils/sound";
+// Removed motion import
+
+// Removed animation variants
 
 // Effect for sound toggle
 const toggleSound = (enabled: boolean) => {
@@ -24,11 +27,8 @@ export function SkillsSection() {
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (isLoading) return;
-
-      // Find current category and skill indices
       let currentCatIndex = -1;
       let currentSkillIndex = -1;
-
       skillCategories.forEach((cat, catIdx) => {
         const skillIdx = cat.skills.findIndex(s => s.name === selectedSkill);
         if (skillIdx !== -1) {
@@ -36,39 +36,25 @@ export function SkillsSection() {
           currentSkillIndex = skillIdx;
         }
       });
-
-      // Handle sound toggle with 'M' key
       if (e.key.toLowerCase() === 'm') {
         setSoundEnabled(!soundEnabled);
         toggleSound(!soundEnabled);
         log(`Sound effects ${!soundEnabled ? 'enabled' : 'disabled'}`);
         return;
       }
-
-      // Tab key for navigation (more reliable than arrows)
       if (e.key === 'Tab') {
         e.preventDefault();
-        
-        // Find the next skill to select
         let nextSkill = null;
-        
-        // If we already have a selection
         if (selectedSkill) {
           let foundCurrent = false;
           let foundNext = false;
-          
-          // Loop through all categories and skills to find the next one after current
           outerLoop: for (let catIdx = 0; catIdx < skillCategories.length; catIdx++) {
             for (let skillIdx = 0; skillIdx < skillCategories[catIdx].skills.length; skillIdx++) {
               const skill = skillCategories[catIdx].skills[skillIdx];
-              
-              // If we found the current skill, mark it and continue to find the next
               if (skill.name === selectedSkill) {
                 foundCurrent = true;
                 continue;
               }
-              
-              // If we already found the current, this is our next skill
               if (foundCurrent) {
                 nextSkill = skill;
                 foundNext = true;
@@ -76,35 +62,29 @@ export function SkillsSection() {
               }
             }
           }
-          
-          // If we went through all skills and didn't find next, loop to beginning
           if (!foundNext) {
             nextSkill = skillCategories[0].skills[0];
           }
         } else {
-          // If no selection yet, select the first skill
           nextSkill = skillCategories[0].skills[0];
         }
-        
         if (nextSkill) {
           setSelectedSkill(nextSkill.name);
           log(`Selected: ${nextSkill.name}`);
           soundManager.play('select');
         }
       }
-      
-      // Escape key for clearing selection
       if (e.key === 'Escape' && selectedSkill) {
         setSelectedSkill(null);
         log('Selection cleared');
         soundManager.play('hover');
       }
     };
-
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [selectedSkill, isLoading, log, soundEnabled]);
 
+  // Loading simulation effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -112,8 +92,6 @@ export function SkillsSection() {
           if (entry.isIntersecting) {
             setIsLoading(true);
             log('Initializing skill tree...');
-            
-            // Simulate loading time for game-like feel
             setTimeout(() => {
               setIsLoading(false);
               success('Skill tree data loaded successfully');
@@ -124,19 +102,19 @@ export function SkillsSection() {
       },
       { threshold: 0.2 }
     );
-
     const section = document.getElementById('skills');
     if (section) {
       observer.observe(section);
     }
-
     return () => observer.disconnect();
   }, [log, success]);
 
+
   return (
+    // Removed motion wrapper
     <section id="skills" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm relative">
       <LoadingOverlay isLoading={isLoading} text="Loading Skill Tree" />
-      
+
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Keyboard controls hint */}
@@ -179,39 +157,39 @@ export function SkillsSection() {
               )}
             </button>
           </div>
-          
+
           <div className="bg-black/30 rounded-lg border border-border p-8 relative overflow-hidden">
             {/* Terminal-like header */}
             <div className="flex items-center gap-2 mb-6 text-muted-foreground">
               <Terminal size={18} className="text-muted-foreground" />
               <span className="font-mono text-sm">cat skills_overview.md</span>
-             </div>
+            </div>
 
-             {/* Description with typing animation - Changed text color */}
-             <p className="text-foreground leading-relaxed mb-10 font-mono">
-               As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years
-               specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in
+            {/* Description */}
+            <p className="text-foreground leading-relaxed mb-10 font-mono">
+              As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years
+              specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in
               crafting immersive experiences that captivate users through engaging gameplay, stunning visuals, and intuitive UI design.
             </p>
 
-            {/* Skills grid with game-like styling */}
+            {/* Skills grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {skillCategories.map((category, index) => (
                 <div
                   key={category.title}
                   className={`bg-black/20 rounded-lg border border-border/50 overflow-hidden ${
-                    isLoading ? 'opacity-0' : 'opacity-100'
+                    isLoading ? 'opacity-0' : 'opacity-100' // Keep existing loading opacity
                   }`}
                 >
-                  {/* Category header with game UI style */}
+                  {/* Category header */}
                   <div className="border-b border-border/50 px-4 py-2 flex items-center gap-2 bg-black/40">
                     <span className="font-mono text-sm text-primary">{category.icon}</span>
                     <h3 className="font-mono text-sm text-foreground">
                       {category.title}
                     </h3>
                   </div>
-                  
-                  {/* Skills list with hover effects */}
+
+                  {/* Skills list */}
                   <div className="p-6 space-y-4">
                     {category.skills.map((skill, skillIndex) => (
                       <div
@@ -229,18 +207,16 @@ export function SkillsSection() {
                           }
                         }}
                       >
-                        
                         <div className="flex items-center justify-between w-full relative">
                           <div className="flex items-center gap-2">
                             {skill.icon && (
                               <span className="text-lg">
-                                 {skill.icon}
-                               </span>
-                             )}
-                             {/* Changed text color */}
-                             <span className="font-mono text-sm text-foreground">
-                               {skill.name}
-                             </span>
+                                {skill.icon}
+                              </span>
+                            )}
+                            <span className="font-mono text-sm text-foreground">
+                              {skill.name}
+                            </span>
                           </div>
                           <span className="text-xs text-primary/60">Level {skill.level}/5</span>
                         </div>
@@ -254,5 +230,6 @@ export function SkillsSection() {
         </div>
       </div>
     </section>
+    // Removed closing motion.div
   );
 }

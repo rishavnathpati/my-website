@@ -1,4 +1,4 @@
-'use client';
+'use client'; // Was already client component
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -7,11 +7,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { highlightedPortfolioItems } from "@/lib/data/portfolio";
 import { ArrowRight, Github, ExternalLink, FolderGit2, GitBranch, Star, GitFork, ChevronDown, ChevronUp } from 'lucide-react';
+// Removed motion import
+
+// Removed animation variants
 
 export function PortfolioHighlights() {
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null); // Keep state
 
   return (
+    // Removed motion wrapper
     <section id="portfolio" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto mb-12">
@@ -26,7 +30,7 @@ export function PortfolioHighlights() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {highlightedPortfolioItems.map((item, index) => {
                 const isExpanded = expandedItem === item.slug;
-                
+
                 return (
                   <div
                     key={item.slug}
@@ -34,7 +38,7 @@ export function PortfolioHighlights() {
                       isExpanded ? 'md:col-span-2' : ''
                     } hover:border-primary/50`}
                   >
-                    <div 
+                    <div
                       className="border-b border-border/50 p-4 cursor-pointer"
                       onClick={() => setExpandedItem(isExpanded ? null : item.slug)}
                     >
@@ -46,21 +50,19 @@ export function PortfolioHighlights() {
                               {item.title}
                             </h3>
                           </div>
-                          {/* Changed text color */}
                           <p className={`text-sm text-foreground font-mono ${isExpanded ? '' : 'line-clamp-2'}`}>
                             {item.description}
                           </p>
                         </div>
                         <div className="flex flex-col items-end gap-3">
-                           {/* Changed text color */}
                           <div className="flex items-center gap-3 text-foreground">
                             <div className="flex items-center gap-1">
                               <Star className="w-4 h-4" />
-                              <span className="text-sm font-mono">24</span>
+                              <span className="text-sm font-mono">24</span> {/* Placeholder */}
                             </div>
                             <div className="flex items-center gap-1">
                               <GitFork className="w-4 h-4" />
-                              <span className="text-sm font-mono">8</span>
+                              <span className="text-sm font-mono">8</span> {/* Placeholder */}
                             </div>
                           </div>
                           {isExpanded ? (
@@ -72,6 +74,7 @@ export function PortfolioHighlights() {
                       </div>
                     </div>
 
+                    {/* Expandable content */}
                     <div className={isExpanded ? 'block' : 'hidden'}>
                       {isExpanded && (
                         <div className="aspect-video overflow-hidden border-b border-border/50">
@@ -85,7 +88,6 @@ export function PortfolioHighlights() {
                           />
                         </div>
                       )}
-
                       <div className="p-4">
                         <div className="flex flex-wrap gap-2 mb-4">
                           {item.tags.map((tag) => (
@@ -94,14 +96,12 @@ export function PortfolioHighlights() {
                             </Badge>
                           ))}
                         </div>
-
                         <div className="flex justify-between items-center">
                           <Button variant="ghost" size="sm" asChild className="font-mono text-xs">
                             <Link href={item.detailsUrl || '#'}>
                               view_details.md <ArrowRight className="ml-1 h-3 w-3" />
                             </Link>
                           </Button>
-
                           <div className="flex items-center gap-2">
                             {item.githubUrl && (
                               <Button variant="outline" size="icon" className="h-8 w-8" asChild>
@@ -137,5 +137,6 @@ export function PortfolioHighlights() {
         </div>
       </div>
     </section>
+    // Removed closing motion.div
   );
 }

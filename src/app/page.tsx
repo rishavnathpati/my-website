@@ -1,24 +1,22 @@
+  // No 'use client' directive needed here
+
 import { HeroSection } from '@/components/sections/HeroSection';
-import { AboutSection } from '@/components/sections/AboutSection';
-import { ExperienceSection } from '@/components/sections/ExperienceSection';
-import { SkillsSection } from '@/components/sections/SkillsSection';
-import { PortfolioHighlights } from '@/components/sections/PortfolioHighlights';
-import { BlogHighlights } from '@/components/sections/BlogHighlights';
-import { ContactCTA } from '@/components/sections/ContactCTA';
+import { AnimatedSections } from '@/components/sections/AnimatedSections'; // Import the new client component
+import { getSortedPostsData } from '@/lib/blog'; // Import data fetching function
+// Removed individual section imports as they are now handled by AnimatedSections
 
 export default function Home() {
+  // Fetch recent posts data here
+  const recentPosts = getSortedPostsData().slice(0, 3);
+
   return (
-    <main className="flex flex-col">
+    <div className="flex flex-col">
       <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <PortfolioHighlights />
-      <BlogHighlights />
-      <ContactCTA />
+      {/* Render all animated sections via the client component, passing posts data */}
+      <AnimatedSections recentPosts={recentPosts} />
 
       {/* Add padding below the last section */}
       <div className="h-20"></div>
-    </main>
+    </div>
   );
 }
