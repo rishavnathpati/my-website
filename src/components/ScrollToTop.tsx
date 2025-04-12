@@ -53,13 +53,18 @@ export function ScrollToTop() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div
+      className="fixed bottom-8 right-8 z-50 cursor-pointer group"
+      onClick={scrollToTop}
+      title="Click to scroll to top"
+      aria-label="Scroll to top"
+    >
       <div className="relative h-12 w-12">
-        {/* Progress Circle */}
         <svg
-          className="absolute inset-0 -rotate-90"
+          className="absolute inset-0"
           viewBox="0 0 100 100"
         >
+          {/* Background circle */}
           <circle
             className="text-muted stroke-current"
             strokeWidth="4"
@@ -68,6 +73,7 @@ export function ScrollToTop() {
             cx="50"
             cy="50"
           />
+          {/* Progress circle */}
           <circle
             className="text-primary stroke-current"
             strokeWidth="4"
@@ -76,24 +82,40 @@ export function ScrollToTop() {
             r="44"
             cx="50"
             cy="50"
+            transform="rotate(-90 50 50)"
             style={{
-              strokeDasharray: 276.46, // Pre-calculated 2 * Math.PI * 44
+              strokeDasharray: 276.46,
               strokeDashoffset: 276.46 * (1 - scrollProgress / 100),
             }}
           />
+          {/* Up arrow */}
+          <g className="stroke-current text-foreground group-hover:text-primary transition-colors">
+            <line
+              x1="50"
+              y1="65"
+              x2="50"
+              y2="35"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <line
+              x1="35"
+              y1="50"
+              x2="50"
+              y2="35"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <line
+              x1="65"
+              y1="50"
+              x2="50"
+              y2="35"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+          </g>
         </svg>
-        
-        {/* Button - positioned in center of progress circle */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Button
-            onClick={scrollToTop}
-            size="icon"
-            className="h-8 w-8 rounded-full bg-black/30 backdrop-blur-sm border border-border hover:border-primary hover:bg-black/50 transition-colors"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-4 w-4" />
-          </Button>
-        </div>
       </div>
     </div>
   );

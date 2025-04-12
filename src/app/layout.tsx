@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-// Removed no-animations.css import to enable animations by default
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnimationProvider } from "@/components/ui/animation-provider";
@@ -15,8 +14,6 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { ConsoleProvider } from "@/components/ui/console-provider";
 import BackgroundEffects from "@/components/effects/BackgroundEffects";
-
-// Geist fonts are configured via Tailwind variables
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
 
@@ -71,7 +68,6 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head />
       <body className="font-sans bg-background text-foreground">
-        {/* Force dark theme only */}
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -81,7 +77,6 @@ export default function RootLayout({
         >
           <AnimationProvider>
             <ConsoleProvider>
-              {/* Background Effects */}
               <BackgroundEffects />
               <SkipLink />
               <Header />

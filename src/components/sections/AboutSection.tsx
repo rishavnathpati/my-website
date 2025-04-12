@@ -1,12 +1,7 @@
-// Removed 'use client'
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Download, Mail, MapPin, Calendar, UserCheck, Briefcase, Code2, Terminal, Phone, Globe2, Cake } from 'lucide-react';
-// Removed motion import
-
-// Removed animation variants
 
 const calculateAge = (birthDate: string): number => {
   const today = new Date();
@@ -24,12 +19,9 @@ export function AboutSection() {
   const age = calculateAge(dob);
 
   return (
-    // Removed motion wrapper
     <section id="about" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          {/* Column 1: Image and Details */}
-          {/* Re-added data-aos */}
           <div className="lg:col-span-1" data-aos="fade-right">
             <div className="bg-black/30 rounded-lg border border-border p-6">
               <div className="flex justify-center mb-6">
@@ -43,49 +35,47 @@ export function AboutSection() {
                 />
               </div>
               <div className="space-y-4 font-mono">
-                 {/* Details list */}
-                 <div className="flex items-center space-x-3 text-sm">
-                    <Calendar className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">birthday: <span className="text-foreground">3 May 2001</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Cake className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">age: <span className="text-foreground">{age}</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">location: <span className="text-foreground">Kolkata, West Bengal, India</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Phone className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">phone: <span className="text-foreground">+91 9123877594</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <UserCheck className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">degree: <span className="text-foreground">Masters in Computer Application</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Code2 className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">role: <span className="text-foreground">Game & Interactive Media Developer</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Mail className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">email: <span className="text-foreground">patirishavnath@gmail.com</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Globe2 className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">website: <span className="text-foreground">patirishavnath.github.io</span></span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Briefcase className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">freelance: <span className="text-green-500">available</span></span>
-                  </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Calendar className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">birthday: <span className="text-foreground">3 May 2001</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Cake className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">age: <span className="text-foreground">{age}</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">location: <span className="text-foreground">Kolkata, West Bengal, India</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Phone className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">phone: <span className="text-foreground">+91 9123877594</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <UserCheck className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">degree: <span className="text-foreground">Masters in Computer Application</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Code2 className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">role: <span className="text-foreground">Game & Interactive Media Developer</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Mail className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">email: <span className="text-foreground">patirishavnath@gmail.com</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Globe2 className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">website: <span className="text-foreground">patirishavnath.github.io</span></span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Briefcase className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground">freelance: <span className="text-green-500">available</span></span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Column 2: Description and Competencies */}
-          {/* Re-added data-aos */}
           <div className="lg:col-span-2" data-aos="fade-left">
             <div className="bg-black/30 rounded-lg border border-border p-6">
               <div className="flex items-center gap-2 mb-6">
@@ -95,9 +85,8 @@ export function AboutSection() {
                 </h2>
               </div>
               <div className="space-y-6 text-muted-foreground font-mono">
-                {/* Description Paragraphs */}
                 <div>
-                   <p className="leading-relaxed mb-4">
+                  <p className="leading-relaxed mb-4">
                     🎮 As a seasoned Game Developer, I possess extensive expertise in C# and Unity3D. My portfolio boasts over 10 published titles across mobile platforms (Android and iOS) and PC, encompassing a diverse range of genres including casual, hyper-casual, free-to-play, and educational games. My experience spans the entire development lifecycle, from initial concept to final product delivery.
                   </p>
                   <p className="leading-relaxed mb-4">
@@ -159,6 +148,5 @@ export function AboutSection() {
         </div>
       </div>
     </section>
-    // Removed closing motion.div
   );
 }
