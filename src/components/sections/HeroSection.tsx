@@ -1,10 +1,11 @@
 'use client';
 
-import { memo, useRef, useCallback, useState } from 'react';
+import { memo, useRef, useCallback, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown, Terminal, Gamepad2 } from 'lucide-react';
 import { typedStrings } from '@/lib/data/hero';
+import Typed from 'typed.js';
 
 // Memoized button component
 const ActionButton = memo(function ActionButton({ 
@@ -36,11 +37,35 @@ const ActionButton = memo(function ActionButton({
 function HeroSectionComponent() {
   const heroContentRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
+  const typedElementRef = useRef<HTMLSpanElement>(null);
+  const typedInstanceRef = useRef<Typed | null>(null);
   const [isHoveringGamepad, setIsHoveringGamepad] = useState(false);
   
   // Memoized hover handlers
   const handleGamepadEnter = useCallback(() => setIsHoveringGamepad(true), []);
   const handleGamepadLeave = useCallback(() => setIsHoveringGamepad(false), []);
+
+  // Initialize Typed.js
+  useEffect(() => {
+    if (typedElementRef.current) {
+      typedInstanceRef.current = new Typed(typedElementRef.current, {
+        strings: typedStrings,
+        typeSpeed: 70,
+        backSpeed: 50,
+        backDelay: 3000,
+        startDelay: 1000,
+        loop: true,
+        smartBackspace: false,
+      });
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      if (typedInstanceRef.current) {
+        typedInstanceRef.current.destroy();
+      }
+    };
+  }, []);
   
   // Manual tilt effect implementation
   const handleTiltMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -113,7 +138,7 @@ function HeroSectionComponent() {
               </h1>
               <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ current_role</p>
               <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
-                I'm <span className="text-foreground">{typedStrings[0]}</span>
+                I'm <span ref={typedElementRef} className="text-foreground"></span>
               </p>
               <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
