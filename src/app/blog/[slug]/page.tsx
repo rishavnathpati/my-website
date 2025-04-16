@@ -6,15 +6,16 @@ import Image from 'next/image'; // Import Image
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
- import { CalendarDays, Clock, ArrowLeft } from 'lucide-react';
- import rehypePrettyCode from 'rehype-pretty-code';
- 
- // Import individual MDX components directly
-  import { Card as MdxCard } from '@/components/ui/mdx/Card'; // Alias to avoid naming conflict
-  import { Note } from '@/components/ui/mdx/Note';
-  import { Steps, Step } from '@/components/ui/mdx/Steps';
-  // Import Lucide icons used within MDX (Corrected: Wrench, Plug)
-  import { Terminal, Package, Shell, Wrench, Plug } from 'lucide-react';
+import { CalendarDays, Clock, ArrowLeft } from 'lucide-react';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { ProseTerminal } from '@/components/ui/prose-terminal';
+
+// Import individual MDX components directly
+import { Card as MdxCard } from '@/components/ui/mdx/Card'; // Alias to avoid naming conflict
+import { Note } from '@/components/ui/mdx/Note';
+import { Steps, Step } from '@/components/ui/mdx/Steps';
+// Import Lucide icons used within MDX (Corrected: Wrench, Plug)
+import { Terminal, Package, Shell, Wrench, Plug } from 'lucide-react';
   
   type Props = {
   params: { slug: string };
@@ -72,8 +73,18 @@ const formatDate = (dateString: string): string => {
   });
 };
 
+// Define types for rehype plugins
+type RehypePlugin = any;
+type RehypePluginWithOptions<T> = [RehypePlugin, T];
+
+// Type for rehype-pretty-code options
+interface PrettyCodeOptions {
+  theme: string;
+  keepBackground: boolean;
+}
+
 // Options for rehype-pretty-code
-const prettyCodeOptions = {
+const prettyCodeOptions: PrettyCodeOptions = {
   theme: 'one-dark-pro', // Or your preferred theme
   keepBackground: true,
 };
@@ -136,30 +147,22 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         {/* MDX Content Area */}
-        <div className="prose prose-invert max-w-none prose-neutral prose-lg
-           prose-headings:font-mono /* Apply mono to headings */
-           prose-p:font-mono /* Apply mono to paragraphs */
-           prose-li:font-mono /* Apply mono to list items */
-           prose-a:text-primary prose-a:no-underline hover:prose-a:text-primary/80
-           prose-code:before:content-none prose-code:after:content-none /* Rely on global styles for code */
-           prose-pre:my-8 prose-pre:rounded-lg prose-pre:shadow-lg /* Rely on global styles for pre */
-           prose-img:rounded-lg prose-img:shadow-md
-           prose-blockquote:border-l-4 prose-blockquote:border-primary/50
-           prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-muted-foreground prose-blockquote:font-mono /* Apply mono */
-           prose-strong:font-semibold prose-strong:text-foreground
-           prose-em:italic prose-em:text-foreground">
+        <ProseTerminal className="
+           prose-code:before:content-none prose-code:after:content-none
+           prose-pre:my-8 prose-pre:rounded-lg prose-pre:shadow-lg
+           prose-img:rounded-lg prose-img:shadow-md">
           <MDXRemote
             source={post.content}
             options={{
               mdxOptions: {
                 remarkPlugins: [], // Add remark plugins if needed
-                rehypePlugins: [[rehypePrettyCode, prettyCodeOptions] as any],
+                rehypePlugins: [[rehypePrettyCode, prettyCodeOptions] as RehypePluginWithOptions<PrettyCodeOptions>],
               },
              }}
              // Pass the correctly defined components object
              components={components}
            />
-         </div>
+         </ProseTerminal>
       </article>
     </div>
   );

@@ -1,6 +1,4 @@
-'use client';
-
-import { memo, useMemo } from 'react';
+import React from 'react';
 import { Briefcase, Terminal, GraduationCap, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -11,8 +9,8 @@ import {
   type EducationItem
 } from '@/lib/data/experience';
 
-// Memoized Experience Item component
-const ExperienceItem = memo(function ExperienceItem({ experience }: { experience: ExperienceItem }) {
+// Experience Item component
+function ExperienceItem({ experience }: { experience: ExperienceItem }) {
   return (
     <div className="border-l border-border pl-5 relative group">
       <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2 transition-transform group-hover:scale-125"></div>
@@ -48,10 +46,10 @@ const ExperienceItem = memo(function ExperienceItem({ experience }: { experience
       )}
     </div>
   );
-});
+}
 
-// Memoized Education Item component
-const EducationItem = memo(function EducationItem({ education }: { education: EducationItem }) {
+// Education Item component
+function EducationItem({ education }: { education: EducationItem }) {
   return (
     <div className="border-l border-border pl-5 relative group">
       <div className="absolute w-2 h-2 bg-primary rounded-full -left-1 top-2 transition-transform group-hover:scale-125"></div>
@@ -72,12 +70,10 @@ const EducationItem = memo(function EducationItem({ education }: { education: Ed
       </p>
     </div>
   );
-});
+}
 
 function ExperienceSectionComponent() {
-  // Memoize data to prevent unnecessary re-renders
-  const memoizedExperience = useMemo(() => professionalExperience, []);
-  const memoizedEducation = useMemo(() => education, []);
+  // Use data directly - these are static imports that don't change
 
   return (
     <section id="experience" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
@@ -112,7 +108,7 @@ function ExperienceSectionComponent() {
                   </h3>
                 </div>
                 <div className="space-y-8">
-                  {memoizedExperience.map((exp, index) => (
+                  {professionalExperience.map((exp, index) => (
                     <ExperienceItem key={index} experience={exp} />
                   ))}
                 </div>
@@ -127,7 +123,7 @@ function ExperienceSectionComponent() {
                   </h3>
                 </div>
                 <div className="space-y-8">
-                  {memoizedEducation.map((edu, index) => (
+                  {education.map((edu, index) => (
                     <EducationItem key={index} education={edu} />
                   ))}
                 </div>
@@ -140,5 +136,5 @@ function ExperienceSectionComponent() {
   );
 }
 
-// Export memoized component
-export const ExperienceSection = memo(ExperienceSectionComponent);
+// Export component directly
+export const ExperienceSection = ExperienceSectionComponent;

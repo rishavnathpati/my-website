@@ -342,52 +342,51 @@
    --radius-lg: var(--radius);
    --radius-xl: calc(var(--radius) + 4px);
  }
-
- /* Only dark theme - forcing dark mode */
- :root {
-   --radius: 0.5rem;
-   /* Slightly reduced radius for a more technical look */
-   --background: oklch(0.1 0 0);
-   /* Deeper black for better contrast */
-   --foreground: oklch(0.95 0 0);
-   --card: oklch(0.15 0 0);
-   /* Slightly lighter than background */
-   --card-foreground: oklch(0.95 0 0);
-   --popover: oklch(0.15 0 0);
-   --popover-foreground: oklch(0.95 0 0);
-   --primary: oklch(0.7 0.15 200);
-   /* Brighter blue for better visibility */
-   --primary-foreground: oklch(0.1 0 0);
-   --secondary: oklch(0.2 0 0);
-   --secondary-foreground: oklch(0.95 0 0);
-   --muted: oklch(0.2 0 0);
-   --muted-foreground: oklch(0.65 0 0);
-   /* More visible muted text */
-   --accent: oklch(0.2 0 0);
-   --accent-foreground: oklch(0.95 0 0);
-   --destructive: oklch(0.7 0.2 25);
-   --border: oklch(0.3 0 0);
-   /* More visible borders */
-   --input: oklch(0.2 0 0);
-   --ring: oklch(0.7 0.15 200);
-   /* Match primary color */
-   --chart-1: oklch(0.6 0.2 250);
-   --chart-2: oklch(0.7 0.15 180);
-   --chart-3: oklch(0.75 0.18 80);
-   --chart-4: oklch(0.65 0.25 300);
-   --chart-5: oklch(0.65 0.25 20);
-   --sidebar: oklch(0.15 0 0);
-   --sidebar-foreground: oklch(0.95 0 0);
-   --sidebar-primary: oklch(0.7 0.15 200);
-   /* Match primary color */
-   --sidebar-primary-foreground: oklch(0.95 0 0);
-   --sidebar-accent: oklch(0.2 0 0);
-   --sidebar-accent-foreground: oklch(0.95 0 0);
-   --sidebar-border: oklch(0.3 0 0);
-   /* Match border color */
-   --sidebar-ring: oklch(0.7 0.15 200);
-   /* Match primary color */
- }
+/* Only dark theme - forcing dark mode */
+:root {
+  --radius: 0.5rem;
+  /* Slightly reduced radius for a more technical look */
+  --background: oklch(0.1 0 0);
+  /* Deeper black for better contrast */
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.15 0 0);
+  /* Slightly lighter than background */
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.15 0 0);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.75 0.15 200);
+  /* Brighter blue for better visibility and contrast */
+  --primary-foreground: oklch(0.1 0 0);
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.75 0 0);
+  /* Increased brightness for better contrast (WCAG AA) */
+  --accent: oklch(0.2 0 0);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.7 0.2 25);
+  --border: oklch(0.3 0 0);
+  /* More visible borders */
+  --input: oklch(0.2 0 0);
+  --ring: oklch(0.75 0.15 200);
+  /* Match primary color */
+  --chart-1: oklch(0.65 0.2 250);
+  --chart-2: oklch(0.75 0.15 180);
+  --chart-3: oklch(0.75 0.18 80);
+  --chart-4: oklch(0.7 0.25 300);
+  --chart-5: oklch(0.7 0.25 20);
+  --sidebar: oklch(0.15 0 0);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.75 0.15 200);
+  /* Match primary color */
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.2 0 0);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.3 0 0);
+  /* Match border color */
+  --sidebar-ring: oklch(0.75 0.15 200);
+  /* Match primary color */
+}
 
  /* Removed .dark class as we're forcing dark mode only */
 
@@ -401,23 +400,33 @@
    * {
      @apply border-border;
    }
-
+ 
    html {
      scroll-padding-top: 80px;
    }
-
+ 
    body {
      @apply bg-background text-foreground;
      @apply font-sans;
      min-height: 100vh;
    }
-
+ 
    /* Headings will inherit the body font (Geist Sans) by default */
    /* If specific heading font needed, apply here e.g., @apply font-sans; */
-
+ 
    /* Style links except navigation links */
    a:not(.nav-link) {
      @apply text-primary underline-offset-4 hover:text-primary/80 hover:underline;
+   }
+   
+   /* Improved focus styles for better accessibility */
+   :focus-visible {
+     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+   }
+   
+   /* Ensure buttons have proper focus styles */
+   button:focus-visible {
+     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
    }
  }
 

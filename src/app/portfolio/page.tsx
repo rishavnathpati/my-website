@@ -4,12 +4,12 @@ import { Metadata } from 'next';
 import { Suspense } from 'react'; // Import Suspense
  import { PortfolioCardSkeleton } from '@/components/PortfolioCardSkeleton'; // Import Skeleton
  import {
-   Card as ShadCard, // Import Card with an alias
+   Card,
    CardContent,
    CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+   CardFooter,
+   CardHeader,
+   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,11 +21,10 @@ import { ArrowRight, Github, ExternalLink } from 'lucide-react';
    return (
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
        {portfolioItems.map((item, index) => (
-         /* Use the alias ShadCard */
-         <ShadCard
+         <Card
            key={item.slug}
-           className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 group"
-        >
+           className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group"
+         >
           <CardHeader className="p-0">
             <Link href={item.detailsUrl ?? '#'} aria-label={`View details for ${item.title}`}>
               <div className="aspect-video overflow-hidden">
@@ -36,6 +35,7 @@ import { ArrowRight, Github, ExternalLink } from 'lucide-react';
                   height={338}
                   className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                   loading="lazy" // Keep lazy loading for items on this page
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
              </Link>
@@ -88,7 +88,7 @@ import { ArrowRight, Github, ExternalLink } from 'lucide-react';
               )}
              </div>
            </CardFooter>
-         </ShadCard> /* Use the alias ShadCard */
+         </Card>
        ))}
      </div>
   );

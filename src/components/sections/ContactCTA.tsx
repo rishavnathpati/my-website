@@ -1,12 +1,10 @@
-'use client';
-
-import { memo, useMemo } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Mail, Terminal } from 'lucide-react';
 import { contactInfo, type ContactInfo } from '@/lib/data/contact';
 
-// Memoized contact item component
-const ContactItem = memo(function ContactItem({ info }: { info: ContactInfo }) {
+// Contact item component
+function ContactItem({ info }: { info: ContactInfo }) {
   const Icon = info.icon;
   
   return (
@@ -21,11 +19,10 @@ const ContactItem = memo(function ContactItem({ info }: { info: ContactInfo }) {
       </span>
     </div>
   );
-});
+}
 
 function ContactCTAComponent() {
-  // Memoize contact info to prevent unnecessary re-renders
-  const memoizedContactInfo = useMemo(() => contactInfo, []);
+  // Use data directly - these are static imports that don't change
 
   return (
     <section
@@ -64,7 +61,7 @@ function ContactCTAComponent() {
                   <span className="group-hover:text-primary transition-colors">$ cat contact_info.txt</span>
                 </div>
                 <div className="bg-black/20 rounded border border-border/50 p-4 mb-6 hover:border-primary/50 transition-colors">
-                  {memoizedContactInfo.map((info, index) => (
+                  {contactInfo.map((info, index) => (
                     <ContactItem key={index} info={info} />
                   ))}
                 </div>
@@ -98,5 +95,5 @@ function ContactCTAComponent() {
   );
 }
 
-// Export memoized component
-export const ContactCTA = memo(ContactCTAComponent);
+// Export component directly
+export const ContactCTA = ContactCTAComponent;

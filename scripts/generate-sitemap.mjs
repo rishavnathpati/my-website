@@ -31,9 +31,9 @@ async function generateSitemap() {
 
   // 2. Get dynamic portfolio pages
   const portfolioDir = path.join(pagesDir, 'portfolio/[slug]');
-  // Read portfolio data from JSON file instead of importing TypeScript
-  const portfolioData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/lib/data/portfolio.json'), 'utf8'));
-  const portfolioUrls = portfolioData.portfolioItems.map(item => `/portfolio/${item.slug}`);
+  // Import portfolio data from TypeScript file
+  const { portfolioItems } = await import('../src/lib/data/portfolio.ts');
+  const portfolioUrls = portfolioItems.map(item => `/portfolio/${item.slug}`);
 
   // 3. Get dynamic blog pages
   const blogPostsDir = path.join(contentDir, 'blogs');

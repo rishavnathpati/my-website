@@ -1,11 +1,9 @@
-'use client';
-
-import { memo, useMemo } from 'react';
+import React from 'react';
 import { Terminal } from "lucide-react";
 import { aboutData, type Competency } from '@/lib/data/about';
 
-// Memoized competency component
-const CompetencyItem = memo(function CompetencyItem({ competency }: { competency: Competency }) {
+// Competency component
+function CompetencyItem({ competency }: { competency: Competency }) {
   return (
     <li className="group transition-transform hover:translate-x-1">
       <div className="flex items-start gap-2 group-hover:bg-primary/5 p-2 rounded-lg transition-colors">
@@ -14,11 +12,11 @@ const CompetencyItem = memo(function CompetencyItem({ competency }: { competency
       </div>
     </li>
   );
-});
+}
 
 function AboutSectionComponent() {
-  // Memoize data to prevent unnecessary re-renders
-  const { paragraphs, competencies } = useMemo(() => aboutData, []);
+  // Use data directly - these are static imports that don't change
+  const { paragraphs, competencies } = aboutData;
 
   return (
     <section id="about" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
@@ -73,7 +71,7 @@ function AboutSectionComponent() {
                   className="inline-flex items-center px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 rounded-lg transition-all hover:scale-105 hover:shadow-lg group gap-2"
                 >
                   <span className="font-mono text-sm group-hover:text-primary transition-colors">
-                    download_cv.pdf
+                    cv.pdf
                   </span>
                 </a>
               </div>
@@ -85,5 +83,5 @@ function AboutSectionComponent() {
   );
 }
 
-// Export memoized component
-export const AboutSection = memo(AboutSectionComponent);
+// Export component directly
+export const AboutSection = AboutSectionComponent;

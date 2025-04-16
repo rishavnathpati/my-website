@@ -8,7 +8,8 @@ import type { LogMessage } from './console-provider'; // Use type import
 
 // Removed ConsoleProps interface, no props needed
 
-// Memoize the component to prevent unnecessary re-renders if props don't change
+// Keep the memoization here as the console component could re-render frequently
+// when logs are added, and we want to prevent unnecessary re-renders
 export const Console = memo(function Console() {
   // Get logs directly from context
   const { logs } = useConsole();

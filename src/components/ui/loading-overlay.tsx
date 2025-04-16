@@ -59,21 +59,32 @@ export function LoadingOverlay({ isLoading, text = 'Loading...' }: LoadingOverla
   if (!isLoading) return null;
 
   return (
-    <div className="absolute inset-0 bg-black/30 flex items-center justify-center z-50">
-      <div className="bg-black/50 border border-primary/20 p-4 rounded-lg max-w-xs w-full font-mono">
+    <div
+      className="absolute inset-0 bg-black/30 flex items-center justify-center z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="loading-title"
+    >
+      <div
+        className="bg-black/50 border border-primary/20 p-4 rounded-lg max-w-xs w-full font-mono"
+        tabIndex={-1}
+        aria-live="polite"
+      >
         <div className="flex items-center justify-between mb-3">
-          <span className="text-primary text-sm">{text}{dots}</span>
-          <span className="text-primary text-sm">{Math.min(100, Math.round(progress))}%</span>
+          <span id="loading-title" className="text-primary text-sm">{text}{dots}</span>
+          <span className="text-primary text-sm" aria-live="polite" aria-atomic="true">
+            {Math.min(100, Math.round(progress))}%
+          </span>
         </div>
         
-        <div className="h-2 bg-black/40 rounded-full overflow-hidden">
+        <div className="h-2 bg-black/40 rounded-full overflow-hidden" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
           <div
             className="h-full bg-primary relative"
             style={{ width: `${progress}%` }}
           />
         </div>
 
-        <div className="mt-3 text-xs text-muted-foreground">
+        <div className="mt-3 text-xs text-muted-foreground" aria-live="polite">
           {progress < 100 ? 'Loading...' : 'Complete'}
         </div>
       </div>

@@ -3,7 +3,6 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Analytics } from "@/components/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
@@ -11,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
+import { KeyboardShortcutsHelp } from "@/components/KeyboardShortcutsHelp";
 import { ConsoleProvider } from "@/components/ui/console-provider";
 import { siteMetadata } from "@/lib/config/metadata";
 
@@ -21,13 +21,12 @@ const fontMono = GeistMono;
 // Export metadata
 export const metadata = siteMetadata;
 
+// Import the PageSkeleton component
+import { PageSkeleton } from "@/components/PageSkeleton";
+
 // Loading fallback component
 function LoadingFallback() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
+  return <PageSkeleton />;
 }
 
 export default function RootLayout({
@@ -61,6 +60,7 @@ export default function RootLayout({
                 {/* Utility components */}
                 <Suspense fallback={null}>
                   <ScrollToTop />
+                  <KeyboardShortcutsHelp />
                 </Suspense>
 
                 {/* Main content */}
@@ -73,10 +73,7 @@ export default function RootLayout({
                   <Footer />
                 </main>
 
-                {/* Analytics and utilities */}
-                <Suspense fallback={null}>
-                  <Analytics />
-                </Suspense>
+                {/* Utilities */}
                 <Toaster />
                 
                 {/* Development utilities */}

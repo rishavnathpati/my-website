@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function PortfolioCardSkeleton() {
   return (
-    <Card className="flex flex-col overflow-hidden">
+    <Card className="flex flex-col overflow-hidden bg-black/30 border border-border">
       <CardHeader className="p-0">
         <Skeleton className="aspect-video w-full" />
       </CardHeader>

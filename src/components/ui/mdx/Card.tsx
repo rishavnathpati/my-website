@@ -1,21 +1,28 @@
 'use client';
 
-interface CardProps {
+import {
+  Card as BaseCard,
+  CardHeader,
+  CardTitle,
+  CardContent
+} from "@/components/ui/card";
+
+interface MDXCardProps {
   title?: string;
   icon?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export function Card({ title, icon, children }: CardProps) {
+export function Card({ title, icon, children }: MDXCardProps) {
   return (
-    <div className="my-6 rounded-lg border bg-card text-card-foreground shadow-sm">
+    <BaseCard className="my-6">
       {(title || icon) && (
-        <div className="flex items-center border-b border-border p-4">
-          {icon && <div className="mr-2">{icon}</div>}
-          {title && <h3 className="font-semibold">{title}</h3>}
-        </div>
+        <CardHeader className="flex flex-row items-center gap-2 pb-2">
+          {icon && <div>{icon}</div>}
+          {title && <CardTitle>{title}</CardTitle>}
+        </CardHeader>
       )}
-      <div className="p-4">{children}</div>
-    </div>
+      <CardContent>{children}</CardContent>
+    </BaseCard>
   );
-} 
+}

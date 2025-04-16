@@ -102,13 +102,13 @@ function HeroSectionComponent() {
         
         <div 
           ref={tiltRef}
-          className="bg-black/40 rounded-lg border border-border p-6 mb-8 relative overflow-hidden group hover:border-primary/50 transition-colors"
+          className="bg-black/60 rounded-lg border border-border p-6 mb-8 relative overflow-hidden group hover:border-primary/50 transition-colors"
           onMouseMove={handleTiltMouseMove}
           onMouseLeave={handleTiltMouseLeave}
         >
           {/* Animated gradient background */}
           <div
-            className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none transition-opacity group-hover:opacity-75"
+            className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none transition-opacity group-hover:opacity-75"
             style={{
               maskImage: 'radial-gradient(circle at center, black, transparent)',
               WebkitMaskImage: 'radial-gradient(circle at center, black, transparent)'
@@ -116,16 +116,16 @@ function HeroSectionComponent() {
           />
           
           <div className="relative">
-            <div className="flex items-center gap-2 mb-4 text-muted-foreground group">
+            <div className="flex items-center gap-2 mb-4 text-foreground/80 group">
               <Terminal size={20} className="group-hover:text-primary transition-colors" />
               <span className="text-sm font-mono group-hover:text-primary transition-colors">portfolio.sh</span>
             </div>
             
             <div className="font-mono">
               <div className="flex items-center gap-2 mb-2 group">
-                <p className="text-muted-foreground group-hover:text-primary transition-colors">$ whoami</p>
-                <Gamepad2 
-                  size={20} 
+                <p className="text-foreground/80 group-hover:text-primary transition-colors">$ whoami</p>
+                <Gamepad2
+                  size={20}
                   className={`text-primary transition-all duration-300 cursor-pointer ${
                     isHoveringGamepad ? 'rotate-12 scale-110' : ''
                   }`}
@@ -136,11 +136,11 @@ function HeroSectionComponent() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary bg-clip-text hover:text-primary/90 transition-colors">
                 Rishav Nath Pati
               </h1>
-              <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ current_role</p>
+              <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ current_role</p>
               <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
                 I'm <span ref={typedElementRef} className="text-foreground"></span>
               </p>
-              <p className="text-muted-foreground mb-2 group-hover:text-primary transition-colors">$ next_action</p>
+              <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div>
                   <ActionButton href="#portfolio">view_portfolio.sh</ActionButton>
@@ -155,17 +155,19 @@ function HeroSectionComponent() {
       </div>
 
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-        <Link 
-          href="#about" 
+        <Link
+          href="#about"
           aria-label="Scroll down to about section"
-          className="group"
+          className="group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-full p-1"
         >
-          <ArrowDown className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors animate-bounce-slow" />
+          <ArrowDown className="w-6 h-6 text-foreground/80 group-hover:text-primary transition-colors animate-bounce-slow" />
         </Link>
       </div>
     </section>
   );
 }
 
-// Export memoized component
-export const HeroSection = memo(HeroSectionComponent);
+// Keep the ActionButton memoized as it's a simple UI component
+// Keep the useCallback hooks as they're used for event handlers
+// But the parent component doesn't need memoization as it's only rendered once
+export const HeroSection = HeroSectionComponent;

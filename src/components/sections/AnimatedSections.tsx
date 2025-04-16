@@ -1,33 +1,43 @@
 'use client';
 
-import { Suspense, memo } from 'react';
+import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 import { BlogPostMeta } from '@/lib/blog';
 
 // Dynamic imports for all sections
+// Import skeleton components
+import {
+  AboutSectionSkeleton,
+  ExperienceSectionSkeleton,
+  SkillsSectionSkeleton,
+  PortfolioHighlightsSkeleton,
+  BlogHighlightsSkeleton,
+  ContactCTASkeleton
+} from '@/components/SectionSkeleton';
+
 const AboutSection = dynamic(() => import('./AboutSection').then(mod => ({ default: mod.AboutSection })), {
-  loading: () => <div className="h-[600px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />
+  loading: () => <AboutSectionSkeleton />
 });
 
 const ExperienceSection = dynamic(() => import('./ExperienceSection').then(mod => ({ default: mod.ExperienceSection })), {
-  loading: () => <div className="h-[800px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />
+  loading: () => <ExperienceSectionSkeleton />
 });
 
 const SkillsSection = dynamic(() => import('./SkillsSection').then(mod => ({ default: mod.SkillsSection })), {
-  loading: () => <div className="h-[700px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />
+  loading: () => <SkillsSectionSkeleton />
 });
 
 const PortfolioHighlights = dynamic(() => import('./PortfolioHighlights').then(mod => ({ default: mod.PortfolioHighlights })), {
-  loading: () => <div className="h-[600px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />
+  loading: () => <PortfolioHighlightsSkeleton />
 });
 
 const BlogHighlights = dynamic(() => import('./BlogHighlights').then(mod => ({ default: mod.BlogHighlights })), {
-  loading: () => <div className="h-[500px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />
+  loading: () => <BlogHighlightsSkeleton />
 });
 
 const ContactCTA = dynamic(() => import('./ContactCTA').then(mod => ({ default: mod.ContactCTA })), {
-  loading: () => <div className="h-[300px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />
+  loading: () => <ContactCTASkeleton />
 });
 
 // Define props interface
@@ -39,37 +49,37 @@ interface AnimatedSectionsProps {
 function AnimatedSectionsComponent({ recentPosts }: AnimatedSectionsProps) {
   return (
     <>
-      <Suspense fallback={<div className="h-[600px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />}>
+      <Suspense fallback={<AboutSectionSkeleton />}>
         <AnimateOnScroll>
           <AboutSection />
         </AnimateOnScroll>
       </Suspense>
 
-      <Suspense fallback={<div className="h-[800px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />}>
+      <Suspense fallback={<ExperienceSectionSkeleton />}>
         <AnimateOnScroll delay={0.15}>
           <ExperienceSection />
         </AnimateOnScroll>
       </Suspense>
 
-      <Suspense fallback={<div className="h-[700px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />}>
+      <Suspense fallback={<SkillsSectionSkeleton />}>
         <AnimateOnScroll delay={0.3}>
           <SkillsSection />
         </AnimateOnScroll>
       </Suspense>
 
-      <Suspense fallback={<div className="h-[600px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />}>
+      <Suspense fallback={<PortfolioHighlightsSkeleton />}>
         <AnimateOnScroll delay={0.45}>
           <PortfolioHighlights />
         </AnimateOnScroll>
       </Suspense>
 
-      <Suspense fallback={<div className="h-[500px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />}>
+      <Suspense fallback={<BlogHighlightsSkeleton />}>
         <AnimateOnScroll delay={0.6}>
           <BlogHighlights recentPosts={recentPosts} />
         </AnimateOnScroll>
       </Suspense>
 
-      <Suspense fallback={<div className="h-[300px] bg-black/20 backdrop-blur-sm animate-pulse rounded-lg" />}>
+      <Suspense fallback={<ContactCTASkeleton />}>
         <AnimateOnScroll delay={0.75}>
           <ContactCTA />
         </AnimateOnScroll>
@@ -78,5 +88,6 @@ function AnimatedSectionsComponent({ recentPosts }: AnimatedSectionsProps) {
   );
 }
 
-// Export memoized component
-export const AnimatedSections = memo(AnimatedSectionsComponent);
+// This component doesn't need memoization as it's only rendered once
+// and its props (recentPosts) rarely change
+export const AnimatedSections = AnimatedSectionsComponent;
