@@ -26,16 +26,18 @@ const helpCommand: Command = {
         console.error(`Unknown command: ${commandName}`);
       }
     } else {
-      // Show all commands grouped by category
-      console.log('Available commands:');
+      // Show all commands grouped by category with modern styling
+      console.success('╭──────────────────────────────────────────────╮');
+      console.success('│              AVAILABLE COMMANDS              │');
+      console.success('╰──────────────────────────────────────────────╯');
       console.log('');
 
       // Navigation commands
       const navCommands = getCommandsByCategory('navigation');
       if (navCommands.length > 0) {
-        console.log('Navigation:');
+        console.success('● Navigation:');
         navCommands.forEach(cmd => {
-          console.log(`  ${cmd.name} - ${cmd.description}`);
+          console.log(`  ${cmd.name.padEnd(10)} │ ${cmd.description}`);
         });
         console.log('');
       }
@@ -43,9 +45,9 @@ const helpCommand: Command = {
       // Information commands
       const infoCommands = getCommandsByCategory('information');
       if (infoCommands.length > 0) {
-        console.log('Information:');
+        console.success('● Information:');
         infoCommands.forEach(cmd => {
-          console.log(`  ${cmd.name} - ${cmd.description}`);
+          console.log(`  ${cmd.name.padEnd(10)} │ ${cmd.description}`);
         });
         console.log('');
       }
@@ -53,14 +55,28 @@ const helpCommand: Command = {
       // Utility commands
       const utilityCommands = getCommandsByCategory('utility');
       if (utilityCommands.length > 0) {
-        console.log('Utility:');
+        console.success('● Utility:');
         utilityCommands.forEach(cmd => {
-          console.log(`  ${cmd.name} - ${cmd.description}`);
+          console.log(`  ${cmd.name.padEnd(10)} │ ${cmd.description}`);
+        });
+        console.log('');
+      }
+      
+      // Easter egg commands (don't show these unless we want to)
+      const easterEggCommands = getCommandsByCategory('easteregg');
+      if (easterEggCommands.length > 0 && args.includes('--all')) {
+        console.success('● Fun:');
+        easterEggCommands.forEach(cmd => {
+          console.log(`  ${cmd.name.padEnd(10)} │ ${cmd.description}`);
         });
         console.log('');
       }
 
-      console.log('Type "help [command]" for more information on a specific command.');
+      console.success('╭──────────────────────────────────────────────╮');
+      console.log('  Type "help [command]" for more information');
+      console.log('  Use arrow keys to navigate command history');
+      console.log('  Press ESC to exit full-screen terminal');
+      console.success('╰──────────────────────────────────────────────╯');
     }
   }
 };
@@ -138,10 +154,19 @@ const historyCommand: Command = {
       return;
     }
     
-    console.log('Command history:');
+    console.success('╭──────────────────────────────────────────────╮');
+    console.success('│             COMMAND HISTORY                  │');
+    console.success('╰──────────────────────────────────────────────╯');
+    console.log('');
+    
     history.forEach((cmd, index) => {
-      console.log(`  ${index + 1}  ${cmd}`);
+      // Get the index number with at least 2 digits (padded with spaces)
+      const indexStr = `${index + 1}`.padStart(2, ' ');
+      console.log(`  ${indexStr}  ${cmd}`);
     });
+    
+    console.log('');
+    console.log('Use ↑/↓ arrow keys to navigate history');
   }
 };
 

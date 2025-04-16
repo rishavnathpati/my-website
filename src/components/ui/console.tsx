@@ -1,20 +1,23 @@
 'use client';
 
-import { memo, useState, useRef, useEffect, KeyboardEvent } from 'react';
+import { memo, useState, useRef, useEffect, KeyboardEvent, forwardRef } from 'react';
 import { Terminal, Maximize2 } from 'lucide-react';
 // Import context hook and LogMessage type
 import { useConsole } from './console-provider';
 import type { LogMessage } from './console-provider'; // Use type import
+import { TERMINAL_USERNAME, TERMINAL_HOSTNAME, TERMINAL_PATH } from '@/lib/constants';
 
 // Add fullScreen prop to Console component
 interface ConsoleProps {
   fullScreen?: boolean;
 }
 
-// New component for command input
-const ConsoleInput = () => {
+// New component for command input with forwardRef
+const ConsoleInput = forwardRef<
+  HTMLInputElement, 
+  { fullScreen?: boolean }
+>(({ fullScreen }, ref) => {
   const [input, setInput] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
   const { executeCommand, getPreviousCommand, getNextCommand } = useConsole();
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,9 +36,9 @@ const ConsoleInput = () => {
         setInput(prevCommand);
         // Move cursor to end of input
         setTimeout(() => {
-          if (inputRef.current) {
-            inputRef.current.selectionStart = inputRef.current.value.length;
-            inputRef.current.selectionEnd = inputRef.current.value.length;
+          if (ref && 'current' in ref && ref.current) {
+            ref.current.selectionStart = ref.current.value.length;
+            ref.current.selectionEnd = ref.current.value.length;
           }
         }, 0);
       }
@@ -48,18 +51,15 @@ const ConsoleInput = () => {
     }
   };
   
-  // Focus input on mount
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
-  
   return (
     <form onSubmit={handleSubmit} className="flex border-t border-border">
-      <span className="text-primary px-2 py-1">$</span>
+      <div className="flex items-center px-2 py-1 text-xs">
+        <span className="text-green-400 font-bold mr-1">➜</span>
+        <span className="text-blue-400 font-semibold mr-2">{TERMINAL_PATH}</span>
+        <span className="text-primary mr-1">$</span>
+      </div>
       <input
-        ref={inputRef}
+        ref={ref}
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -72,7 +72,9 @@ const ConsoleInput = () => {
       <button type="submit" className="sr-only">Execute</button>
     </form>
   );
-};
+});
+
+ConsoleInput.displayName = 'ConsoleInput';
 
 // Keep the memoization here as the console component could re-render frequently
 // when logs are added, and we want to prevent unnecessary re-renders
@@ -80,12 +82,21 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
   // Get logs directly from context
   const { logs, toggleTerminalFullScreen } = useConsole();
   const logContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Function to focus the input field
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
 
   const getMessageColor = (type: LogMessage['type']) => {
     switch (type) {
       case 'error': return 'text-red-500';
       case 'warning': return 'text-yellow-500';
       case 'success': return 'text-green-500';
+      case 'command': return 'text-green-400 font-bold';
       default: return 'text-blue-500';
     }
   };
@@ -96,6 +107,11 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
       logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
   }, [logs]);
+  
+  // Focus input when fullScreen changes or on mount
+  useEffect(() => {
+    setTimeout(focusInput, 50);
+  }, [fullScreen]);
 
   // Adjust height based on fullScreen prop
   const containerClasses = fullScreen
@@ -106,8 +122,35 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
     ? "p-2 flex-1 overflow-y-auto space-y-1"
     : "p-2 max-h-52 overflow-y-auto space-y-1 flex-1";
 
+  const renderLogMessage = (log: LogMessage) => {
+    if (log.type === 'command') {
+      return (
+        <div key={log.id} className="flex items-start mt-2 mb-1">
+          <div className="flex items-center">
+            <span className="text-pink-500 font-semibold mr-1">{TERMINAL_USERNAME}</span>
+            <span className="text-gray-500 mr-1">@</span>
+            <span className="text-blue-500 font-semibold mr-1">{TERMINAL_HOSTNAME}</span>
+            <span className="text-gray-500 mr-1">:</span>
+            <span className="text-blue-400 font-semibold mr-2">{TERMINAL_PATH}</span>
+            <span className="text-primary mr-2">$</span>
+            <span className={`${getMessageColor(log.type)}`}>{log.message}</span>
+          </div>
+        </div>
+      );
+    }
+    
+    return (
+      <div key={log.id} className="flex items-start">
+        <span className={`${getMessageColor(log.type)} pl-12 break-words`}>{log.message}</span>
+      </div>
+    );
+  };
+
   return (
-    <div className={containerClasses}>
+    <div 
+      className={`console-container ${containerClasses}`}
+      onClick={focusInput}
+    >
       {/* Optional header for the inline console with expand button */}
       {!fullScreen && (
         <div className="flex items-center justify-between px-2 py-1 border-b border-border bg-zinc-900/50">
@@ -130,17 +173,14 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
       <div 
         ref={logContainerRef}
         className={logContainerClasses}
+        role="log"
+        aria-live="polite"
       >
-        {logs.map((log) => (
-          <div key={log.id} className="flex items-start gap-2">
-            <span className="text-muted-foreground text-xs shrink-0 w-[70px]">{log.timestamp}</span>
-            <span className={`${getMessageColor(log.type)} break-words`}>{log.message}</span>
-          </div>
-        ))}
+        {logs.map(renderLogMessage)}
       </div>
       
-      {/* Add the input field component */}
-      <ConsoleInput />
+      {/* Add the input field component - properly forward ref */}
+      <ConsoleInput ref={inputRef} fullScreen={fullScreen} />
     </div>
   );
 });

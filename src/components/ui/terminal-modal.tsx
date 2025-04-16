@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { X, Minimize, Command, Terminal as TerminalIcon } from 'lucide-react';
 import { Console } from './console';
 import { useConsole } from './console-provider';
+import { TERMINAL_USERNAME, TERMINAL_HOSTNAME } from '@/lib/constants';
 
 interface TerminalModalProps {
   isOpen: boolean;
@@ -47,19 +48,28 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div 
         ref={modalRef}
-        className="w-4/5 h-4/5 bg-black/90 border border-border rounded-lg overflow-hidden flex flex-col"
+        className="w-4/5 h-4/5 bg-black/95 border border-zinc-700 rounded-md overflow-hidden flex flex-col shadow-xl"
+        style={{
+          boxShadow: '0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(10, 10, 10, 0.2)'
+        }}
       >
         {/* Terminal Header */}
-        <div className="flex items-center justify-between p-2 bg-zinc-900 border-b border-border">
+        <div className="flex items-center justify-between p-2 bg-zinc-900/90 border-b border-zinc-800">
           <div className="flex items-center space-x-2">
             <div className="flex space-x-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <button 
+                onClick={onClose}
+                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+                aria-label="Close terminal"
+              />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <div className="w-3 h-3 rounded-full bg-green-500" />
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 ml-2">
               <TerminalIcon size={14} className="text-primary" />
-              <h3 className="text-sm font-medium text-foreground">Terminal</h3>
+              <h3 className="text-sm font-medium text-foreground">
+                {TERMINAL_USERNAME}@{TERMINAL_HOSTNAME}
+              </h3>
             </div>
           </div>
           <div className="flex items-center space-x-4">
@@ -93,7 +103,7 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
         </div>
         
         {/* Terminal Content */}
-        <div className="flex-1 p-4 overflow-hidden">
+        <div className="flex-1 p-0 overflow-hidden">
           <Console fullScreen={true} />
         </div>
       </div>

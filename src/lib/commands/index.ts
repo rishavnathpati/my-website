@@ -1,5 +1,27 @@
 import { LogMessage } from '@/components/ui/console-provider';
 
+// Custom error classes for command execution
+export class CommandError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'CommandError';
+  }
+}
+
+export class ArgumentError extends CommandError {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ArgumentError';
+  }
+}
+
+export class ExecutionError extends CommandError {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ExecutionError';
+  }
+}
+
 // Extended ConsoleContextType that will be available to command handlers
 export interface CommandConsoleContext {
   log: (message: string) => void;
@@ -23,17 +45,23 @@ export interface Command {
 
 // Registry to store all commands
 const commandRegistry: Command[] = [];
+// Map for fast command lookup
+const commandMap = new Map<string, Command>();
 
 // Helper to register commands
 export function registerCommand(command: Command): void {
   commandRegistry.push(command);
+  
+  // Add to the lookup map for O(1) access
+  commandMap.set(command.name, command);
+  if (command.aliases) {
+    command.aliases.forEach(alias => commandMap.set(alias, command));
+  }
 }
 
 // Helper to find a command by name or alias
 export function findCommand(name: string): Command | undefined {
-  return commandRegistry.find(
-    (cmd) => cmd.name === name || (cmd.aliases && cmd.aliases.includes(name))
-  );
+  return commandMap.get(name);
 }
 
 // Get all commands

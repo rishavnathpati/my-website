@@ -1,13 +1,15 @@
 'use client';
 
-import { createContext, useContext, useCallback, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useCallback, useState, useEffect, ReactNode, useMemo } from 'react';
 import { findCommand } from '@/lib/commands/main';
+import { CommandError } from '@/lib/commands/index';
+import { MAX_LOGS, MAX_COMMAND_HISTORY } from '@/lib/constants';
 // Import registry to ensure all commands are registered
 import '@/lib/commands/main';
 
 // Export LogMessage type so it can be imported elsewhere
 export interface LogMessage {
-  type: 'info' | 'warning' | 'error' | 'success';
+  type: 'info' | 'warning' | 'error' | 'success' | 'command';
   message: string;
   timestamp: string;
   id: number;
@@ -54,7 +56,7 @@ export function ConsoleProvider({ children }: ConsoleProviderProps) {
       const newLog = { message, type, timestamp, id: logIdCounter++ };
       const updatedLogs = [...prev, newLog];
       // Limit log length
-      if (updatedLogs.length > 50) return updatedLogs.slice(-50);
+      if (updatedLogs.length > MAX_LOGS) return updatedLogs.slice(-MAX_LOGS);
       return updatedLogs;
     });
   }, []);
@@ -83,12 +85,25 @@ export function ConsoleProvider({ children }: ConsoleProviderProps) {
     // Add command to history
     setCommandHistory(prev => {
       const newHistory = [...prev, commandStr];
+      // Limit history length
+      if (newHistory.length > MAX_COMMAND_HISTORY) return newHistory.slice(-MAX_COMMAND_HISTORY);
       return newHistory;
     });
     setHistoryIndex(-1);
     
-    // Log the command
-    log(`$ ${commandStr}`);
+    // Log the command with special type
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    setLogs(prev => {
+      const newLog = { 
+        message: commandStr, 
+        type: 'command' as const, 
+        timestamp, 
+        id: logIdCounter++ 
+      };
+      const updatedLogs = [...prev, newLog];
+      if (updatedLogs.length > MAX_LOGS) return updatedLogs.slice(-MAX_LOGS);
+      return updatedLogs;
+    });
     
     // Parse command and arguments
     const [command, ...args] = commandStr.trim().split(/\s+/);
@@ -103,12 +118,17 @@ export function ConsoleProvider({ children }: ConsoleProviderProps) {
           error, 
           success, 
           clear: clearLogs,
-          commandHistory: [...commandHistory, commandStr], // Pass updated history including current command
+          commandHistory, // Pass only the previous history, not including current command
           toggleTerminal: toggleTerminalFullScreen // Pass the terminal toggle function
         });
       } catch (err) {
-        // @ts-ignore - err might not have message
-        error(`Error executing command: ${err?.message || 'Unknown error'}`);
+        if (err instanceof CommandError) {
+          error(`Error executing command: ${err.message}`);
+        } else if (err instanceof Error) {
+          error(`Error executing command: ${err.message}`);
+        } else {
+          error(`Error executing command: Unknown error`);
+        }
       }
     } else {
       error(`Command not found: ${command}`);
@@ -154,29 +174,44 @@ export function ConsoleProvider({ children }: ConsoleProviderProps) {
 
   // Add initial logs after mount using useEffect
   useEffect(() => {
-    log('System initialized');
-    success('Assets loaded successfully');
+    success('Welcome to my interactive portfolio terminal!');
     log('Type "help" to see available commands');
     log('Try "terminal" or "t" to open full-screen mode');
     log('Keyboard shortcut: Ctrl+` or Cmd+`');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this runs only once on mount
 
+  // Memoize the context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    logs, 
+    log, 
+    warn, 
+    error, 
+    success, 
+    executeCommand,
+    clearLogs,
+    commandHistory,
+    getPreviousCommand,
+    getNextCommand,
+    isTerminalFullScreen,
+    toggleTerminalFullScreen
+  }), [
+    logs, 
+    log, 
+    warn, 
+    error, 
+    success, 
+    executeCommand,
+    clearLogs,
+    commandHistory,
+    getPreviousCommand,
+    getNextCommand,
+    isTerminalFullScreen,
+    toggleTerminalFullScreen
+  ]);
+
   return (
-    <ConsoleContext.Provider value={{ 
-      logs, 
-      log, 
-      warn, 
-      error, 
-      success, 
-      executeCommand,
-      clearLogs,
-      commandHistory,
-      getPreviousCommand,
-      getNextCommand,
-      isTerminalFullScreen,
-      toggleTerminalFullScreen
-    }}>
+    <ConsoleContext.Provider value={contextValue}>
       {children}
     </ConsoleContext.Provider>
   );
