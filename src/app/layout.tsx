@@ -13,6 +13,7 @@ import { SkipLink } from "@/components/SkipLink";
 import { KeyboardShortcutsHelp } from "@/components/KeyboardShortcutsHelp";
 import { ConsoleProvider } from "@/components/ui/console-provider";
 import { siteMetadata } from "@/lib/config/metadata";
+import { TerminalModalContainer } from '@/components/ui/terminal-modal-container';
 
 // Configure fonts
 const fontSans = GeistSans;
@@ -72,6 +73,9 @@ export default function RootLayout({
                   {children}
                   <Footer />
                 </main>
+
+                {/* Terminal modal container */}
+                <TerminalModalContainer />
 
                 {/* Utilities */}
                 <Toaster />

@@ -15,6 +15,9 @@ export function useActiveSectionObserver(items: SectionItem[]) {
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const pathname = usePathname();
   const { log, success } = useConsole();
+  
+  // Track which sections we've already seen
+  const visitedSections = useRef<Set<string>>(new Set(['hero']));
 
   useEffect(() => {
     // Only set up the observer if we're on the home page
@@ -33,12 +36,18 @@ export function useActiveSectionObserver(items: SectionItem[]) {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id;
           
-          setActiveSection(sectionId);
-          log(`Loading section: ${sectionId}`);
-          
-          setTimeout(() => {
+          // Only update state and log if this is a new section
+          if (!visitedSections.current.has(sectionId)) {
+            setActiveSection(sectionId);
+            visitedSections.current.add(sectionId);
+            
+            // Log messages without setTimeout
+            log(`Loading section: ${sectionId}`);
             success(`Section "${sectionId}" loaded successfully`);
-          }, 500);
+          } else {
+            // Just update active section without logging
+            setActiveSection(sectionId);
+          }
         }
       });
     };
