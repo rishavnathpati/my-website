@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useMobileNav } from '@/hooks/useMobileNav';
 import { useConsole } from '@/components/ui/console-provider';
 import { Console } from '@/components/ui/console';
 import { ProfileCard } from '@/components/header/ProfileCard';
@@ -13,7 +14,7 @@ import { useNavigationSound } from '@/hooks/useNavigationSound';
 import { navItems, socialLinks } from '@/components/header/headerConstants';
 
 export function Header() {
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const { open: isMobileNavOpen, toggle: toggleMobileNav, close: closeMobileNav } = useMobileNav();
   const pathname = usePathname();
   const { log, success } = useConsole();
   const { playNavigationSound } = useNavigationSound();
@@ -41,13 +42,9 @@ export function Header() {
     }
   }, [isMobileNavOpen]);
 
-  const toggleMobileNav = () => {
-    setIsMobileNavOpen(!isMobileNavOpen);
-  };
-
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, command: string) => {
     if (isMobileNavOpen) {
-      setIsMobileNavOpen(false);
+      closeMobileNav();
       log('Minimizing terminal');
     }
 
@@ -81,7 +78,6 @@ export function Header() {
             activeSection={activeSection}
             onLinkClick={handleLinkClick}
             firstNavLinkRef={firstNavLinkRef}
-          />
           />
           
           {/* Render Console component here, pushed to the bottom */}

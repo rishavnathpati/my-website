@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -87,8 +85,7 @@ const PortfolioCard = memo(function PortfolioCard({
             width={800}
             height={450}
             className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-            priority={isExpanded}
-            loading={isExpanded ? undefined : "lazy"}
+            priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
             quality={75}
           />

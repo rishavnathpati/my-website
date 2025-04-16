@@ -11,7 +11,7 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import { ProseTerminal } from '@/components/ui/prose-terminal';
 
 // Import individual MDX components directly
-import { Card as MdxCard } from '@/components/ui/mdx/Card'; // Alias to avoid naming conflict
+import { Card as MdxCard } from '@/components/ui/card'; // Alias to avoid naming conflict
 import { Note } from '@/components/ui/mdx/Note';
 import { Steps, Step } from '@/components/ui/mdx/Steps';
 // Import Lucide icons used within MDX (Corrected: Wrench, Plug)

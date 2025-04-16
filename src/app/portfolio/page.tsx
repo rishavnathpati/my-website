@@ -35,7 +35,9 @@ import { ArrowRight, Github, ExternalLink } from 'lucide-react';
                   height={338}
                   className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                   loading="lazy" // Keep lazy loading for items on this page
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width:768px) 100vw,
+                         (max-width:1200px) 50vw,
+                         33vw"
                 />
               </div>
              </Link>

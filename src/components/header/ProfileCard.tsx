@@ -44,6 +44,7 @@ export function ProfileCard({ socialLinks }: ProfileCardProps) {
               height={100}
               className="rounded-lg border-2 border-primary/20 transition-transform duration-300 group-hover:scale-105"
               priority
+              sizes="128px"
             />
             <div className="absolute inset-0 border-2 border-primary/0 rounded-lg transition-all duration-300 group-hover:border-primary/40 group-hover:scale-105"></div>
           </div>

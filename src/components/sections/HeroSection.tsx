@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown, Terminal, Gamepad2 } from 'lucide-react';
 import { typedStrings } from '@/lib/data/hero';
-import Typed from 'typed.js';
 
 // Memoized button component
 const ActionButton = memo(function ActionButton({ 
@@ -37,35 +36,43 @@ const ActionButton = memo(function ActionButton({
 function HeroSectionComponent() {
   const heroContentRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
-  const typedElementRef = useRef<HTMLSpanElement>(null);
-  const typedInstanceRef = useRef<Typed | null>(null);
   const [isHoveringGamepad, setIsHoveringGamepad] = useState(false);
+  const [currentStringIndex, setCurrentStringIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
   
   // Memoized hover handlers
   const handleGamepadEnter = useCallback(() => setIsHoveringGamepad(true), []);
   const handleGamepadLeave = useCallback(() => setIsHoveringGamepad(false), []);
 
-  // Initialize Typed.js
+  // Custom typing animation effect
   useEffect(() => {
-    if (typedElementRef.current) {
-      typedInstanceRef.current = new Typed(typedElementRef.current, {
-        strings: typedStrings,
-        typeSpeed: 70,
-        backSpeed: 50,
-        backDelay: 3000,
-        startDelay: 1000,
-        loop: true,
-        smartBackspace: false,
-      });
-    }
+    const currentString = typedStrings[currentStringIndex];
     
-    // Cleanup on unmount
-    return () => {
-      if (typedInstanceRef.current) {
-        typedInstanceRef.current.destroy();
+    // Set timeout for typing effect
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        // Still typing the current string
+        if (displayText.length < currentString.length) {
+          setDisplayText(currentString.substring(0, displayText.length + 1));
+        } else {
+          // Finished typing, wait before deleting
+          setTimeout(() => setIsDeleting(true), 3000);
+        }
+      } else {
+        // Deleting
+        if (displayText.length > 0) {
+          setDisplayText(displayText.substring(0, displayText.length - 1));
+        } else {
+          // Move to next string
+          setIsDeleting(false);
+          setCurrentStringIndex((currentStringIndex + 1) % typedStrings.length);
+        }
       }
-    };
-  }, []);
+    }, isDeleting ? 50 : 70); // Faster when deleting
+    
+    return () => clearTimeout(timeout);
+  }, [displayText, currentStringIndex, isDeleting]);
   
   // Manual tilt effect implementation
   const handleTiltMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -138,7 +145,8 @@ function HeroSectionComponent() {
               </h1>
               <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ current_role</p>
               <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
-                I'm <span ref={typedElementRef} className="text-foreground"></span>
+                I'm <span className="text-foreground">{displayText}</span>
+                <span className="text-foreground animate-blink">|</span>
               </p>
               <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
