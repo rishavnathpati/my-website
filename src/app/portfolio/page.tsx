@@ -20,7 +20,7 @@ import { ArrowRight, GitBranch, ExternalLink } from 'lucide-react';
  function PortfolioGrid() {
    return (
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-       {portfolioItems.map((item) => (
+       {portfolioItems.map((item, index) => (
          <Card
            key={item.slug}
            className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group"
@@ -34,7 +34,9 @@ import { ArrowRight, GitBranch, ExternalLink } from 'lucide-react';
                   width={600}
                   height={338}
                   className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                  loading="lazy" // Keep lazy loading for items on this page
+                  priority={index < 3} // Priority loading for first 3 images (above the fold)
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   sizes="(max-width:768px) 100vw,
                          (max-width:1200px) 50vw,
                          33vw"

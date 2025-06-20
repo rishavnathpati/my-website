@@ -20,11 +20,15 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+// Enable ISR with 1 hour revalidation
+export const revalidate = 3600; // Revalidate every hour
+
 // Generate static paths for all blog posts
 export async function generateStaticParams() {
   const paths = getAllPostSlugs();
-  // Ensure the returned format matches { slug: string }[]
-  return paths.map(path => ({ slug: path.params.slug }));
+  // Pre-generate only the first 5 most recent posts for faster builds
+  // Other posts will be generated on-demand with ISR
+  return paths.slice(0, 5).map(path => ({ slug: path.params.slug }));
 }
 
 // Generate metadata for the page

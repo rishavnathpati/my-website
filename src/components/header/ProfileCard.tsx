@@ -61,7 +61,7 @@ export function ProfileCard({ socialLinks }: ProfileCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="w-8 h-8 bg-black/30 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200 border border-border hover:scale-110"
+                className="w-11 h-11 bg-black/30 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200 border border-border hover:scale-110 social-link"
                 onClick={() => handleSocialLinkClick(link.command)}
               >
                 <link.icon size={16} />

@@ -12,7 +12,11 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+// Enable ISR with 1 hour revalidation for portfolio items
+export const revalidate = 3600; // Revalidate every hour
+
 export async function generateStaticParams() {
+  // Pre-generate all portfolio items since there are fewer of them
   return portfolioItems.map((item) => ({
     slug: item.slug,
   }));
@@ -88,6 +92,9 @@ export default async function PortfolioDetailPage(props: Props) {
              fill
              className="object-cover"
              priority
+             placeholder="blur"
+             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
             />
           </div>
 
@@ -127,7 +134,9 @@ export default async function PortfolioDetailPage(props: Props) {
                       src={item.imageUrl}
                       alt={item.title}
                       fill
-                       className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                      />
                    </div>
                    <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors font-mono">

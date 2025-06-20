@@ -428,6 +428,48 @@
    button:focus-visible {
      @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
    }
+
+   /* Mobile touch target improvements */
+   @media (max-width: 768px) {
+     /* Ensure minimum 44px touch targets for interactive elements */
+     button,
+     a[role="button"],
+     .interactive,
+     input[type="button"],
+     input[type="submit"],
+     .nav-link,
+     .social-link {
+       min-height: 44px;
+       min-width: 44px;
+       @apply flex items-center justify-center;
+     }
+
+     /* Specific adjustments for navigation links */
+     .nav-link {
+       @apply py-3 px-4;
+       min-height: 48px; /* Slightly larger for better UX */
+     }
+
+     /* Social links in profile card */
+     .social-links a {
+       min-height: 44px;
+       min-width: 44px;
+       @apply p-3;
+     }
+
+     /* Button improvements */
+     .btn-sm {
+       min-height: 44px;
+       @apply px-4 py-3;
+     }
+
+     /* Icon buttons */
+     button[aria-label] {
+       min-height: 44px;
+       min-width: 44px;
+       @apply p-3;
+     }
+   }
  }
 
  /* Code block styles */

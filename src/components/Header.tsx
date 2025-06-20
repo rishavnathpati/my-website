@@ -30,7 +30,7 @@ export function Header() {
   // Ref for the first navigation link to manage focus
   const firstNavLinkRef = useRef<HTMLAnchorElement>(null);
   
-  // Handle focus trap in mobile navigation
+  // Handle focus trap and keyboard navigation in mobile menu
   useEffect(() => {
     if (isMobileNavOpen) {
       // Set focus to the first navigation link when menu opens
@@ -39,8 +39,28 @@ export function Header() {
           firstNavLinkRef.current.focus();
         }
       }, 100);
+
+      // Handle escape key to close mobile menu
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          closeMobileNav();
+          // Return focus to the mobile nav toggle button
+          const toggleButton = document.querySelector('[aria-label*="terminal"]') as HTMLButtonElement;
+          if (toggleButton) {
+            toggleButton.focus();
+          }
+        }
+      };
+
+      // Add event listener for escape key
+      document.addEventListener('keydown', handleEscape);
+
+      // Cleanup
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+      };
     }
-  }, [isMobileNavOpen]);
+  }, [isMobileNavOpen, closeMobileNav]);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, command: string) => {
     if (isMobileNavOpen) {
