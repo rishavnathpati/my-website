@@ -30,9 +30,52 @@ async function generateSitemap() {
   });
 
   // 2. Get dynamic portfolio pages
-  const portfolioDir = path.join(pagesDir, 'portfolio/[slug]');
-  // Import portfolio data from TypeScript file
-  const { portfolioItems } = await import('../src/lib/data/portfolio.ts');
+  // Import portfolio data - handle both TypeScript and JavaScript environments
+  let portfolioItems;
+  try {
+    // Try importing the TypeScript file first (works in local dev with Node.js experimental TS support)
+    const portfolioModule = await import('../src/lib/data/portfolio.ts');
+    portfolioItems = portfolioModule.portfolioItems;
+  } catch (error) {
+    // Fallback: Create a temporary JavaScript file for deployment environments
+    console.log('TypeScript import failed, creating temporary JS file...');
+    const portfolioFilePath = path.resolve(process.cwd(), 'src/lib/data/portfolio.ts');
+    const portfolioFileContent = fs.readFileSync(portfolioFilePath, 'utf-8');
+
+    // Convert TypeScript to JavaScript by removing type annotations and interfaces
+    const jsContent = portfolioFileContent
+      .replace(/export interface[\s\S]*?^}/gm, '') // Remove interface definitions
+      .replace(/: PortfolioItem\[\]/g, '') // Remove type annotations
+      .replace(/: string\[\]/g, '') // Remove array type annotations
+      .replace(/: string/g, '') // Remove string type annotations
+      .replace(/: 'Games' \| 'Machine Learning' \| 'Publications' \| 'Web'/g, '') // Remove union types
+      .replace(/\?\s*:/g, ':') // Remove optional property markers
+      .trim();
+
+    // Write temporary JS file
+    const tempJsPath = path.resolve(process.cwd(), 'temp-portfolio.mjs');
+    fs.writeFileSync(tempJsPath, jsContent);
+
+    try {
+      // Import the temporary JS file
+      const portfolioModule = await import(tempJsPath);
+      portfolioItems = portfolioModule.portfolioItems;
+
+      // Clean up temporary file
+      fs.unlinkSync(tempJsPath);
+    } catch (importError) {
+      console.error('Failed to import temporary JS file:', importError);
+      portfolioItems = [];
+
+      // Clean up temporary file even on error
+      try {
+        fs.unlinkSync(tempJsPath);
+      } catch (cleanupError) {
+        // Ignore cleanup errors
+      }
+    }
+  }
+
   const portfolioUrls = portfolioItems.map(item => `/portfolio/${item.slug}`);
 
   // 3. Get dynamic blog pages
