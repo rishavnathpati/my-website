@@ -1,4 +1,4 @@
-import { Mail, Terminal, MessageSquare, Send, Laptop, Phone, MapPin } from 'lucide-react';
+import { MessageSquare, Send, Laptop, Phone, MapPin } from 'lucide-react';
 
 export interface ContactInfo {
   icon: typeof MessageSquare;

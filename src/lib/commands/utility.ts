@@ -133,7 +133,7 @@ const openCommand: Command = {
     try {
       window.open(url, '_blank');
       console.success(`Opening ${url} in a new tab`);
-    } catch (error) {
+    } catch {
       console.error(`Failed to open ${url}`);
     }
   }
@@ -200,8 +200,8 @@ const terminalCommand: Command = {
     console.log('Opening full-screen terminal...');
     
     // Access our custom toggleTerminal function through the CommandConsoleContext
-    if ((console as any).toggleTerminal) {
-      (console as any).toggleTerminal(true);
+    if ('toggleTerminal' in console && typeof console.toggleTerminal === 'function') {
+      console.toggleTerminal(true);
     } else {
       console.error('Full-screen terminal functionality not available');
     }

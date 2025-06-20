@@ -2,7 +2,6 @@ import { getPostData, getAllPostSlugs } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image'; // Import Image
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,9 +15,9 @@ import { Note } from '@/components/ui/mdx/Note';
 import { Steps, Step } from '@/components/ui/mdx/Steps';
 // Import Lucide icons used within MDX (Corrected: Wrench, Plug)
 import { Terminal, Package, Shell, Wrench, Plug } from 'lucide-react';
-  
-  type Props = {
-  params: { slug: string };
+
+type Props = {
+  params: Promise<{ slug: string }>;
 };
 
 // Generate static paths for all blog posts
@@ -30,7 +29,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPostData(params.slug);
+  const { slug } = await params;
+  const post = await getPostData(slug);
 
   if (!post) {
     return { title: 'Post Not Found' };
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `/blog/${params.slug}`, // Add URL
+      url: `/blog/${slug}`, // Add URL
       images: [{ url: ogImageUrl, alt: post.title }],
       type: 'article',
       publishedTime: post.date,
@@ -73,10 +73,6 @@ const formatDate = (dateString: string): string => {
   });
 };
 
-// Define types for rehype plugins
-type RehypePlugin = any;
-type RehypePluginWithOptions<T> = [RehypePlugin, T];
-
 // Type for rehype-pretty-code options
 interface PrettyCodeOptions {
   theme: string;
@@ -90,7 +86,8 @@ const prettyCodeOptions: PrettyCodeOptions = {
 };
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = await getPostData(params.slug);
+  const { slug } = await params;
+  const post = await getPostData(slug);
 
   if (!post) {
      notFound();
@@ -156,7 +153,7 @@ export default async function BlogPostPage({ params }: Props) {
             options={{
               mdxOptions: {
                 remarkPlugins: [], // Add remark plugins if needed
-                rehypePlugins: [[rehypePrettyCode, prettyCodeOptions] as RehypePluginWithOptions<PrettyCodeOptions>],
+                rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
               },
              }}
              // Pass the correctly defined components object

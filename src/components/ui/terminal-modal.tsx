@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { X, Minimize, Command, Terminal as TerminalIcon } from 'lucide-react';
+import { X, Minimize, Terminal as TerminalIcon } from 'lucide-react';
 import { Console } from './console';
 import { useConsole } from './console-provider';
 import { TERMINAL_USERNAME, TERMINAL_HOSTNAME } from '@/lib/constants';

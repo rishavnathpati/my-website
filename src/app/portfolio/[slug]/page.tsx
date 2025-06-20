@@ -4,12 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Github, ExternalLink } from 'lucide-react';
+import { ArrowLeft, GitBranch, ExternalLink } from 'lucide-react';
 import { portfolioItems } from '@/lib/data/portfolio';
 import { ProseTerminal } from '@/components/ui/prose-terminal';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -19,7 +19,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const project = portfolioItems.find(item => item.slug === props.params.slug);
+  const { slug } = await props.params;
+  const project = portfolioItems.find(item => item.slug === slug);
 
   if (!project) {
     return { title: 'Project Not Found' };
@@ -44,7 +45,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default async function PortfolioDetailPage(props: Props) {
-  const project = portfolioItems.find(item => item.slug === props.params.slug);
+  const { slug } = await props.params;
+  const project = portfolioItems.find(item => item.slug === slug);
 
   if (!project) {
     notFound();
@@ -97,7 +99,7 @@ export default async function PortfolioDetailPage(props: Props) {
            {project.githubUrl && (
              <Button asChild className="font-mono">
                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                 <Github className="mr-2 h-5 w-5" /> View on GitHub
+                 <GitBranch className="mr-2 h-5 w-5" /> View on GitHub
                </a>
              </Button>
            )}

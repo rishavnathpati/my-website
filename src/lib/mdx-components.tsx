@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/mdx/Card';
+import { Card } from '@/components/ui/card';
 import { Note } from '@/components/ui/mdx/Note';
 import { Steps, Step } from '@/components/ui/mdx/Steps';
 import type { MDXComponents } from 'mdx/types';

@@ -145,7 +145,7 @@ function HeroSectionComponent() {
               </h1>
               <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ current_role</p>
               <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
-                I'm <span className="text-foreground">{displayText}</span>
+                I&apos;m <span className="text-foreground">{displayText}</span>
                 <span className="text-foreground animate-blink">|</span>
               </p>
               <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ next_action</p>

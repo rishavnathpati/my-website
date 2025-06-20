@@ -14,13 +14,13 @@ import { Suspense } from 'react'; // Import Suspense
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { portfolioItems } from "@/lib/data/portfolio";
-import { ArrowRight, Github, ExternalLink } from 'lucide-react';
+import { ArrowRight, GitBranch, ExternalLink } from 'lucide-react';
 
 // Define the PortfolioGrid component containing the mapping logic
  function PortfolioGrid() {
    return (
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-       {portfolioItems.map((item, index) => (
+       {portfolioItems.map((item) => (
          <Card
            key={item.slug}
            className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group"
@@ -77,7 +77,7 @@ import { ArrowRight, Github, ExternalLink } from 'lucide-react';
               {item.githubUrl && (
                 <Button variant="outline" size="icon" className="h-8 w-8" asChild>
                   <a href={item.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">
-                    <Github className="h-4 w-4" />
+                    <GitBranch className="h-4 w-4" />
                   </a>
                 </Button>
               )}

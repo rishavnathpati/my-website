@@ -48,7 +48,7 @@ function ContactCTAComponent() {
             <div className="space-y-6">
               <div className="font-mono">
                 <div className="text-muted-foreground mb-2 group">
-                  <span className="group-hover:text-primary transition-colors">$ echo "status"</span>
+                  <span className="group-hover:text-primary transition-colors">$ echo &quot;status&quot;</span>
                 </div>
                 <p className="text-foreground mb-4 pl-4 group hover:bg-primary/5 rounded transition-colors">
                   <span className="text-green-500 animate-pulse">●</span>

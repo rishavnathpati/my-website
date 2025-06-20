@@ -117,7 +117,7 @@ export default function BlogListPage() {
         </h1>
         {/* Use font-mono, text-foreground */}
         <p className="text-lg lg:text-xl text-foreground leading-relaxed font-mono">
-          Exploring ideas and sharing knowledge on topics I'm passionate about.
+          Exploring ideas and sharing knowledge on topics I&apos;m passionate about.
        </p>
        </div>
  

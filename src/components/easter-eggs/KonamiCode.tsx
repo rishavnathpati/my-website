@@ -23,43 +23,6 @@ export function KonamiCode() {
   const { log, success, warn } = useConsole();
   const maxSequenceLength = Math.max(...Object.values(CHEAT_CODES).map(code => code.sequence.length));
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    let lastKeyTime = 0;
-    const keyDebounceTime = 100; // ms
-    
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const now = Date.now();
-      // Debounce key presses to avoid too many state updates
-      if (now - lastKeyTime < keyDebounceTime) return;
-      lastKeyTime = now;
-      
-      const key = e.key.toLowerCase();
-      
-      // Optimize array operations with direct manipulation
-      const newInput = [...input, key];
-      if (newInput.length > maxSequenceLength) {
-        newInput.shift();
-      }
-      
-      setInput(newInput);
-
-      // Check for any matching cheat codes
-      for (const [codeName, code] of Object.entries(CHEAT_CODES)) {
-        const sequence = code.sequence.map(k => k.toLowerCase());
-        if (newInput.slice(-sequence.length).join(',') === sequence.join(',')) {
-          activateCheatCode(codeName as keyof typeof CHEAT_CODES);
-          setInput([]); // Reset input
-          break; // Exit loop once a match is found
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown, { passive: true });
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [input, maxSequenceLength]);
-
   const celebrateKonamiCode = useCallback(() => {
     // Simple celebration effect using DOM elements
     const colors = ['#ff0000', '#00ff00', '#0000ff'];
@@ -106,6 +69,43 @@ export function KonamiCode() {
         break;
     }
   }, [log, success, warn, celebrateKonamiCode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    let lastKeyTime = 0;
+    const keyDebounceTime = 100; // ms
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const now = Date.now();
+      // Debounce key presses to avoid too many state updates
+      if (now - lastKeyTime < keyDebounceTime) return;
+      lastKeyTime = now;
+      
+      const key = e.key.toLowerCase();
+      
+      // Optimize array operations with direct manipulation
+      const newInput = [...input, key];
+      if (newInput.length > maxSequenceLength) {
+        newInput.shift();
+      }
+      
+      setInput(newInput);
+
+      // Check for any matching cheat codes
+      for (const [codeName, code] of Object.entries(CHEAT_CODES)) {
+        const sequence = code.sequence.map(k => k.toLowerCase());
+        if (newInput.slice(-sequence.length).join(',') === sequence.join(',')) {
+          activateCheatCode(codeName as keyof typeof CHEAT_CODES);
+          setInput([]); // Reset input
+          break; // Exit loop once a match is found
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown, { passive: true });
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [input, maxSequenceLength, activateCheatCode]);
 
   return null;
 }

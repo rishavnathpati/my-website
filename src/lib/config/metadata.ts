@@ -6,6 +6,11 @@ export const siteMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Rishav Nath Pati | Game & Interactive Media Developer",
   description: "Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
   openGraph: {
     title: 'Rishav Nath Pati | Game & Interactive Media Developer',
     description: 'Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.',

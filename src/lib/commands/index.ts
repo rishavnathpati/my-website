@@ -1,5 +1,3 @@
-import { LogMessage } from '@/components/ui/console-provider';
-
 // Custom error classes for command execution
 export class CommandError extends Error {
   constructor(message: string) {

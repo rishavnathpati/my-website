@@ -14,9 +14,9 @@ interface ConsoleProps {
 
 // New component for command input with forwardRef
 const ConsoleInput = forwardRef<
-  HTMLInputElement, 
+  HTMLInputElement,
   { fullScreen?: boolean }
->(({ fullScreen }, ref) => {
+>(({}, ref) => {
   const [input, setInput] = useState('');
   const { executeCommand, getPreviousCommand, getNextCommand } = useConsole();
   

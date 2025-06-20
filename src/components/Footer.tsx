@@ -8,11 +8,11 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground font-mono">
           <Terminal size={14} className="text-primary" />
-          <span>echo "Made with</span>
+          <span>echo &quot;Made with</span>
           <Heart size={14} className="text-red-500 animate-pulse" />
           <span>and</span>
           <Coffee size={14} className="text-amber-500" />
-          <span>in India"</span>
+          <span>in India&quot;</span>
         </div>
         <div className="mt-2 text-xs text-muted-foreground/60 font-mono">
           <span className="text-primary">&gt; </span>

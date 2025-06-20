@@ -1,4 +1,4 @@
-import { Command, registerCommand } from './index';
+import { Command, registerCommand, CommandConsoleContext } from './index';
 
 // Tutorial command to guide users through the portfolio
 const tutorialCommand: Command = {
@@ -48,7 +48,7 @@ const tutorialCommand: Command = {
 };
 
 // Navigation tutorial
-const navigationTutorial = (console: any) => {
+const navigationTutorial = (console: CommandConsoleContext) => {
   console.log('=== Navigation Tutorial ===');
   console.log('');
   console.log('The portfolio is organized into sections that you can navigate to:');
@@ -68,7 +68,7 @@ const navigationTutorial = (console: any) => {
 };
 
 // Commands tutorial
-const commandsTutorial = (console: any) => {
+const commandsTutorial = (console: CommandConsoleContext) => {
   console.log('=== Commands Tutorial ===');
   console.log('');
   console.log('Here are the main categories of commands:');
@@ -94,7 +94,7 @@ const commandsTutorial = (console: any) => {
 };
 
 // Easter eggs tutorial
-const easterEggsTutorial = (console: any) => {
+const easterEggsTutorial = (console: CommandConsoleContext) => {
   console.log('=== Easter Eggs Tutorial ===');
   console.log('');
   console.log('This portfolio contains several fun easter eggs:');

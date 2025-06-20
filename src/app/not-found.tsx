@@ -19,7 +19,7 @@ export default function NotFound() {
           Page Not Found
         </h2>
         <p className="text-lg text-muted-foreground mb-8">
-          Sorry, we couldn't find the page you were looking for. It might have been moved, deleted, or maybe it never existed.
+          Sorry, we couldn&apos;t find the page you were looking for. It might have been moved, deleted, or maybe it never existed.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Button asChild size="lg">
