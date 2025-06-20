@@ -3,14 +3,14 @@ import Image from 'next/image';
 import { Metadata } from 'next';
  import { getSortedPostsData } from '@/lib/blog';
  import { Suspense } from 'react'; // Re-import Suspense
- import { BlogCardSkeleton } from '../../components/BlogCardSkeleton'; // Re-import Skeleton with relative path
+ import { BlogCardSkeleton } from '@/components/BlogCardSkeleton';
  import {
    Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card"; // Using relative path for now
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock } from 'lucide-react';
 
@@ -106,6 +106,12 @@ function BlogGrid() {
 export const metadata: Metadata = {
   title: 'Blog | Rishav Nath Pati',
   description: 'Read articles and insights on game development, interactive media, AI, and technology by Rishav Nath Pati.',
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 

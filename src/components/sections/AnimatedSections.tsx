@@ -17,27 +17,33 @@ import {
 } from '@/components/SectionSkeleton';
 
 const AboutSection = dynamic(() => import('./AboutSection').then(mod => ({ default: mod.AboutSection })), {
-  loading: () => <AboutSectionSkeleton />
+  loading: () => <AboutSectionSkeleton />,
+  ssr: true // Keep SSR for above-the-fold content
 });
 
 const ExperienceSection = dynamic(() => import('./ExperienceSection').then(mod => ({ default: mod.ExperienceSection })), {
-  loading: () => <ExperienceSectionSkeleton />
+  loading: () => <ExperienceSectionSkeleton />,
+  ssr: false // Disable SSR for below-the-fold content
 });
 
 const SkillsSection = dynamic(() => import('./SkillsSection').then(mod => ({ default: mod.SkillsSection })), {
-  loading: () => <SkillsSectionSkeleton />
+  loading: () => <SkillsSectionSkeleton />,
+  ssr: false // Disable SSR for below-the-fold content
 });
 
 const PortfolioHighlights = dynamic(() => import('./PortfolioHighlights').then(mod => ({ default: mod.PortfolioHighlights })), {
-  loading: () => <PortfolioHighlightsSkeleton />
+  loading: () => <PortfolioHighlightsSkeleton />,
+  ssr: false // Disable SSR for below-the-fold content
 });
 
 const BlogHighlights = dynamic(() => import('./BlogHighlights').then(mod => ({ default: mod.BlogHighlights })), {
-  loading: () => <BlogHighlightsSkeleton />
+  loading: () => <BlogHighlightsSkeleton />,
+  ssr: false // Disable SSR for below-the-fold content
 });
 
 const ContactCTA = dynamic(() => import('./ContactCTA').then(mod => ({ default: mod.ContactCTA })), {
-  loading: () => <ContactCTASkeleton />
+  loading: () => <ContactCTASkeleton />,
+  ssr: false // Disable SSR for below-the-fold content
 });
 
 // Define props interface

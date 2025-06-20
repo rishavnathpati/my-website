@@ -1,4 +1,4 @@
-import { Command, registerCommand } from './index';
+import { Command, registerCommand } from '@/lib/commands/index';
 
 // Helper function to scroll to a section
 const scrollToSection = (sectionId: string) => {

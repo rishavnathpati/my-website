@@ -1,4 +1,4 @@
-import { Command, registerCommand } from './index';
+import { Command, registerCommand } from '@/lib/commands/index';
 
 // Sudo command - classic joke
 const sudoCommand: Command = {

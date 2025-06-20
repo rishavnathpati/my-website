@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { BlogPostMeta } from "@/lib/blog";
 import { ArrowRight, BookOpen, Terminal } from 'lucide-react';
-import BlogCard from './blog/BlogCard';
+import BlogCard from '@/components/sections/blog/BlogCard';
 
 interface BlogHighlightsProps {
   recentPosts: BlogPostMeta[];

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMobileNav } from '@/hooks/useMobileNav';
 import { useConsole } from '@/components/ui/console-provider';
@@ -62,7 +62,7 @@ export function Header() {
     }
   }, [isMobileNavOpen, closeMobileNav]);
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, command: string) => {
+  const handleLinkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string, command: string) => {
     if (isMobileNavOpen) {
       closeMobileNav();
       log('Minimizing terminal');
@@ -76,7 +76,7 @@ export function Header() {
       log('Redirecting to home directory');
       window.location.href = '/' + href;
     }
-  };
+  }, [isMobileNavOpen, closeMobileNav, log, success, playNavigationSound, pathname]);
 
   return (
     <>

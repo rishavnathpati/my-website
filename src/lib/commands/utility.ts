@@ -1,4 +1,4 @@
-import { Command, registerCommand, getAllCommands, getCommandsByCategory } from './index';
+import { Command, registerCommand, getAllCommands, getCommandsByCategory } from '@/lib/commands/index';
 
 // Help command
 const helpCommand: Command = {

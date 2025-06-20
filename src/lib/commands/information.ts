@@ -1,4 +1,4 @@
-import { Command, registerCommand } from './index';
+import { Command, registerCommand } from '@/lib/commands/index';
 
 // Cat command for displaying information
 const catCommand: Command = {

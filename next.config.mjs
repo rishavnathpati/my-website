@@ -21,10 +21,11 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
   experimental: {
-    serverMinification: false, // Prevents class name minification issues
+    // serverMinification: false, // Re-enabled for better performance
+    // optimizeCss: true, // Disabled - requires additional dependencies
   },
   webpack: (config) => {
-    // This explicitly returns the config to prevent minification issues
+    // Let Next.js handle optimizations
     return config;
   },
   async headers() {

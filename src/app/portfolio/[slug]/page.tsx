@@ -48,6 +48,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default async function PortfolioDetailPage(props: Props) {
   const { slug } = await props.params;
   const project = portfolioItems.find(item => item.slug === slug);

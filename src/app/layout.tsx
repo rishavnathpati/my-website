@@ -12,15 +12,16 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
 import { KeyboardShortcutsHelp } from "@/components/KeyboardShortcutsHelp";
 import { ConsoleProvider } from "@/components/ui/console-provider";
-import { siteMetadata } from "@/lib/config/metadata";
+import { siteMetadata, viewport as siteViewport } from "@/lib/config/metadata";
 import { TerminalModalContainer } from '@/components/ui/terminal-modal-container';
 
 // Configure fonts
 const fontSans = GeistSans;
 const fontMono = GeistMono;
 
-// Export metadata
+// Export metadata and viewport
 export const metadata = siteMetadata;
+export const viewport = siteViewport;
 
 // Import the PageSkeleton component
 import { PageSkeleton } from "@/components/PageSkeleton";

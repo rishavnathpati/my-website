@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   description: "Oops! The page you're looking for doesn't seem to exist.",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] text-center px-4 lg:ml-[300px]">

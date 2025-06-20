@@ -103,6 +103,12 @@ export const metadata: Metadata = {
   description: 'Explore the full portfolio of games, machine learning projects, and publications by Rishav Nath Pati.',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
  export default function PortfolioPage() {
    return (
      <div className="container mx-auto px-4 py-16 lg:py-24">

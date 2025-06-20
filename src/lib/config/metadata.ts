@@ -6,11 +6,7 @@ export const siteMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Rishav Nath Pati | Game & Interactive Media Developer",
   description: "Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
+  // viewport moved to separate export for Next.js 15 compatibility
   openGraph: {
     title: 'Rishav Nath Pati | Game & Interactive Media Developer',
     description: 'Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.',
@@ -47,4 +43,11 @@ export const siteMetadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+};
+
+// Separate viewport export for Next.js 15 compatibility
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };

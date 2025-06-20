@@ -1,4 +1,4 @@
-import { Command, registerCommand, CommandConsoleContext } from './index';
+import { Command, registerCommand, CommandConsoleContext } from '@/lib/commands/index';
 
 // Tutorial command to guide users through the portfolio
 const tutorialCommand: Command = {

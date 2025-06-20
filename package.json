@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run sitemap && next build",
+    "build:analyze": "ANALYZE=true npm run build",
     "start": "next start",
     "lint": "next lint",
     "sitemap": "node ./scripts/generate-sitemap.mjs"

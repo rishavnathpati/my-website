@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Terminal } from 'lucide-react';
@@ -21,10 +22,10 @@ export function ProfileCard({ socialLinks }: ProfileCardProps) {
   const { success } = useConsole();
   const { playNavigationSound } = useNavigationSound();
 
-  const handleSocialLinkClick = (command: string) => {
+  const handleSocialLinkClick = useCallback((command: string) => {
     success(`Executing: ${command}`);
     playNavigationSound();
-  };
+  }, [success, playNavigationSound]);
 
   return (
     <div className="profile mb-8 pt-10 lg:pt-0">

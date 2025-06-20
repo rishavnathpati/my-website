@@ -68,6 +68,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 // Helper function
 const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString('en-US', {
