@@ -45,10 +45,10 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4">
       <div 
         ref={modalRef}
-        className="w-4/5 h-4/5 bg-black/95 border border-zinc-700 rounded-md overflow-hidden flex flex-col shadow-xl"
+        className="w-full h-full sm:w-4/5 sm:h-4/5 bg-black/95 border border-zinc-700 rounded-none sm:rounded-md overflow-hidden flex flex-col shadow-xl"
         style={{
           boxShadow: '0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(10, 10, 10, 0.2)'
         }}
@@ -77,27 +77,7 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
             <div className="hidden sm:flex items-center text-xs text-muted-foreground">
               <span className="mr-1">Press</span>
               <kbd className="px-1.5 py-0.5 bg-zinc-800 border border-zinc-700 rounded text-xs">ESC</kbd>
-              <span className="mx-1">to close or</span>
-              <kbd className="px-1.5 py-0.5 bg-zinc-800 border border-zinc-700 rounded text-xs">Ctrl</kbd>
-              <span className="mx-1">+</span>
-              <kbd className="px-1.5 py-0.5 bg-zinc-800 border border-zinc-700 rounded text-xs">`</kbd>
-              <span className="ml-1">to toggle</span>
-            </div>
-            <div className="flex space-x-2">
-              <button
-                onClick={onClose}
-                className="p-1 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Minimize terminal"
-              >
-                <Minimize size={16} />
-              </button>
-              <button
-                onClick={onClose}
-                className="p-1 text-muted-foreground hover:text-red-500 transition-colors"
-                aria-label="Close terminal"
-              >
-                <X size={16} />
-              </button>
+              <span className="ml-1">to close</span>
             </div>
           </div>
         </div>

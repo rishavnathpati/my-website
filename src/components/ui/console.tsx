@@ -166,12 +166,15 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
             <span className="text-xs font-medium">Console</span>
           </div>
           <button
-            onClick={() => toggleTerminalFullScreen(true)}
-            className="p-1 text-muted-foreground hover:text-foreground transition-colors rounded-sm"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent event bubbling
+              toggleTerminalFullScreen(true);
+            }}
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-sm touch-manipulation"
             aria-label="Open full-screen terminal"
-            title="Open full-screen terminal (or type 'terminal')"
+            title="Open full-screen terminal"
           >
-            <Maximize2 size={14} />
+            <Maximize2 size={16} className="sm:w-3.5 sm:h-3.5" />
           </button>
         </div>
       )}

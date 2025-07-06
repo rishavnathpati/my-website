@@ -157,27 +157,10 @@ export function ConsoleProvider({ children }: ConsoleProviderProps) {
     return null;
   }, [commandHistory, historyIndex]);
 
-  // Add keyboard shortcuts for terminal
-  useEffect(() => {
-    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      // Check for Ctrl+` or Cmd+` to toggle terminal
-      if ((e.ctrlKey || e.metaKey) && e.key === '`') {
-        toggleTerminalFullScreen();
-      }
-    };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [toggleTerminalFullScreen]);
-
-  // Add initial logs after mount using useEffect
+  // Add minimal initial log after mount using useEffect
   useEffect(() => {
-    success('Welcome to my interactive portfolio terminal!');
     log('Type "help" to see available commands');
-    log('Try "terminal" or "t" to open full-screen mode');
-    log('Keyboard shortcut: Ctrl+` or Cmd+`');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this runs only once on mount
 

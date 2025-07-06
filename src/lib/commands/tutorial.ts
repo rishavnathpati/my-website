@@ -89,6 +89,7 @@ const commandsTutorial = (console: CommandConsoleContext) => {
   console.log('  history - Show command history');
   console.log('');
   console.log('Use the up and down arrow keys to navigate through command history.');
+  console.log('Type "terminal" to open full-screen mode for better experience.');
   console.log('');
   console.success('Try using "help" to see all available commands!');
 };
