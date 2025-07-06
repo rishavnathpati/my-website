@@ -45,7 +45,7 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4">
       <div 
         ref={modalRef}
         className="w-full h-full sm:w-4/5 sm:h-4/5 bg-black/95 border border-zinc-700 rounded-none sm:rounded-md overflow-hidden flex flex-col shadow-xl"
@@ -59,11 +59,11 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
             <div className="flex space-x-1.5">
               <button 
                 onClick={onClose}
-                className="w-3 h-3 sm:w-3 sm:h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex-shrink-0"
+                className="w-5 h-5 sm:w-3 sm:h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex-shrink-0 touch-manipulation"
                 aria-label="Close terminal"
               />
-              <div className="w-3 h-3 sm:w-3 sm:h-3 rounded-full bg-yellow-500 flex-shrink-0" />
-              <div className="w-3 h-3 sm:w-3 sm:h-3 rounded-full bg-green-500 flex-shrink-0" />
+              <div className="w-5 h-5 sm:w-3 sm:h-3 rounded-full bg-yellow-500 flex-shrink-0" />
+              <div className="w-5 h-5 sm:w-3 sm:h-3 rounded-full bg-green-500 flex-shrink-0" />
             </div>
             <div className="flex items-center gap-1.5 ml-2">
               <TerminalIcon size={14} className="text-primary" />

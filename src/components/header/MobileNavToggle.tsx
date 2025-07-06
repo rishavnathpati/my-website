@@ -10,7 +10,7 @@ interface MobileNavToggleProps {
 }
 
 export function MobileNavToggle({ isOpen, onToggle }: MobileNavToggleProps) {
-  const { log } = useConsole();
+  const { log, isTerminalFullScreen } = useConsole();
   const { playNavigationSound } = useNavigationSound();
 
   const handleToggle = () => {
@@ -18,6 +18,11 @@ export function MobileNavToggle({ isOpen, onToggle }: MobileNavToggleProps) {
     log(`Terminal ${!isOpen ? 'maximized' : 'minimized'}`);
     playNavigationSound();
   };
+
+  // Hide the mobile nav toggle when terminal modal is open
+  if (isTerminalFullScreen) {
+    return null;
+  }
 
   return (
     <button
