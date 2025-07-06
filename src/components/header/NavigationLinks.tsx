@@ -31,7 +31,8 @@ export function NavigationLinks({ navItems, activeSection, onLinkClick, firstNav
       </div>
       <ul className="space-y-2">
         {navItems.map((item, index) => {
-          const isActive = activeSection === item.sectionId && pathname === '/';
+          // Only show active state when on home page AND section matches
+          const isActive = pathname === '/' && activeSection === item.sectionId;
           return (
             <li key={item.label}>
               <Link
@@ -57,10 +58,6 @@ export function NavigationLinks({ navItems, activeSection, onLinkClick, firstNav
                     }`}
                   />
                   <span>{item.label.toLowerCase()}</span>
-                </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity text-xs text-primary/60 flex items-center gap-1" aria-hidden="true">
-                  <Command size={12} />
-                  <span>Alt+{item.shortcut}</span>
                 </div>
                 {isActive && (
                   <div className="absolute bottom-0 left-0 h-[2px] bg-primary/40 w-full transform origin-left scale-x-100 transition-transform"></div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState, useRef, useEffect, KeyboardEvent, forwardRef } from 'react';
+import { memo, useState, useRef, useEffect, useCallback, KeyboardEvent, forwardRef } from 'react';
 import { Terminal, Maximize2 } from 'lucide-react';
 // Import context hook and LogMessage type
 import { useConsole } from './console-provider';
@@ -91,7 +91,7 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
     }
   };
 
-  const getMessageColor = (type: LogMessage['type']) => {
+  const getMessageColor = useCallback((type: LogMessage['type']) => {
     switch (type) {
       case 'error': return 'text-red-500';
       case 'warning': return 'text-yellow-500';
@@ -99,14 +99,21 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
       case 'command': return 'text-green-400 font-bold';
       default: return 'text-blue-500';
     }
-  };
+  }, []);
 
-  // Auto-scroll to bottom when logs update
+  // Auto-scroll to bottom when logs update - throttled for performance
   useEffect(() => {
-    if (logContainerRef.current) {
-      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
-    }
-  }, [logs]);
+    const scrollToBottom = () => {
+      if (logContainerRef.current) {
+        logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+      }
+    };
+    
+    // Use requestAnimationFrame to throttle scroll updates
+    const timeoutId = requestAnimationFrame(scrollToBottom);
+    
+    return () => cancelAnimationFrame(timeoutId);
+  }, [logs.length]); // Only depend on logs length, not entire logs array
   
   // Focus input when fullScreen changes or on mount
   useEffect(() => {
@@ -122,7 +129,7 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
     ? "p-2 flex-1 overflow-y-auto space-y-1"
     : "p-2 max-h-52 overflow-y-auto space-y-1 flex-1";
 
-  const renderLogMessage = (log: LogMessage) => {
+  const renderLogMessage = useCallback((log: LogMessage) => {
     if (log.type === 'command') {
       return (
         <div key={log.id} className="flex items-start mt-2 mb-1">
@@ -144,7 +151,7 @@ export const Console = memo(function Console({ fullScreen = false }: ConsoleProp
         <span className={`${getMessageColor(log.type)} pl-12 break-words`}>{log.message}</span>
       </div>
     );
-  };
+  }, [getMessageColor]);
 
   return (
     <div 

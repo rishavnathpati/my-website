@@ -21,7 +21,15 @@ export function useActiveSectionObserver(items: SectionItem[]) {
 
   useEffect(() => {
     // Only set up the observer if we're on the home page
-    if (pathname !== '/') return;
+    if (pathname !== '/') {
+      // Reset active section when not on home page
+      setActiveSection('');
+      return;
+    }
+
+    // Reset to hero when returning to home page
+    setActiveSection('hero');
+    visitedSections.current = new Set(['hero']);
 
     if (observerRef.current) observerRef.current.disconnect();
 
@@ -41,9 +49,11 @@ export function useActiveSectionObserver(items: SectionItem[]) {
             setActiveSection(sectionId);
             visitedSections.current.add(sectionId);
             
-            // Log messages without setTimeout
-            log(`Loading section: ${sectionId}`);
-            success(`Section "${sectionId}" loaded successfully`);
+            // Throttle logging to prevent spam
+            if (sectionId !== 'hero') { // Don't log hero section as it's default
+              log(`Loading section: ${sectionId}`);
+              success(`Section "${sectionId}" loaded successfully`);
+            }
           } else {
             // Just update active section without logging
             setActiveSection(sectionId);

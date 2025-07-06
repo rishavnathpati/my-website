@@ -32,11 +32,11 @@ function BlogGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
       {allPosts.map((post, index) => (
         <Card
           key={post.slug}
-          className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group" // Added border
+          className="flex flex-col overflow-hidden transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group touch-manipulation" // Added touch-manipulation
         >
           <CardHeader className="p-0">
             <Link href={post.externalUrl || `/blog/${post.slug}`} target={post.externalUrl ? '_blank' : '_self'} rel={post.externalUrl ? 'noopener noreferrer' : ''} aria-label={`Read more about ${post.title}`}>
@@ -96,7 +96,7 @@ function BlogGrid() {
  // Fallback component displaying multiple skeletons
  function BlogSkeletonFallback() {
    return (
-     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
        {Array.from({ length: 6 }).map((_, index) => (
          <BlogCardSkeleton key={index} />
        ))}
@@ -117,7 +117,7 @@ export const viewport = {
 
 export default function BlogListPage() {
   return (
-    <div className="container mx-auto px-4 py-16 lg:py-24">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
       <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
         {/* Use font-mono, text-foreground */}
         <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">

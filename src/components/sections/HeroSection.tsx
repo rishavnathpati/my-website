@@ -45,33 +45,48 @@ function HeroSectionComponent() {
   const handleGamepadEnter = useCallback(() => setIsHoveringGamepad(true), []);
   const handleGamepadLeave = useCallback(() => setIsHoveringGamepad(false), []);
 
-  // Custom typing animation effect
+  // Custom typing animation effect - optimized
   useEffect(() => {
     const currentString = typedStrings[currentStringIndex];
     
-    // Set timeout for typing effect
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        // Still typing the current string
-        if (displayText.length < currentString.length) {
-          setDisplayText(currentString.substring(0, displayText.length + 1));
+    // Use requestAnimationFrame for better performance
+    let animationId: number;
+    let lastUpdate = Date.now();
+    const targetInterval = isDeleting ? 50 : 70;
+    
+    const updateText = () => {
+      const now = Date.now();
+      if (now - lastUpdate >= targetInterval) {
+        lastUpdate = now;
+        
+        if (!isDeleting) {
+          // Still typing the current string
+          if (displayText.length < currentString.length) {
+            setDisplayText(currentString.substring(0, displayText.length + 1));
+          } else {
+            // Finished typing, wait before deleting
+            setTimeout(() => setIsDeleting(true), 3000);
+            return;
+          }
         } else {
-          // Finished typing, wait before deleting
-          setTimeout(() => setIsDeleting(true), 3000);
-        }
-      } else {
-        // Deleting
-        if (displayText.length > 0) {
-          setDisplayText(displayText.substring(0, displayText.length - 1));
-        } else {
-          // Move to next string
-          setIsDeleting(false);
-          setCurrentStringIndex((currentStringIndex + 1) % typedStrings.length);
+          // Deleting
+          if (displayText.length > 0) {
+            setDisplayText(displayText.substring(0, displayText.length - 1));
+          } else {
+            // Move to next string
+            setIsDeleting(false);
+            setCurrentStringIndex((currentStringIndex + 1) % typedStrings.length);
+            return;
+          }
         }
       }
-    }, isDeleting ? 50 : 70); // Faster when deleting
+      
+      animationId = requestAnimationFrame(updateText);
+    };
     
-    return () => clearTimeout(timeout);
+    animationId = requestAnimationFrame(updateText);
+    
+    return () => cancelAnimationFrame(animationId);
   }, [displayText, currentStringIndex, isDeleting]);
   
   // Manual tilt effect implementation
@@ -93,7 +108,7 @@ function HeroSectionComponent() {
   return (
     <section
       id="hero"
-      className="min-h-screen w-full flex flex-col justify-center items-center px-4 relative overflow-hidden"
+      className="min-h-[100dvh] lg:min-h-screen w-full flex flex-col justify-center items-center px-4 py-8 relative overflow-hidden"
     >
       <div 
         ref={heroContentRef}
@@ -140,11 +155,11 @@ function HeroSectionComponent() {
                   onMouseLeave={handleGamepadLeave}
                 />
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary bg-clip-text hover:text-primary/90 transition-colors">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-primary bg-clip-text hover:text-primary/90 transition-colors">
                 Rishav Nath Pati
               </h1>
               <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ current_role</p>
-              <p className="text-lg sm:text-xl md:text-2xl mb-6 font-mono">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-mono">
                 I&apos;m <span className="text-foreground">{displayText}</span>
                 <span className="text-foreground animate-blink">|</span>
               </p>

@@ -3,8 +3,8 @@
  */
 
 // Console-related constants
-export const MAX_LOGS = 50;
-export const MAX_COMMAND_HISTORY = 50;
+export const MAX_LOGS = 25; // Reduced for better performance
+export const MAX_COMMAND_HISTORY = 20; // Reduced for better performance
 
 // Terminal styling constants
 export const TERMINAL_USERNAME = "visitor";

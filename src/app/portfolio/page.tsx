@@ -19,11 +19,11 @@ import { ArrowRight, GitBranch, ExternalLink } from 'lucide-react';
 // Define the PortfolioGrid component containing the mapping logic
  function PortfolioGrid() {
    return (
-     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
        {portfolioItems.map((item, index) => (
          <Card
            key={item.slug}
-           className="flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group"
+           className="flex flex-col overflow-hidden transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group touch-manipulation"
          >
           <CardHeader className="p-0">
             <Link href={item.detailsUrl ?? '#'} aria-label={`View details for ${item.title}`}>
@@ -111,7 +111,7 @@ export const viewport = {
 
  export default function PortfolioPage() {
    return (
-     <div className="container mx-auto px-4 py-16 lg:py-24">
+     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
        <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
          {/* Changed font */}
          <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">

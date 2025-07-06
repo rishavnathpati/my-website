@@ -8,9 +8,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { KonamiCode } from "@/components/easter-eggs/KonamiCode";
-import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipLink } from "@/components/SkipLink";
-import { KeyboardShortcutsHelp } from "@/components/KeyboardShortcutsHelp";
+import { FloatingActions } from "@/components/FloatingActions";
 import { ConsoleProvider } from "@/components/ui/console-provider";
 import { siteMetadata, viewport as siteViewport } from "@/lib/config/metadata";
 import { TerminalModalContainer } from '@/components/ui/terminal-modal-container';
@@ -61,14 +60,13 @@ export default function RootLayout({
 
                 {/* Utility components */}
                 <Suspense fallback={null}>
-                  <ScrollToTop />
-                  <KeyboardShortcutsHelp />
+                  <FloatingActions />
                 </Suspense>
 
                 {/* Main content */}
                 <main 
                   id="main" 
-                  className="lg:ml-[300px] relative z-[2]" 
+                  className="lg:ml-[300px] relative z-[2] min-h-[100dvh] w-full" 
                   tabIndex={-1}
                 >
                   {children}

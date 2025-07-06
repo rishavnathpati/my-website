@@ -403,12 +403,16 @@
  
    html {
      scroll-padding-top: 80px;
+     height: 100%;
    }
  
    body {
      @apply bg-background text-foreground;
      @apply font-sans;
      min-height: 100vh;
+     min-height: 100dvh; /* Use dynamic viewport height for mobile */
+     overflow-x: hidden;
+     height: 100%;
    }
  
    /* Headings will inherit the body font (Geist Sans) by default */
@@ -439,35 +443,62 @@
      input[type="submit"],
      .nav-link,
      .social-link {
-       min-height: 44px;
-       min-width: 44px;
+       min-height: 48px;
+       min-width: 48px;
        @apply flex items-center justify-center;
      }
 
      /* Specific adjustments for navigation links */
      .nav-link {
-       @apply py-3 px-4;
-       min-height: 48px; /* Slightly larger for better UX */
+       @apply py-4 px-4;
+       min-height: 52px; /* Larger for better mobile UX */
+       font-size: 16px; /* Prevent zoom on iOS */
      }
 
      /* Social links in profile card */
      .social-links a {
-       min-height: 44px;
-       min-width: 44px;
+       min-height: 48px;
+       min-width: 48px;
        @apply p-3;
      }
 
      /* Button improvements */
      .btn-sm {
-       min-height: 44px;
+       min-height: 48px;
        @apply px-4 py-3;
+       font-size: 16px; /* Prevent zoom on iOS */
      }
 
      /* Icon buttons */
      button[aria-label] {
-       min-height: 44px;
-       min-width: 44px;
+       min-height: 48px;
+       min-width: 48px;
        @apply p-3;
+     }
+
+     /* Add safe area padding for devices with notches */
+     body {
+       padding-top: env(safe-area-inset-top);
+       padding-bottom: env(safe-area-inset-bottom);
+     }
+
+     /* Improve tap targets for blog/portfolio cards */
+     .grid > * {
+       @apply mb-4;
+     }
+
+     /* Prevent viewport zoom on small text inputs */
+     input, textarea, select {
+       font-size: 16px !important;
+     }
+
+     /* Ensure content is not cut off on small screens */
+     @media (max-height: 600px) {
+       .min-h-screen {
+         min-height: auto !important;
+         padding-top: 2rem;
+         padding-bottom: 2rem;
+       }
      }
    }
  }
