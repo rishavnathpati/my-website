@@ -59,11 +59,11 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
             <div className="flex space-x-1.5">
               <button 
                 onClick={onClose}
-                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+                className="w-3 h-3 sm:w-3 sm:h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex-shrink-0"
                 aria-label="Close terminal"
               />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
+              <div className="w-3 h-3 sm:w-3 sm:h-3 rounded-full bg-yellow-500 flex-shrink-0" />
+              <div className="w-3 h-3 sm:w-3 sm:h-3 rounded-full bg-green-500 flex-shrink-0" />
             </div>
             <div className="flex items-center gap-1.5 ml-2">
               <TerminalIcon size={14} className="text-primary" />
