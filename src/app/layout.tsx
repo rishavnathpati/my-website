@@ -66,7 +66,7 @@ export default function RootLayout({
                 {/* Main content */}
                 <main 
                   id="main" 
-                  className="lg:ml-[300px] relative z-[2] min-h-[100dvh] w-full" 
+                  className="lg:ml-[300px] relative z-[2] min-h-[100dvh]" 
                   tabIndex={-1}
                 >
                   {children}

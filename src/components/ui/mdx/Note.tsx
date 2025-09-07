@@ -15,9 +15,9 @@ const icons = {
 };
 
 const styles = {
-  info: 'border-blue-200 bg-blue-50 dark:border-blue-900/50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-200',
-  warning: 'border-yellow-200 bg-yellow-50 dark:border-yellow-900/50 dark:bg-yellow-900/20 text-yellow-900 dark:text-yellow-200',
-  success: 'border-green-200 bg-green-50 dark:border-green-900/50 dark:bg-green-900/20 text-green-900 dark:text-green-200',
+  info: 'border-blue-500/30 bg-blue-500/10 text-blue-200 border-l-4 border-l-blue-500',
+  warning: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-200 border-l-4 border-l-yellow-500',
+  success: 'border-green-500/30 bg-green-500/10 text-green-200 border-l-4 border-l-green-500',
 };
 
 export function Note({ type = 'info', children }: NoteProps) {
@@ -25,11 +25,11 @@ export function Note({ type = 'info', children }: NoteProps) {
 
   return (
     <div className={cn(
-      'my-6 flex gap-2 rounded-lg border p-4',
+      'my-4 sm:my-6 flex gap-2 sm:gap-3 rounded-lg border p-3 sm:p-4 font-mono backdrop-blur-sm text-sm sm:text-base',
       styles[type]
     )}>
-      <Icon className="h-5 w-5 mt-1 flex-shrink-0" />
-      <div>{children}</div>
+      <Icon className="h-4 w-4 sm:h-5 sm:w-5 mt-1 flex-shrink-0" />
+      <div className="flex-1">{children}</div>
     </div>
   );
 } 

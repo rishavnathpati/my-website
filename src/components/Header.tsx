@@ -27,9 +27,6 @@ export function Header() {
   // Handle focus trap and keyboard navigation in mobile menu
   useEffect(() => {
     if (isMobileNavOpen) {
-      // Prevent body scroll when mobile nav is open
-      document.body.style.overflow = 'hidden';
-      
       // Set focus to the first navigation link when menu opens
       const timer = setTimeout(() => {
         if (firstNavLinkRef.current) {
@@ -73,12 +70,8 @@ export function Header() {
       // Cleanup
       return () => {
         document.removeEventListener('keydown', handleKeyDown);
-        document.body.style.overflow = 'unset';
         clearTimeout(timer);
       };
-    } else {
-      // Restore body scroll when menu closes
-      document.body.style.overflow = 'unset';
     }
   }, [isMobileNavOpen, closeMobileNav]);
 
@@ -107,7 +100,7 @@ export function Header() {
 
       <header
         id="header"
-        className={`fixed top-0 left-0 w-full max-w-sm sm:w-80 lg:w-[300px] h-full max-h-screen border-r border-border bg-black/30 backdrop-blur-sm transition-transform duration-300 z-50 ${
+        className={`fixed top-0 left-0 w-[300px] h-full max-h-screen border-r border-border bg-black/30 backdrop-blur-sm transition-transform duration-300 z-50 ${
           isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
       >
