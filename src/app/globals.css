@@ -130,6 +130,133 @@
    animation: bounce-slow 2s infinite ease-in-out;
  }
 
+ /* Keyframes for bounce-slow animation */
+ @keyframes bounce-slow {
+   0%, 100% {
+     transform: translateY(0);
+   }
+   50% {
+     transform: translateY(8px);
+   }
+ }
+
+ /* Enhanced arrow animations */
+ @keyframes arrow-float-bounce {
+   0%, 100% {
+     transform: translate3d(0, 0, 0);
+     opacity: 0.9;
+   }
+   50% {
+     transform: translate3d(0, 10px, 0);
+     opacity: 1;
+   }
+ }
+
+ @keyframes arrow-pulse-down {
+   0%, 100% {
+     transform: translateY(0);
+     opacity: 0.7;
+   }
+   50% {
+     transform: translateY(12px);
+     opacity: 1;
+   }
+ }
+
+ @keyframes arrow-glow-pulse {
+   0%, 100% {
+     filter: drop-shadow(0 0 0 transparent);
+     transform: translateY(0);
+   }
+   50% {
+     filter: drop-shadow(0 4px 12px rgba(var(--primary), 0.4));
+     transform: translateY(8px);
+   }
+ }
+
+ /* Combined animation class for the arrow */
+ .animate-arrow-enhanced {
+   animation: arrow-float-bounce 2.5s ease-in-out infinite;
+   will-change: transform;
+   transform: translateZ(0);
+ }
+
+ /* Synchronized ripple animations that follow the arrow */
+ @keyframes ripple-sync {
+   0% {
+     transform: scale(0.5);
+     opacity: 0;
+   }
+   20% {
+     transform: scale(0.7);
+     opacity: 0.8;
+   }
+   40% {
+     transform: scale(1.2);
+     opacity: 0.5;
+   }
+   60% {
+     transform: scale(1.5);
+     opacity: 0.3;
+   }
+   80% {
+     transform: scale(1.8);
+     opacity: 0.1;
+   }
+   100% {
+     transform: scale(2);
+     opacity: 0;
+   }
+ }
+
+ /* Center-anchored ripple that maintains perfect alignment with the arrow */
+ .ripple-center {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%) scale(0.5);
+   transform-origin: center center;
+   will-change: transform, opacity;
+   backface-visibility: hidden;
+   pointer-events: none;
+ }
+
+ @keyframes ripple-sync-center {
+   0% {
+     transform: translate(-50%, -50%) scale(0.5);
+     opacity: 0;
+   }
+   20% {
+     transform: translate(-50%, -50%) scale(0.7);
+     opacity: 0.8;
+   }
+   40% {
+     transform: translate(-50%, -50%) scale(1.2);
+     opacity: 0.5;
+   }
+   60% {
+     transform: translate(-50%, -50%) scale(1.5);
+     opacity: 0.3;
+   }
+   80% {
+     transform: translate(-50%, -50%) scale(1.8);
+     opacity: 0.1;
+   }
+   100% {
+     transform: translate(-50%, -50%) scale(2);
+     opacity: 0;
+   }
+ }
+
+ .animate-ripple-sync-center {
+   animation: ripple-sync-center 2.5s ease-out infinite;
+ }
+
+ .animate-ripple-sync-center-delayed {
+   animation: ripple-sync-center 2.5s ease-out infinite;
+   animation-delay: 0.3s;
+ }
+
  .animate-float {
    animation: float 3s infinite ease-in-out;
  }

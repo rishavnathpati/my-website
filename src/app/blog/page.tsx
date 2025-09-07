@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
- import { getSortedPostsData } from '@/lib/blog';
- import { Suspense } from 'react'; // Re-import Suspense
- import { BlogCardSkeleton } from '@/components/BlogCardSkeleton';
- import {
-   Card,
+import { getSortedPostsData } from '@/lib/blog';
+import { Suspense } from 'react'; // Re-import Suspense
+import { BlogCardSkeleton } from '@/components/BlogCardSkeleton';
+import {
+  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -13,6 +13,7 @@ import { Metadata } from 'next';
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock } from 'lucide-react';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
 // Helper function (can be moved to utils if needed)
 const formatDate = (dateString: string): string => {
@@ -34,8 +35,8 @@ function BlogGrid() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
       {allPosts.map((post, index) => (
+        <AnimateOnScroll key={post.slug} delay={index * 0.05}>
         <Card
-          key={post.slug}
           className="flex flex-col overflow-hidden transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg bg-black/30 border border-border group touch-manipulation" // Added touch-manipulation
         >
           <CardHeader className="p-0">
@@ -49,7 +50,7 @@ function BlogGrid() {
                   className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                   priority={index < 3} // Priority loading for first 3 images (above the fold)
                   placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAICEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   sizes="(max-width:768px) 100vw,
                          (max-width:1200px) 50vw,
                          33vw"
@@ -88,6 +89,7 @@ function BlogGrid() {
           </CardContent>
           {/* No CardFooter needed */}
         </Card>
+        </AnimateOnScroll>
       ))}
     </div>
    );
@@ -118,20 +120,24 @@ export const viewport = {
 export default function BlogListPage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
-      <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
-        {/* Use font-mono, text-foreground */}
-        <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">
-          Blog Posts
-        </h1>
-        {/* Use font-mono, text-foreground */}
-        <p className="text-lg lg:text-xl text-foreground leading-relaxed font-mono">
-          Exploring ideas and sharing knowledge on topics I&apos;m passionate about.
-       </p>
-       </div>
+      <AnimateOnScroll>
+        <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
+          {/* Use font-mono, text-foreground */}
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">
+            Blog Posts
+          </h1>
+          {/* Use font-mono, text-foreground */}
+          <p className="text-lg lg:text-xl text-foreground leading-relaxed font-mono">
+            Exploring ideas and sharing knowledge on topics I&apos;m passionate about.
+         </p>
+        </div>
+      </AnimateOnScroll>
  
        {/* Re-add Suspense wrapper */}
        <Suspense fallback={<BlogSkeletonFallback />}>
-         <BlogGrid />
+         <AnimateOnScroll delay={0.1}>
+           <BlogGrid />
+         </AnimateOnScroll>
        </Suspense>
      </div>
    );

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { CalendarDays, Clock, ArrowLeft } from 'lucide-react';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { ProseTerminal } from '@/components/ui/prose-terminal';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
 // Import individual MDX components directly
 import { Card as MdxCard } from '@/components/ui/mdx/Card'; // Use the specialized MDX Card
@@ -122,58 +123,64 @@ export default async function BlogPostPage({ params }: Props) {
     return (
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-24 lg:max-w-5xl xl:max-w-6xl">
       {/* Back Button */}
-      <div className="mb-6 sm:mb-8">
-        <Button variant="outline" size="sm" asChild className="font-mono hover:bg-primary/10 transition-colors">
-          <Link href="/blog">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
-          </Link>
-        </Button>
-      </div>
+      <AnimateOnScroll>
+        <div className="mb-6 sm:mb-8">
+          <Button variant="outline" size="sm" asChild className="font-mono hover:bg-primary/10 transition-colors">
+            <Link href="/blog">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
+            </Link>
+          </Button>
+        </div>
+      </AnimateOnScroll>
 
       <article>
         {/* Header Section */}
-        <header className="mb-8 sm:mb-10 border-b border-border pb-6 sm:pb-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 font-mono text-foreground leading-tight">
-            {post.title}
-          </h1>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-4 font-mono">
-            <span className="flex items-center gap-1.5">
-              <CalendarDays className="w-4 h-4" /> {formatDate(post.date)}
-            </span>
-            {post.readTimeMinutes && (
+        <AnimateOnScroll>
+          <header className="mb-8 sm:mb-10 border-b border-border pb-6 sm:pb-8">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 font-mono text-foreground leading-tight">
+              {post.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-4 font-mono">
               <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4" /> {post.readTimeMinutes} min read
+                <CalendarDays className="w-4 h-4" /> {formatDate(post.date)}
               </span>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {post.tags?.map((tag) => (
-              <Badge key={tag} variant="outline" className="font-mono text-xs">{tag}</Badge>
-            ))}
-          </div>
-        </header>
+              {post.readTimeMinutes && (
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4" /> {post.readTimeMinutes} min read
+                </span>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {post.tags?.map((tag) => (
+                <Badge key={tag} variant="outline" className="font-mono text-xs">{tag}</Badge>
+              ))}
+            </div>
+          </header>
+        </AnimateOnScroll>
 
         {/* MDX Content Area */}
-        <div className="w-full">
-          <ProseTerminal className="
-             prose-code:before:content-none prose-code:after:content-none
-             prose-pre:my-6 sm:prose-pre:my-8 prose-pre:rounded-lg prose-pre:shadow-lg
-             prose-img:rounded-lg prose-img:shadow-md
-             prose-sm sm:prose-base lg:prose-lg
-             prose-headings:scroll-mt-20">
-            <MDXRemote
-              source={post.content}
-              options={{
-                mdxOptions: {
-                  remarkPlugins: [], // Add remark plugins if needed
-                  rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
-                },
-               }}
-               // Pass the correctly defined components object
-               components={components}
-             />
-           </ProseTerminal>
-        </div>
+        <AnimateOnScroll delay={0.05}>
+          <div className="w-full">
+            <ProseTerminal className="
+               prose-code:before:content-none prose-code:after:content-none
+               prose-pre:my-6 sm:prose-pre:my-8 prose-pre:rounded-lg prose-pre:shadow-lg
+               prose-img:rounded-lg prose-img:shadow-md
+               prose-sm sm:prose-base lg:prose-lg
+               prose-headings:scroll-mt-20">
+              <MDXRemote
+                source={post.content}
+                options={{
+                  mdxOptions: {
+                    remarkPlugins: [], // Add remark plugins if needed
+                    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+                  },
+                 }}
+                 // Pass the correctly defined components object
+                 components={components}
+               />
+             </ProseTerminal>
+          </div>
+        </AnimateOnScroll>
       </article>
     </div>
   );

@@ -181,9 +181,19 @@ function HeroSectionComponent() {
         <Link
           href="#about"
           aria-label="Scroll down to about section"
-          className="group inline-block focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-2 hover:bg-primary/10 transition-all duration-200"
+          className="group relative inline-block focus:outline-none focus:ring-2 focus:ring-primary rounded-full hover:bg-primary/10 transition-all duration-300"
         >
-          <ArrowDown className="w-6 h-6 text-foreground/80 group-hover:text-primary transition-colors animate-bounce-slow" />
+          {/* Container that moves with the arrow */}
+          <div className="relative animate-arrow-enhanced will-change-transform">
+            {/* Arrow icon */}
+            <ArrowDown className="relative z-10 w-6 h-6 text-foreground/80 group-hover:text-primary transition-colors" />
+            
+            {/* Ripple effect that stays perfectly centered on the arrow */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="ripple-center w-12 h-12 rounded-full border-2 border-primary/30 animate-ripple-sync-center" />
+              <div className="ripple-center w-12 h-12 rounded-full border-2 border-primary/20 animate-ripple-sync-center-delayed" />
+            </div>
+          </div>
         </Link>
       </div>
     </section>
