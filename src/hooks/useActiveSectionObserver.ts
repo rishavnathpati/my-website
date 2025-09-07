@@ -20,6 +20,7 @@ export function useActiveSectionObserver(items: SectionItem[]) {
   const activeSectionRef = useRef<string>('hero');
   const visitedSections = useRef<Set<string>>(new Set(['hero']));
   const isInitialized = useRef(false);
+  const observedIdsRef = useRef<Set<string>>(new Set());
 
   // Define the complete section order as it appears on the page
   const SECTION_ORDER = ['hero', 'about', 'experience', 'skills', 'portfolio-highlights', 'blogs', 'contact-cta'];
@@ -69,54 +70,36 @@ export function useActiveSectionObserver(items: SectionItem[]) {
     // Simple and reliable observer options
     const observerOptions: IntersectionObserverInit = {
       root: null,
-      rootMargin: '-20% 0px -60% 0px', // Balanced detection area
+      rootMargin: '-35% 0px -35% 0px', // Center-weighted detection area
       threshold: [0, 0.25, 0.5, 0.75, 1.0], // Simplified thresholds
     };
 
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      // Find the section with the highest intersection ratio
-      let bestSection = '';
-      let bestRatio = 0;
-      let hasIntersecting = false;
+    // Compute the active section using viewport center for robust sequencing
+    const computeActiveByViewportCenter = () => {
+      const viewportCenterY = window.scrollY + window.innerHeight / 2;
+      let closestSection = '';
+      let closestDistance = Infinity;
 
-      entries.forEach(entry => {
-        const sectionId = entry.target.id;
-        const ratio = entry.intersectionRatio;
-
-        if (entry.isIntersecting && ratio > bestRatio) {
-          bestRatio = ratio;
-          bestSection = sectionId;
-          hasIntersecting = true;
+      SECTION_ORDER.forEach(sectionId => {
+        const element = document.getElementById(sectionId);
+        if (!element) return;
+        const rect = element.getBoundingClientRect();
+        const elementCenter = rect.top + window.scrollY + rect.height / 2;
+        const distance = Math.abs(elementCenter - viewportCenterY);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestSection = sectionId;
         }
       });
 
-      // If no section is intersecting well, find the closest one based on scroll position
-      if (!hasIntersecting || bestRatio < 0.1) {
-        const scrollY = window.scrollY + window.innerHeight / 2; // Middle of viewport
-        let closestSection = 'hero';
-        let closestDistance = Infinity;
-
-        SECTION_ORDER.forEach(sectionId => {
-          const element = document.getElementById(sectionId);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            const elementCenter = rect.top + window.scrollY + rect.height / 2;
-            const distance = Math.abs(elementCenter - scrollY);
-
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestSection = sectionId;
-            }
-          }
-        });
-
-        bestSection = closestSection;
+      if (closestSection && closestSection !== activeSectionRef.current) {
+        updateActiveSection(closestSection);
       }
+    };
 
-      // Update active section if we found a different one
-      if (bestSection && bestSection !== activeSectionRef.current) {
-        updateActiveSection(bestSection);
-      }
+    // Intersection observer simply triggers recalculation
+    const observerCallback = (_entries: IntersectionObserverEntry[]) => {
+      computeActiveByViewportCenter();
     };
 
     // Create and configure observer
@@ -126,40 +109,53 @@ export function useActiveSectionObserver(items: SectionItem[]) {
     // Observe all sections in the expected order
     const observeSections = () => {
       let observedCount = 0;
-      const missingElements: string[] = [];
-
       SECTION_ORDER.forEach(sectionId => {
+        if (observedIdsRef.current.has(sectionId)) return;
         const element = document.getElementById(sectionId);
         if (element) {
           observer.observe(element);
+          observedIdsRef.current.add(sectionId);
           observedCount++;
-        } else {
-          missingElements.push(sectionId);
         }
       });
-
       return observedCount;
     };
 
     // Try to observe sections immediately
     const initialCount = observeSections();
 
-    // If some sections are missing, retry after a delay (for dynamic content)
-    let retryTimeout: NodeJS.Timeout | null = null;
+    // If some sections are missing, keep watching DOM mutations to observe them when they mount
+    let mutationObserver: MutationObserver | null = null;
     if (initialCount < SECTION_ORDER.length) {
-      retryTimeout = setTimeout(() => {
+      mutationObserver = new MutationObserver(() => {
         observeSections();
-      }, 300);
+      });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
     }
+
+    // Add scroll/resize listeners to keep active section accurate even without IO events
+    let rafId: number | null = null;
+    const handleScrollOrResize = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        computeActiveByViewportCenter();
+      });
+    };
+    window.addEventListener('scroll', handleScrollOrResize, { passive: true });
+    window.addEventListener('resize', handleScrollOrResize, { passive: true });
 
     // Cleanup function
     return () => {
-      if (retryTimeout) {
-        clearTimeout(retryTimeout);
-      }
       if (observer) {
         observer.disconnect();
       }
+      if (mutationObserver) {
+        mutationObserver.disconnect();
+      }
+      observedIdsRef.current.clear();
+      window.removeEventListener('scroll', handleScrollOrResize);
+      window.removeEventListener('resize', handleScrollOrResize);
     };
   }, [pathname, items, updateActiveSection]);
 
