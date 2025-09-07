@@ -166,7 +166,7 @@ function HeroSectionComponent() {
               <p className="text-foreground/80 mb-2 group-hover:text-primary transition-colors">$ next_action</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div>
-                  <ActionButton href="#portfolio">view_portfolio.sh</ActionButton>
+                  <ActionButton href="#portfolio-highlights">view_portfolio.sh</ActionButton>
                 </div>
                 <div>
                   <ActionButton href="#contact-cta" variant="outline">contact_me.sh</ActionButton>
@@ -181,7 +181,7 @@ function HeroSectionComponent() {
         <Link
           href="#about"
           aria-label="Scroll down to about section"
-          className="group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-full p-1"
+          className="group inline-block focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-2 hover:bg-primary/10 transition-all duration-200"
         >
           <ArrowDown className="w-6 h-6 text-foreground/80 group-hover:text-primary transition-colors animate-bounce-slow" />
         </Link>

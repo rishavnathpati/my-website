@@ -21,8 +21,10 @@ const cdCommand: Command = {
       console.log('Current sections available:');
       console.log('  home - Home section');
       console.log('  about - About section');
+      console.log('  experience - Experience section');
       console.log('  skills - Skills section');
       console.log('  portfolio - Portfolio section');
+      console.log('  blogs - Blogs section');
       console.log('  contact - Contact section');
       return;
     }
@@ -48,6 +50,13 @@ const cdCommand: Command = {
           console.error('Could not find about section');
         }
         break;
+      case 'experience':
+        if (scrollToSection('experience')) {
+          console.success('Navigated to experience section');
+        } else {
+          console.error('Could not find experience section');
+        }
+        break;
       case 'skills':
         if (scrollToSection('skills')) {
           console.success('Navigated to skills section');
@@ -56,14 +65,21 @@ const cdCommand: Command = {
         }
         break;
       case 'portfolio':
-        if (scrollToSection('portfolio')) {
+        if (scrollToSection('portfolio-highlights')) {
           console.success('Navigated to portfolio section');
         } else {
           console.error('Could not find portfolio section');
         }
         break;
+      case 'blogs':
+        if (scrollToSection('blogs')) {
+          console.success('Navigated to blogs section');
+        } else {
+          console.error('Could not find blogs section');
+        }
+        break;
       case 'contact':
-        if (scrollToSection('contact')) {
+        if (scrollToSection('contact-cta')) {
           console.success('Navigated to contact section');
         } else {
           console.error('Could not find contact section');
@@ -71,7 +87,7 @@ const cdCommand: Command = {
         break;
       default:
         console.error(`Unknown section: ${args[0]}`);
-        console.log('Available sections: home, about, skills, portfolio, contact');
+        console.log('Available sections: home, about, experience, skills, portfolio, blogs, contact');
     }
   }
 };
@@ -87,8 +103,10 @@ const lsCommand: Command = {
     console.log('Available sections:');
     console.log('  home/');
     console.log('  about/');
+    console.log('  experience/');
     console.log('  skills/');
     console.log('  portfolio/');
+    console.log('  blogs/');
     console.log('  contact/');
   }
 };

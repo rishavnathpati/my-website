@@ -162,7 +162,7 @@ function PortfolioHighlightsComponent() {
   // Use data directly - these are static imports that don't change
 
   return (
-    <section id="portfolio" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
+    <section id="portfolio-highlights" className="py-20 lg:py-28 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto mb-12">
           <div className="flex items-center gap-3 mb-6">

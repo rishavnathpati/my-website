@@ -76,18 +76,32 @@ export function Header() {
   }, [isMobileNavOpen, closeMobileNav]);
 
   const handleLinkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string, command: string) => {
+    // Close mobile nav if open
     if (isMobileNavOpen) {
       closeMobileNav();
       log('Minimizing terminal');
     }
 
+    // Console feedback
     success(`Executing: ${command}`);
     playNavigationSound();
 
-    if (pathname !== '/' && href.startsWith('#')) {
-      e.preventDefault();
-      log('Redirecting to home directory');
-      window.location.href = '/' + href;
+    // Handle different navigation types
+    if (href.startsWith('#')) {
+      // Hash link navigation
+      if (pathname !== '/') {
+        // Redirect to home page with hash
+        e.preventDefault();
+        log('Redirecting to home directory');
+        window.location.href = '/' + href;
+      } else {
+        // On home page, let default behavior handle smooth scrolling
+        // The intersection observer will update the active section
+      }
+    } else {
+      // Page navigation - Next.js will handle the route change
+      // The useActiveSectionObserver will automatically clear activeSection
+      log(`Navigating to ${href}`);
     }
   }, [isMobileNavOpen, closeMobileNav, log, success, playNavigationSound, pathname]);
 
