@@ -251,10 +251,78 @@
  .animate-ripple-sync-center {
    animation: ripple-sync-center 2.5s ease-out infinite;
  }
-
+ 
  .animate-ripple-sync-center-delayed {
    animation: ripple-sync-center 2.5s ease-out infinite;
    animation-delay: 0.3s;
+ }
+ 
+ /* Optimized ripple animations with better performance */
+ @keyframes ripple-optimized {
+   0% {
+     transform: translate(-50%, -50%) scale(0.5);
+     opacity: 0;
+   }
+   10% {
+     transform: translate(-50%, -50%) scale(0.6);
+     opacity: 0.8;
+   }
+   30% {
+     transform: translate(-50%, -50%) scale(1.0);
+     opacity: 0.6;
+   }
+   60% {
+     transform: translate(-50%, -50%) scale(1.4);
+     opacity: 0.3;
+   }
+   90% {
+     transform: translate(-50%, -50%) scale(1.8);
+     opacity: 0.1;
+   }
+   100% {
+     transform: translate(-50%, -50%) scale(2.0);
+     opacity: 0;
+   }
+ }
+ 
+ .animate-ripple-optimized {
+   animation: ripple-optimized 2.5s ease-out infinite;
+   will-change: transform, opacity;
+   backface-visibility: hidden;
+ }
+ 
+ .animate-ripple-optimized-delayed {
+   animation: ripple-optimized 2.5s ease-out infinite;
+   animation-delay: 0.3s;
+   will-change: transform, opacity;
+   backface-visibility: hidden;
+ }
+ 
+ /* Click ripple animations for 200ms duration */
+ @keyframes click-ripple {
+   0% {
+     transform: translate(-50%, -50%) scale(0.8);
+     opacity: 1;
+   }
+   50% {
+     transform: translate(-50%, -50%) scale(1.2);
+     opacity: 0.6;
+   }
+   100% {
+     transform: translate(-50%, -50%) scale(1.5);
+     opacity: 0;
+   }
+ }
+ 
+ .animate-click-ripple {
+   animation: click-ripple 200ms ease-out forwards;
+   will-change: transform, opacity;
+ }
+ 
+ .animate-click-ripple-delayed {
+   animation: click-ripple 200ms ease-out forwards;
+   animation-delay: 50ms;
+   will-change: transform, opacity;
  }
 
  .animate-float {

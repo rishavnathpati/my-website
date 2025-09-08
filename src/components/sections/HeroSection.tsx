@@ -177,28 +177,153 @@ function HeroSectionComponent() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-        <Link
-          href="#about"
-          aria-label="Scroll down to about section"
-          className="group relative inline-block focus:outline-none focus:ring-2 focus:ring-primary rounded-full hover:bg-primary/10 transition-all duration-300"
-        >
-          {/* Container that moves with the arrow */}
-          <div className="relative animate-arrow-enhanced will-change-transform">
-            {/* Arrow icon */}
-            <ArrowDown className="relative z-10 w-6 h-6 text-foreground/80 group-hover:text-primary transition-colors" />
-            
-            {/* Ripple effect that stays perfectly centered on the arrow */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="ripple-center w-12 h-12 rounded-full border-2 border-primary/30 animate-ripple-sync-center" />
-              <div className="ripple-center w-12 h-12 rounded-full border-2 border-primary/20 animate-ripple-sync-center-delayed" />
-            </div>
-          </div>
-        </Link>
+      <div className="absolute bottom-30 left-1/2 transform -translate-x-1/2 z-10">
+        <EnhancedArrowButton />
       </div>
     </section>
   );
 }
+
+// Enhanced Arrow Button Component with proper highlight management
+const EnhancedArrowButton = memo(function EnhancedArrowButton() {
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
+
+  // Handle click with proper highlight management
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // Clear any existing timeout
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+    
+    // Set clicked state for 200ms
+    setIsClicked(true);
+    clickTimeoutRef.current = setTimeout(() => {
+      setIsClicked(false);
+    }, 200);
+    
+    // Smooth scroll to target
+    const target = document.querySelector('#about');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
+  // Handle blur to immediately clear highlights
+  const handleBlur = useCallback(() => {
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+    setIsClicked(false);
+  }, []);
+
+  // Handle focus loss
+  const handleFocusOut = useCallback((e: React.FocusEvent) => {
+    // Only clear if focus is moving outside the button
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      handleBlur();
+    }
+  }, [handleBlur]);
+
+  // Viewport visibility observer
+  useEffect(() => {
+    if (!buttonRef.current) return;
+
+    intersectionObserverRef.current = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        // Clear highlights when button goes out of viewport
+        if (!entry.isIntersecting) {
+          handleBlur();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    intersectionObserverRef.current.observe(buttonRef.current);
+
+    return () => {
+      if (intersectionObserverRef.current) {
+        intersectionObserverRef.current.disconnect();
+      }
+    };
+  }, [handleBlur]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+      if (intersectionObserverRef.current) {
+        intersectionObserverRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  return (
+    <Link
+      ref={buttonRef}
+      href="#about"
+      aria-label="Scroll down to about section"
+      className={`
+        group relative inline-block focus:outline-none
+        rounded-full hover:bg-primary/10 transition-all duration-200
+        hover:scale-105 active:scale-95
+        ${!isVisible ? 'pointer-events-none' : ''}
+      `}
+      onClick={handleClick}
+      onBlur={handleBlur}
+      onBlurCapture={handleFocusOut}
+      tabIndex={0}
+    >
+      {/* Container that moves with the arrow - increased size by ~40% */}
+      <div className="relative animate-arrow-enhanced will-change-transform p-3">
+        {/* Arrow icon - increased from w-6 h-6 to w-9 h-9 (~50% larger) */}
+        <ArrowDown className="relative z-10 w-9 h-9 text-foreground/80 group-hover:text-primary transition-colors" />
+        
+        {/* Optimized ripple effect with proper cleanup */}
+        {isVisible && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div
+              className={`
+                ripple-center w-18 h-18 rounded-full border-2 border-primary/30
+                animate-ripple-optimized
+                ${isClicked ? 'animate-click-ripple' : ''}
+              `}
+              style={{
+                animationDuration: isClicked ? '200ms' : '2.5s',
+                opacity: isVisible ? 1 : 0,
+                transition: 'opacity 200ms ease-out'
+              }}
+            />
+            <div
+              className={`
+                ripple-center w-18 h-18 rounded-full border-2 border-primary/20
+                animate-ripple-optimized-delayed
+                ${isClicked ? 'animate-click-ripple-delayed' : ''}
+              `}
+              style={{
+                animationDuration: isClicked ? '200ms' : '2.5s',
+                animationDelay: isClicked ? '50ms' : '0.3s',
+                opacity: isVisible ? 1 : 0,
+                transition: 'opacity 200ms ease-out'
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </Link>
+  );
+});
 
 // Keep the ActionButton memoized as it's a simple UI component
 // Keep the useCallback hooks as they're used for event handlers
