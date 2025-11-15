@@ -4,6 +4,7 @@ import { createContext, useContext, useCallback, useState, useEffect, ReactNode,
 import { findCommand } from '@/lib/commands/main';
 import { CommandError } from '@/lib/commands/index';
 import { MAX_LOGS, MAX_COMMAND_HISTORY } from '@/lib/constants';
+import { showWelcomeMessage } from '@/lib/commands/tutorial';
 // Import registry to ensure all commands are registered
 import '@/lib/commands/main';
 
@@ -158,9 +159,19 @@ export function ConsoleProvider({ children }: ConsoleProviderProps) {
   }, [commandHistory, historyIndex]);
 
 
-  // Add minimal initial log after mount using useEffect
+  // Show welcome message on first mount
   useEffect(() => {
-    log('Type "help" to see available commands');
+    // Check if this is the first visit (optional - could use localStorage)
+    const hasSeenWelcome = sessionStorage.getItem('hasSeenWelcome');
+    
+    if (!hasSeenWelcome) {
+      // Show full welcome message on first load
+      showWelcomeMessage({ log, warn, error, success });
+      sessionStorage.setItem('hasSeenWelcome', 'true');
+    } else {
+      // Show shorter message on subsequent loads
+      log('Welcome back! Try: cat featured/START_HERE.txt | Type "help" for all commands');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this runs only once on mount
 

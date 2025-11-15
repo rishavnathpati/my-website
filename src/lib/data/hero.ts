@@ -1,5 +1,6 @@
 export const typedStrings = [
-  'a Software Engineer',
-  'an Interactive Media Developer @ Convai',
-  'a Unity GameDev | 2D | 3D | AR/VR |',
+  'building AI NPCs that can actually talk',
+  'wiring speech systems into Unity',
+  'making VR characters feel real',
+  'shipping games & interactive experiences',
 ];

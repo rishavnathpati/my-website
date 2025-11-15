@@ -9,26 +9,35 @@ export interface Competency {
 
 export const aboutData: AboutData = {
   paragraphs: [
-    "I'm a passionate Game and Interactive Media Developer with a deep love for creating immersive digital experiences. My journey in game development started with a fascination for how interactive media can transform ideas into engaging experiences that captivate and inspire users.",
-    "Throughout my career, I've focused on bridging the gap between creativity and technology, using my expertise in Unity and various programming languages to bring innovative ideas to life. I believe in the power of games and interactive media to not just entertain, but also educate and create meaningful connections.",
-    "What drives me is the opportunity to push the boundaries of what's possible in interactive media. Whether it's developing intuitive AR/VR experiences, creating engaging mobile games, or integrating cutting-edge AI solutions, I'm always excited to explore new technologies and find creative ways to solve complex challenges.",
-    "I'm currently exploring opportunities to collaborate on ambitious projects where I can contribute my expertise in game development and interactive media, while continuing to learn and grow in this ever-evolving field."
+    "I'm Rishav, a game and interactive media developer who likes building things where real-time interaction actually matters — AI-driven NPCs, speech systems, and VR worlds.",
+    "Right now I work at Convai as an Interactive Media Developer, mostly inside Unity. I spend a lot of time wiring up conversational AI to characters, streaming speech to and from the engine, and making sure these systems feel solid enough that other developers can drop them into their own projects without thinking too hard.",
+    "Before that, I shipped a bunch of small games for mobile and PC: casual, hyper-casual, a few educational ones. That phase taught me how to prototype quickly, cut scope without killing the fun, and keep performance in mind from day one.",
+    "On the side, I tinker with Python backends, small CLIs, and the occasional Android or ML-flavoured experiment — nothing huge, but enough to glue systems together and explore new ideas. I care a lot about tools, workflows, and making complex tech feel approachable, both for players and for other developers."
   ],
   competencies: [
     {
-      text: "Innovative problem-solver with a proven track record of turning complex technical challenges into elegant, user-friendly solutions"
+      text: "Building real-time systems in Unity (speech, AI NPCs, VR, networking)"
     },
     {
-      text: "Strong advocate for clean code and optimization, consistently delivering high-performance applications that exceed expectations"
+      text: "Shipping prototypes quickly while keeping the codebase understandable for v2"
     },
     {
-      text: "Experienced in rapid prototyping and agile development, adapting quickly to new technologies and project requirements"
+      text: "Designing tools and editor workflows that make other developers' lives easier"
     },
     {
-      text: "Dedicated to creating immersive user experiences through a combination of technical expertise and creative design"
+      text: "Optimizing scenes and systems for performance on constrained hardware (mobile, VR)"
     },
     {
-      text: "Committed to continuous learning and staying current with emerging technologies in game development and interactive media"
+      text: "Connecting Unity with backend services using gRPC / REST and lightweight Python services"
+    },
+    {
+      text: "Explaining technical ideas clearly through docs, examples, and conversations"
+    },
+    {
+      text: "Collaborating across disciplines — programmers, designers, writers, and artists"
+    },
+    {
+      text: "Exploring new tech (ML, Android, audio tools) enough to integrate it into real projects"
     }
   ]
 };

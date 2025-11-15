@@ -2,6 +2,8 @@
 import '@/lib/commands/utility';
 import '@/lib/commands/navigation';
 import '@/lib/commands/information';
+import '@/lib/commands/search';
+import '@/lib/commands/hints';
 import '@/lib/commands/easter-eggs';
 import '@/lib/commands/tutorial';
 
