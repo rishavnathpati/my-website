@@ -608,7 +608,8 @@
      min-height: 100dvh; /* Use dynamic viewport height for mobile */
      overflow-x: hidden;
      height: 100%;
-   }
+     line-height: 1.65;
+    }
  
    /* Headings will inherit the body font (Geist Sans) by default */
    /* If specific heading font needed, apply here e.g., @apply font-sans; */

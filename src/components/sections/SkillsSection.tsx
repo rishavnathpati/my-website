@@ -37,9 +37,9 @@ function SkillsSectionComponent() {
             {/* Description */}
             <AnimatedDescription>
               <p className="text-foreground leading-relaxed mb-10 font-mono">
-                As a Game and Interactive Media Developer with over 5 years of experience in Computer Science and 3+ years
-                specializing in Unity, I bring a wealth of expertise to mobile games, AR/VR, and beyond. My passion lies in
-                crafting immersive experiences that captivate users through engaging gameplay, stunning visuals, and intuitive UI design.
+                Most of my toolkit lives inside Unity: speech integrations, AI-driven behaviour trees, VR interaction systems,
+                and the networking glue that keeps them stable. I care about fast iteration without wrecking maintainability,
+                profiling early so Quest builds stay smooth, and shipping editor tools so the rest of the team can tweak content without me hovering.
               </p>
             </AnimatedDescription>
 

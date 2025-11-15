@@ -90,8 +90,22 @@ const PortfolioCard = memo(function PortfolioCard({
             quality={75}
           />
         </div>
-        <CardContent className="p-4">
-          <div className="flex flex-wrap gap-2 mb-4">
+        <CardContent className="p-4 space-y-4">
+          <p className="text-sm text-muted-foreground leading-relaxed font-mono">
+            {item.description}
+          </p>
+
+          {item.highlights && (
+            <ul className="space-y-2 text-sm text-foreground font-mono list-disc pl-5">
+              {item.highlights.map((highlight) => (
+                <li key={highlight} className="marker:text-primary/80">
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="flex flex-wrap gap-2 pt-2">
             {item.tags.map((tag) => (
               <Badge
                 key={tag}

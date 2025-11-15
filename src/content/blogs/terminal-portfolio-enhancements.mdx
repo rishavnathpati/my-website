@@ -1,0 +1,36 @@
+---
+title: 'Building the Terminal Portfolio'
+date: '2024-05-12'
+excerpt: 'Turning my portfolio into a pseudo-shell forced me to design commands, hierarchy, and feedback loops just like a real tool. Here is what changed and why it matters.'
+tags: ['Portfolio', 'UX', 'CLI', 'Content Design']
+imageUrl: '/blog/thumbnails/hand-gesture-gui-tutorial.png'
+readTimeMinutes: 6
+slug: 'terminal-portfolio-enhancements'
+---
+
+I wanted the site to feel like opening a developer workstation: type `help`, explore directories, and fall into rabbit holes even if you never touch the mouse. That meant treating the portfolio like a tiny operating system instead of a scrolling brochure.
+
+## Design goals
+
+1. **Match reality.** My day job lives in terminals, Unity, and debug windows. The site should too.
+2. **Respect time.** If someone only gives me 60 seconds, the best work needs to be one command away.
+3. **Delight without blocking.** Easter eggs are great, but the core navigation should always be obvious.
+
+## System upgrades
+
+### `ls`, `tree`, and friends
+I built a virtual filesystem (`~/featured`, `~/about`, `~/portfolio`, etc.) so every command maps to real content. It returns permissions, fake file sizes, and prettified directories so the terminal feels alive when you type `ls -la`.
+
+### Stateful console
+Command history, autocomplete-style hints, and a draggable full-screen mode were must-haves. The console stores a short log, replays previous commands with the arrow keys, and surfaces gentle nudges like `cat featured/START_HERE.txt` when you look idle.
+
+### Guided `tour`
+Typing `tour` walks you through the hierarchy—the same way I onboard teammates to a repo. It highlights the new featured directory, points to my favourite projects, and links to contact info at the end.
+
+## What I learned
+
+- Treating content like files forces ruthless prioritisation. Every directory needs a reason to exist.
+- Terminal feedback (success/error logs) is a playful stand-in for a full CMS—it lets me ship new text quickly without touching the rest of the UI.
+- People actually read the docs when they feel like commands. The completion rate on `tour` is higher than the old hero CTA click-through.
+
+Next up: keep layering more "ops" style commands (`deploy`, `tail logs`, etc.) so the console keeps surprising people without being a gimmick.

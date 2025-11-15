@@ -29,7 +29,7 @@ function BlogGrid() {
   const allPosts = getSortedPostsData();
 
   if (allPosts.length === 0) {
-    return <p className="text-center text-foreground font-mono">No blog posts found.</p>;
+    return <p className="text-center text-foreground font-mono">No notes found.</p>;
   }
 
   return (
@@ -106,8 +106,8 @@ function BlogGrid() {
    );
  }
 export const metadata: Metadata = {
-  title: 'Blog | Rishav Nath Pati',
-  description: 'Read articles and insights on game development, interactive media, AI, and technology by Rishav Nath Pati.',
+  title: 'Notes | Rishav Nath Pati',
+  description: 'Working notes covering AI NPCs, Unity tooling, VR experiments, and the thinking behind my portfolio.',
 };
 
 export const viewport = {
@@ -124,11 +124,11 @@ export default function BlogListPage() {
         <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
           {/* Use font-mono, text-foreground */}
           <h1 className="text-4xl lg:text-5xl font-bold mb-4 font-mono text-foreground">
-            Blog Posts
+            Notes & Logs
           </h1>
           {/* Use font-mono, text-foreground */}
           <p className="text-lg lg:text-xl text-foreground leading-relaxed font-mono">
-            Exploring ideas and sharing knowledge on topics I&apos;m passionate about.
+            Short write-ups on the systems, experiments, and polish work I ship elsewhere on the site.
          </p>
         </div>
       </AnimateOnScroll>

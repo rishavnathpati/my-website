@@ -84,7 +84,8 @@ const cdCommand: Command = {
       'experience': 'experience',
       'skills': 'skills',
       'portfolio': 'portfolio-highlights',
-      'blogs': 'blogs',
+      'blogs': 'notes',
+      'notes': 'notes',
       'contact': 'contact-cta'
     };
     

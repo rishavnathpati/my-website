@@ -1,0 +1,31 @@
+---
+title: 'Quest 3 NPC Playtest Log'
+date: '2024-06-05'
+excerpt: 'Notes from building a Quest 3 sandbox where AI-driven characters respond to gaze, proximity, and improvised dialogue.'
+tags: ['VR', 'Unity', 'AI NPCs', 'Playtesting']
+imageUrl: '/blog/thumbnails/beatrex-ball-journey.png'
+readTimeMinutes: 4
+slug: 'quest-3-playtest-log'
+---
+
+I wanted a space to stress-test AI NPC interactions before they landed in demos, so I turned my home office into a Quest 3 rehearsal stage. It is part research scene, part improv theatre.
+
+## Setup
+
+- Unity XR Interaction Toolkit + Convai SDK running on a lightweight scene.
+- Cinemachine rigs and lighting cues so NPCs always have a readable silhouette.
+- Remote logging to a CLI that streams transcripts, latency, and posture deltas over WebSocket.
+
+## What we test
+
+1. **Approach behaviour.** NPCs rotate and greet based on your trajectory, not just when you cross a trigger box.
+2. **Gaze awareness.** If you avert your eyes, the character backs off and re-centres. Holding eye contact makes them lean into the conversation.
+3. **Latency feels.** We compare the same dialogue tree at 80 ms vs 200 ms to see how much delay the headset can hide.
+
+## Tooling wins
+
+- Built a `playtest mark` command in the CLI that tags the current transcript line and captures a screenshot automatically.
+- Added a `persona swapper` so writers can test multiple character briefs without reloading the scene.
+- Logged every interjection into a `notes.md` file, which fed straight back into the featured `current-work.md` entry.
+
+It is not glamorous, but treating NPC testing like theatre rehearsals means we find tone issues before engineers are on call. Plus, it is fun to watch AI characters learn how to respect personal space.

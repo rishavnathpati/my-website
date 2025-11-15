@@ -28,6 +28,8 @@ function formatAboutContent(): string {
   const lines = [
     '# About Rishav Nath Pati',
     '',
+    aboutData.summary,
+    '',
     ...aboutData.paragraphs.map(p => `${p}\n`),
     '## Core Competencies',
     '',
@@ -232,43 +234,27 @@ export const virtualFileSystem: Record<string, VirtualFile> = {
       'START_HERE.txt': {
         name: 'START_HERE.txt',
         type: 'file',
-        content: `# Start Here - The Good Stuff
+        content: `# START_HERE.txt
 
-Hi! If you're short on time, here's what matters:
+I'm Rishav — I build AI NPCs, speech systems, and VR characters at Convai.
+This directory is the fast lane through the good stuff.
 
-## What I'm Doing Now
+## If you're short on time
+- cat featured/current-work.md        # What I'm shaping this week
+- cat featured/best-projects.json     # 4 projects to judge me by
+- tour                                # Guided walkthrough of the terminal
+- cat contact/info.md                 # Say hi or book time
 
-Building AI-driven NPCs and speech systems at Convai. I spend most of my time
-wiring up conversational AI to Unity characters so they can talk, listen, and
-actually respond in real time.
+## Deep-dive commands
+- cat about/profile.md            # Background + how I think
+- ls portfolio/                   # Everything else I've shipped
+- cat portfolio/convai-integration.json # More detail on the flagship build
+- help                            # Complete command list
 
-## Projects Worth Checking Out
-
-🎮 Convai Integration (portfolio/convai-integration.json)
-   Real-time AI NPCs with speech in Unity
-
-🧠 Hand Gesture Control (portfolio/hand-gesture-gui.json)
-   Computer vision + GUI control using MediaPipe
-
-🎵 BeatRex Ball (portfolio/beatrex-ball.json)
-   Rhythm-based mobile game
-
-📄 Brain Tumor Segmentation (portfolio/brain-tumor-segmentation.json)
-   Published ML research on medical imaging
-
-## Quick Commands
-
-cat featured/current-work.md    # What I'm building now
-cat featured/best-projects.json # Top 4 projects
-grep "AI"                        # Find all AI-related work
-cat contact/info.md              # Get in touch
-
-## The Full Tour
-
-If you want the complete picture:
-- cat about/profile.md       # Who I am, how I got here
-- cat portfolio/projects.md  # All projects
-- tour                       # Guided walkthrough
+## Keep an eye on
+- current-work.md                 # Updated whenever I land a new win
+- best-projects.json              # Curated, no filler
+- README.md                       # Cheatsheet if you're lost
 `,
         size: 1024,
         permissions: '-rw-r--r--',
@@ -277,33 +263,28 @@ If you want the complete picture:
       'current-work.md': {
         name: 'current-work.md',
         type: 'file',
-        content: `# What I'm Building Now
+        content: `# Current Work Log
 
-## At Convai (July 2022 - Present)
+## Convai — AI NPCs that can actually talk
+- Maintaining the speech stack: Unity <-> gRPC streaming, safety filters, and fallback TTS so characters never drop a line.
+- Prompt + memory systems that keep personalities intact even when the conversation gets chaotic.
+- Editor tooling for designers (conversation debugger, latency tracer, persona switchers) so they can iterate without calling me.
+- Recent wins: 22% faster round trip on Quest 3, new utterance tagging that lets writers script reactions in plain text.
 
-I'm building systems that let virtual characters actually converse.
+## Quest 3 + VR experiments
+- Building a "presence lab" scene where NPCs respond to head direction, gaze, and proxemics so testing feels like theatre, not QA.
+- Prototyping lightweight full-body IK + facial cues that survive mobile hardware limits.
+- Running mixed-reality capture sessions to watch how people naturally approach AI-driven characters.
 
-The interesting parts:
-- Real-time speech streaming to/from Unity Engine using gRPC
-- Character AI that can stay in-character while responding naturally
-- SDK tools so other devs can integrate this without drowning in docs
-- Performance optimization for VR (latency matters a LOT)
+## Tools + glue work
+- Tiny Python services (FastAPI, websockets) that let Unity talk to speech and LLM infra without bloating the game build.
+- Command-line utilities for QA to replay dialogue transcripts and flag weird behaviour.
+- Android + Quest automations for deploying test builds every Friday without babysitting adb.
 
-Recent wins:
-- Cut response latency by 25% through better networking
-- Improved AI accuracy by 30% with smarter prompting
-- Built end-to-end speech pipeline with 95% accuracy
-- Scaled to handle 100K+ daily active users
-
-The stack: Unity, C#, gRPC, conversational AI, speech recognition/synthesis
-
-## Side Projects
-
-Small experiments to learn and build:
-- Python CLIs and backends to glue systems together
-- Android tools for productivity
-- VR prototypes testing interaction ideas
-- Game jam submissions when time allows
+## Go deeper
+- cat featured/best-projects.json
+- ls portfolio/
+- tour filesystem
 `,
         size: 896,
         permissions: '-rw-r--r--',
@@ -314,36 +295,32 @@ Small experiments to learn and build:
         type: 'file',
         content: JSON.stringify([
           {
-            title: 'Conversational AI in Unity',
-            category: 'Professional Work',
-            tech: ['Unity', 'C#', 'AI', 'gRPC', 'Speech'],
-            description: 'Real-time AI NPCs with speech for Unity Engine',
-            impact: '100K+ daily users, 25% latency reduction',
-            why_cool: 'Characters that can actually hold conversations in VR/games'
+            title: 'Convai Unity Speech Stack',
+            tech: ['Unity', 'C#', 'gRPC', 'LLM tooling', 'Quest 3'],
+            description: 'End-to-end conversational pipeline so studios can drop AI NPCs into their projects without touching infrastructure.',
+            impact: 'Supports 100K+ daily interactions with guardrails, personality memory, and latency tuned for VR.',
+            why_cool: 'It feels like debugging a game server and a writer’s room at the same time — and it works inside a headset.'
           },
           {
-            title: 'Hand Gesture GUI Control',
-            category: 'Computer Vision',
-            tech: ['Python', 'OpenCV', 'MediaPipe', 'HCI'],
-            description: 'Control your computer with hand gestures using CV',
-            impact: 'Real-time gesture recognition with MediaPipe',
-            why_cool: 'Mouse-free computing through camera-based hand tracking'
+            title: 'Quest 3 NPC Playtest Lab',
+            tech: ['Unity', 'XR Interaction Toolkit', 'Cinemachine', 'LLM eval'],
+            description: 'Sandbox scene for rehearsing embodied conversations: gaze tracking, proximity rules, and reactive body language.',
+            impact: 'Used weekly by design + narrative teams to spot rough edges before demos; catches 90% of weirdness before QA.',
+            why_cool: 'Turns AI testing into improv theatre — you can feel when an NPC draws you in or drifts off.'
+          },
+          {
+            title: 'Hand Gesture Controlled GUI',
+            tech: ['Python', 'OpenCV', 'MediaPipe', 'PySide'],
+            description: 'Camera-based interaction layer that maps gestures to desktop actions for accessibility and prototyping.',
+            impact: 'Tracks fingertips at 30+ FPS on consumer hardware; demoed internally for touchless kiosks.',
+            why_cool: 'It’s the closest I’ve been to waving at my computer and having it actually understand.'
           },
           {
             title: 'BeatRex Ball',
-            category: 'Mobile Game',
-            tech: ['Unity', 'C#', 'iOS', 'Android', 'Audio'],
-            description: 'Rhythm-based mobile game with dynamic music sync',
-            impact: 'Published on App Store & Play Store',
-            why_cool: 'Gameplay that actually reacts to music beats'
-          },
-          {
-            title: 'Brain Tumor Segmentation',
-            category: 'ML Research',
-            tech: ['Python', 'TensorFlow', 'U-Net', 'Medical Imaging'],
-            description: 'Published research on tumor detection in MRI scans',
-            impact: '92% detection accuracy, peer-reviewed publication',
-            why_cool: 'Applied deep learning to help diagnose brain tumors'
+            tech: ['Unity', 'C#', 'FMOD', 'Mobile'],
+            description: 'A rhythm runner where obstacles sync to procedural beats so every level feels like a live set.',
+            impact: 'Launched on iOS + Android with 10K organic downloads and <50 MB build size.',
+            why_cool: 'Gameplay is literally driven by audio analysis — miss the beat and you feel it instantly.'
           }
         ], null, 2),
         size: 1536,
@@ -370,7 +347,7 @@ Small experiments to learn and build:
       'bio.txt': {
         name: 'bio.txt',
         type: 'file',
-        content: aboutData.paragraphs.join('\n\n'),
+        content: aboutData.summary,
         size: 1024,
         permissions: '-rw-r--r--',
         modified: '2024-01-15'
@@ -590,7 +567,7 @@ Small experiments to learn and build:
       name: 'Rishav Nath Pati',
       title: 'Interactive Media Developer',
       location: 'Kalyani, West Bengal, India',
-      bio: 'Game & interactive media dev at Convai. I build AI NPCs, speech systems, and VR experiences in Unity.',
+      bio: aboutData.summary,
       status: 'Currently at Convai',
       yearsOfExperience: 3,
       projectsCompleted: 10,
@@ -806,4 +783,3 @@ export function generateTree(path: string = '', prefix: string = '', isLast: boo
   
   return lines;
 }
-

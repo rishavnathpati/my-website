@@ -23,7 +23,7 @@ export function useActiveSectionObserver(items: SectionItem[]) {
   const observedIdsRef = useRef<Set<string>>(new Set());
 
   // Define the complete section order as it appears on the page
-  const SECTION_ORDER = ['hero', 'about', 'experience', 'skills', 'portfolio-highlights', 'blogs', 'contact-cta'];
+  const SECTION_ORDER = ['hero', 'about', 'experience', 'skills', 'portfolio-highlights', 'notes', 'contact-cta'];
 
   // Memoized callback to update active section
   const updateActiveSection = useCallback((sectionId: string) => {

@@ -4,12 +4,12 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Rishav Nath Pati | Game & Interactive Media Developer",
-  description: "Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.",
+  title: "Rishav Nath Pati | AI NPCs, Speech & VR in Unity",
+  description: "I build AI-driven NPCs, speech systems, and VR experiences inside Unity — here are the tools, experiments, and notes behind that work.",
   // viewport moved to separate export for Next.js 15 compatibility
   openGraph: {
-    title: 'Rishav Nath Pati | Game & Interactive Media Developer',
-    description: 'Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.',
+    title: 'Rishav Nath Pati | AI NPCs, Speech & VR in Unity',
+    description: 'I build AI-driven NPCs, speech systems, and VR experiences inside Unity — here are the tools, experiments, and notes behind that work.',
     url: '/',
     siteName: 'Rishav Nath Pati Portfolio',
     images: [
@@ -25,8 +25,8 @@ export const siteMetadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rishav Nath Pati | Game & Interactive Media Developer',
-    description: 'Portfolio of Rishav Nath Pati, specializing in Unity 3D/2D/AR/VR, C#, and Machine Learning.',
+    title: 'Rishav Nath Pati | AI NPCs, Speech & VR in Unity',
+    description: 'I build AI-driven NPCs, speech systems, and VR experiences inside Unity — here are the tools, experiments, and notes behind that work.',
     images: ['/profile-img.jpg'],
   },
   robots: {

@@ -1,0 +1,33 @@
+---
+title: 'Hierarchy & Focus Improvements'
+date: '2024-05-20'
+excerpt: 'Documenting how I re-ordered the portfolio so the best work hits first: featured directories, guided commands, and calmer layouts.'
+tags: ['Content Strategy', 'UX', 'Portfolio']
+imageUrl: '/blog/thumbnails/hand-gesture-recognition.png'
+readTimeMinutes: 5
+slug: 'hierarchy-focus-improvements'
+---
+
+My first pass at the terminal portfolio was technically fun but structurally flat. `about/`, `skills/`, and `portfolio/` carried equal weight even though most people only care about two things: **what I am building right now** and **whether the work is any good**. This note captures how I fixed that.
+
+## 1. Create a `featured/` directory
+
+Putting a star next to `~/featured` changed the way people explore. The new `START_HERE.txt`, `current-work.md`, and `best-projects.json` files act like a curated README. Every onboarding command (`help`, `hint`, `tour`) now points there first.
+
+## 2. Rewrite the copy like patch notes
+
+Instead of fluffy bios, I wrote about real systems: Unity speech stacks, Quest 3 prototypes, and the tooling that supports them. Competencies shrank to five pointed bullets so the section reads like capability flags, not personality traits.
+
+## 3. Surface that hierarchy in the UI
+
+The visual layout mirrors the terminal now:
+
+- Hero text is action-driven (`I'm wiring speech systems into Unity`).
+- Suggested commands next to the console show `cat featured/START_HERE.txt` even if you never type.
+- Portfolio cards expand with "what I built" bullet points so the story lands before the tech stack.
+
+## 4. Slow down the layout
+
+I capped the content width around 880px, bumped line-height to 1.7, and added more breathing room between sections. It feels more like documentation than a landing page—and that suits the terminal metaphor much better.
+
+Shipping the hierarchy update was less about new components and more about respecting the story. Once `featured/` exists, every other decision gets easier: either it supports the story, or it gets demoted.

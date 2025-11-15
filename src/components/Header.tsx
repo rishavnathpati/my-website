@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, memo } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMobileNav } from '@/hooks/useMobileNav';
 import { useConsole } from '@/components/ui/console-provider';
@@ -11,11 +11,54 @@ import { MobileNavToggle } from '@/components/header/MobileNavToggle';
 import { useActiveSectionObserver } from '@/hooks/useActiveSectionObserver';
 import { useNavigationSound } from '@/hooks/useNavigationSound';
 import { navItems, socialLinks } from '@/components/header/headerConstants';
+import { Sparkles, ArrowUpRight } from 'lucide-react';
+
+const startHereCommands = [
+  {
+    command: 'cat featured/START_HERE.txt',
+    hint: 'Quick intro to the best work'
+  },
+  {
+    command: 'cat featured/current-work.md',
+    hint: 'See what I am building this week'
+  },
+  {
+    command: 'cat featured/best-projects.json',
+    hint: 'Skim the four flagship projects'
+  }
+];
+
+const StartHereSuggestions = memo(function StartHereSuggestionsComponent({ onRun }: { onRun: (command: string) => void }) {
+  return (
+    <div className="mt-3 bg-black/30 border border-border/60 rounded-lg p-3">
+      <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
+        <Sparkles className="w-4 h-4 text-primary" />
+        <span>Suggested commands</span>
+      </div>
+      <div className="mt-3 space-y-2">
+        {startHereCommands.map(({ command, hint }) => (
+          <button
+            key={command}
+            type="button"
+            className="w-full rounded-md border border-border/60 bg-black/30 px-3 py-2 text-left transition-colors hover:border-primary/60"
+            onClick={() => onRun(command)}
+          >
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-mono text-sm text-foreground">{command}</span>
+              <ArrowUpRight className="w-4 h-4 text-primary" />
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">{hint}</p>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+});
 
 export function Header() {
   const { open: isMobileNavOpen, toggle: toggleMobileNav, close: closeMobileNav } = useMobileNav();
   const pathname = usePathname();
-  const { log, success } = useConsole();
+  const { log, success, executeCommand } = useConsole();
   const { playNavigationSound } = useNavigationSound();
   
   // Use our custom hooks
@@ -130,6 +173,7 @@ export function Header() {
           {/* Render Console component here, pushed to the bottom */}
           <div className="mt-auto">
             <Console />
+            <StartHereSuggestions onRun={executeCommand} />
           </div>
         </div>
       </header>

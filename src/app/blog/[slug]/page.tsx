@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     metadataBase: new URL(siteUrl), // Set metadataBase
-    title: `${post.title} | Rishav Nath Pati Blog`,
+    title: `${post.title} | Rishav Nath Pati Notes`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -127,7 +127,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="mb-6 sm:mb-8">
           <Button variant="outline" size="sm" asChild className="font-mono hover:bg-primary/10 transition-colors">
             <Link href="/blog">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Notes
             </Link>
           </Button>
         </div>

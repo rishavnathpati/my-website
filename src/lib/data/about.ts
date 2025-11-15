@@ -1,4 +1,5 @@
 export interface AboutData {
+  summary: string;
   paragraphs: string[];
   competencies: Competency[];
 }
@@ -8,36 +9,28 @@ export interface Competency {
 }
 
 export const aboutData: AboutData = {
+  summary: "I build AI-driven NPCs, speech systems, and VR characters in Unity so teams can drop believable interactions straight into their projects.",
   paragraphs: [
-    "I'm Rishav, a game and interactive media developer who likes building things where real-time interaction actually matters — AI-driven NPCs, speech systems, and VR worlds.",
-    "Right now I work at Convai as an Interactive Media Developer, mostly inside Unity. I spend a lot of time wiring up conversational AI to characters, streaming speech to and from the engine, and making sure these systems feel solid enough that other developers can drop them into their own projects without thinking too hard.",
-    "Before that, I shipped a bunch of small games for mobile and PC: casual, hyper-casual, a few educational ones. That phase taught me how to prototype quickly, cut scope without killing the fun, and keep performance in mind from day one.",
-    "On the side, I tinker with Python backends, small CLIs, and the occasional Android or ML-flavoured experiment — nothing huge, but enough to glue systems together and explore new ideas. I care a lot about tools, workflows, and making complex tech feel approachable, both for players and for other developers."
+    "I'm Rishav — I spend most of my time inside Unity making characters feel alive. That means building speech pipelines, AI-driven behaviours, and VR interactions that hold up in real-time environments instead of just demos.",
+    "At Convai I own the messy middle ground between research demos and something a studio can trust. I wire streaming speech into Unity, craft prompts that keep personalities on track, build debugging tools for designers, and chase latency budgets so Quest players don't feel the seams.",
+    "VR and Quest 3 experiments are my playground for testing how people actually move, look, and talk to virtual characters. I've prototyped reactive body language, fingertip cues, and network-friendly systems that keep NPCs responsive without melting the headset.",
+    "When a project needs glue, I write it — lightweight Python services, CLI utilities, or Android helpers that let the main experience stay focused. Good tools and clear docs make it easier for writers, designers, and other programmers to collaborate without reverse-engineering my brain."
   ],
   competencies: [
     {
-      text: "Building real-time systems in Unity (speech, AI NPCs, VR, networking)"
+      text: "Real-time interaction in Unity: speech, AI NPCs, VR, and networking"
     },
     {
-      text: "Shipping prototypes quickly while keeping the codebase understandable for v2"
+      text: "Fast prototyping without wrecking long-term maintainability"
     },
     {
-      text: "Designing tools and editor workflows that make other developers' lives easier"
+      text: "Performance-minded development for mobile and VR platforms"
     },
     {
-      text: "Optimizing scenes and systems for performance on constrained hardware (mobile, VR)"
+      text: "Tooling and editor UX for other developers and content creators"
     },
     {
-      text: "Connecting Unity with backend services using gRPC / REST and lightweight Python services"
-    },
-    {
-      text: "Explaining technical ideas clearly through docs, examples, and conversations"
-    },
-    {
-      text: "Collaborating across disciplines — programmers, designers, writers, and artists"
-    },
-    {
-      text: "Exploring new tech (ML, Android, audio tools) enough to integrate it into real projects"
+      text: "Glue code: small Python backends, CLIs, and integrations when needed"
     }
   ]
 };

@@ -14,8 +14,7 @@ export const navItems = [
   },
   { href: '#skills', icon: FileText, label: 'Skills', sectionId: 'skills', command: 'ls skills/', shortcut: '3' },
   { href: '#portfolio-highlights', icon: Gamepad2, label: 'Portfolio', sectionId: 'portfolio-highlights', command: './view_projects', shortcut: '5' },
-  // Keep blogs as a hash section on the home page for consistent in-page navigation
-  { href: '#blogs', icon: Pencil, label: 'Blogs', sectionId: 'blogs', command: 'vim blog.md', shortcut: '6' },
+  { href: '#notes', icon: Pencil, label: 'Notes', sectionId: 'notes', command: 'cat notes/logbook.md', shortcut: '6' },
   { href: '#contact-cta', icon: Mail, label: 'Contact', sectionId: 'contact-cta', command: 'mail -s "Hello"', shortcut: '7' },
 ];
 

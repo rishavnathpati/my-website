@@ -3,7 +3,7 @@
 import { memo, useRef, useCallback, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowDown, Terminal, Gamepad2 } from 'lucide-react';
+import { ArrowDown, Terminal, Gamepad2, Sparkles } from 'lucide-react';
 import { typedStrings } from '@/lib/data/hero';
 
 // Memoized button component
@@ -32,6 +32,24 @@ const ActionButton = memo(function ActionButton({
     </Button>
   );
 });
+
+const heroFocusLines = [
+  "I'm building AI NPCs that can actually talk",
+  "I'm wiring speech systems into Unity",
+  "I'm making VR characters feel real",
+  "I'm shipping tools other devs can reuse"
+];
+
+const featuredDirectoryPreview = [
+  '├── featured/    ⭐ START HERE',
+  '├── portfolio/',
+  '├── about/',
+  '├── experience/',
+  '├── skills/',
+  '└── contact/'
+];
+
+const featuredFiles = ['START_HERE.txt', 'current-work.md', 'best-projects.json'];
 
 function HeroSectionComponent() {
   const heroContentRef = useRef<HTMLDivElement>(null);
@@ -170,6 +188,50 @@ function HeroSectionComponent() {
                 </div>
                 <div>
                   <ActionButton href="#contact-cta" variant="outline">contact_me.sh</ActionButton>
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-3 md:grid-cols-2">
+                {heroFocusLines.map((line) => (
+                  <div
+                    key={line}
+                    className="flex items-center gap-2 bg-black/30 border border-border/60 rounded-lg px-3 py-2 font-mono text-sm text-foreground/90"
+                  >
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span>{line}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                <div className="bg-black/30 border border-border/70 rounded-lg p-4">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                    <Terminal size={16} className="text-primary" />
+                    <span className="font-mono">$ tree -L 1</span>
+                  </div>
+                  <div className="font-mono text-sm text-foreground space-y-1">
+                    {featuredDirectoryPreview.map((line) => (
+                      <div key={line}>{line}</div>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-black/30 border border-border/70 rounded-lg p-4">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                    <Terminal size={16} className="text-primary" />
+                    <span className="font-mono">$ ls featured/</span>
+                  </div>
+                  <ul className="space-y-2 font-mono text-sm text-foreground">
+                    {featuredFiles.map((file, index) => (
+                      <li
+                        key={file}
+                        className="flex items-center justify-between rounded-md border border-border/50 px-3 py-2"
+                      >
+                        <span className="text-primary/80">{index === 0 ? '⭐' : '•'}</span>
+                        <span className="flex-1 pl-2">{file}</span>
+                        <span className="text-muted-foreground text-xs">cat featured/{file}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
